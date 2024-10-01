@@ -1,4 +1,4 @@
-const carColor = require("../models/carColors");
+const CarColor = require("../models/carColors");
 
 // Create a new color
 exports.createCarColor = async (req, res) => {

@@ -7,11 +7,11 @@ const carColorSchema = new mongoose.Schema({
     unique: true,
   },
   colorName: {
-    type: Number,
+    type: String,
     required: true,
   },
   colorCode: {
-    type: Number,
+    type: String,
     required: true,
     match: /^#[0-9A-F]{6}$/i, // Hex code validity
   },
