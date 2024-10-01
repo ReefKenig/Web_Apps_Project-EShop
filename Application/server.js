@@ -6,7 +6,7 @@ dotenv.config();
 const app = express();
 
 const uri = `mongodb+srv://rkenig:${encodeURIComponent(
-  "Rk@DB090320"
+  "&f9-&Hy!NvaKvQX"
 )}@carseshop.uecqa.mongodb.net/?retryWrites=true&w=majority&appName=CarsEshop`;
 
 async function connect() {
