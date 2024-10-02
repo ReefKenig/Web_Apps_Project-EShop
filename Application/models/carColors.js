@@ -22,3 +22,5 @@ const carColorSchema = new mongoose.Schema(
 const CarColors = mongoose.model("car_colors", carColorSchema);
 
 module.exports = CarColors;
+
+

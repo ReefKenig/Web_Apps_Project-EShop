@@ -3,7 +3,7 @@ const CarColors = require("../models/carColors");
 // Create a new color
 exports.createCarColor = async (req, res) => {
   const { colorId, colorName, colorCode } = req.body;
-  const newColor = new CarColors({ colorId, colorName, colorCode });
+  const newColor = new CarColors({ colorId, colorName, colorCode }); 
 
   try {
     const savedColor = await newColor.save();
@@ -17,7 +17,6 @@ exports.createCarColor = async (req, res) => {
 exports.getAllCarColors = async (req, res) => {
   try {
     const colors = await CarColors.find({});
-    console.log('Fetched colors:', colors);
     res.json(colors);
   } catch (error) {
     res.status(500).json({ message: error.message });
