@@ -1,4 +1,4 @@
-const CarImage = require('../models/carimagesmodel'); // Ensure this path is correct
+const CarImage = require('../models/carimagesmodel'); 
 
 // Add new car image
 exports.addCarImage = async (req, res) => {
