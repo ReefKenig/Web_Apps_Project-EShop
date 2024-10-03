@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const carColorRoutes = require("./routes/carColors");
 const carImageRoutes = require("./routes/carimagesroute");
-const UserRoutes=require("./routes/UsersRoute");
-const { db } = require("./models/carColors");
+const userRoutes = require("./routes/users");
+// const { db } = require("./models");
 
 dotenv.config();
 const app = express();
@@ -17,7 +17,6 @@ async function connect() {
   try {
     await mongoose.connect(uri);
     console.log("Connected to MongoDB");
-    const collections = await db.listCollections();
   } catch (error) {
     console.log(error);
   }
@@ -25,12 +24,11 @@ async function connect() {
 
 connect();
 
-app.use(express.json());//middleware for user routes
+app.use(express.json()); //middleware for user routes
 
 app.use("/", carColorRoutes);
 app.use("/", carImageRoutes);
-app.use("/",UserRoutes);
-
+app.use("/", userRoutes);
 
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
