@@ -28,16 +28,15 @@ exports.createUser = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
-    // Check if there are no users
     if (users.length === 0) {
-      return res.status(404).json({ message: 'No users found.' }); // Respond with 404 and message
+      return res.status(404).json({ message: 'No users found' });
     }
-    // Respond with users if found
-    return res.status(200).json(users);
+    res.status(200).json(users);
   } catch (error) {
-    return res.status(500).json({ message: error.message }); // Return error message
+    res.status(500).json({ message: error.message });
   }
 };
+
 
 
 // Get a user by ID
