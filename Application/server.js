@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const carColorRoutes = require("./routes/carColors");
 const carImageRoutes = require("./routes/carimagesroute");
+const UserRoutes=require("./routes/UsersRoute");
 const { db } = require("./models/carColors");
 
 dotenv.config();
@@ -26,6 +27,10 @@ connect();
 
 app.use("/", carColorRoutes);
 app.use("/", carImageRoutes);
+
+app.use(express.json());//middleware for userroutes
+app.use("/",UserRoutes);
+
 
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
