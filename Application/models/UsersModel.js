@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  id: {
+  userid: {
     type: Number,
     unique: true,
     required: true,
@@ -45,6 +45,6 @@ userSchema.methods.comparePassword = async function(password) {
   return await bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model('Users', userSchema);
+const User = mongoose.model("Car_Users", userSchema);
 
 module.exports = User;

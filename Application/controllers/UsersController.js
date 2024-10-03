@@ -2,8 +2,20 @@ const User = require('../models/UsersModel');
 
 // Create a new user
 exports.createUser = async (req, res) => {
-  const{password,name,lastname,id,email,permissions}=req.body;
-  const newUser = new User(password,name,lastname,id,email,permissions);
+  const { password, name, lastname, userid, email, permissions } = req.body;
+  
+  // Hash the password before saving
+  const hashedPassword = await bcrypt.hash(password, 10);
+  
+  const newUser = new User({
+    password: hashedPassword,
+    name,
+    lastname,
+    userid,
+    email,
+    permissions
+  });
+  
   try {
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
@@ -12,20 +24,26 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// Get all users
+//get all users
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
-    res.status(200).json(users);
+    // Check if there are no users
+    if (users.length === 0) {
+      return res.status(404).json({ message: 'No users found.' }); // Respond with 404 and message
+    }
+    // Respond with users if found
+    return res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message }); // Return error message
   }
 };
+
 
 // Get a user by ID
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.userid);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -38,7 +56,7 @@ exports.getUserById = async (req, res) => {
 // Update a user
 exports.updateUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const user = await User.findByIdAndUpdate(req.params.userid, req.body, { new: true });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -51,7 +69,7 @@ exports.updateUser = async (req, res) => {
 // Delete a user
 exports.deleteUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await User.findByIdAndDelete(req.params.userid);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -76,8 +94,7 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Invalid password' });
     }
     
-    // Here, you can implement token generation or session management as needed
-    res.status(200).json({ message: 'Login successful', user: { id: user.id, name: user.name, lastname: user.lastname, email: user.email, permissions: user.permissions } });
+    res.status(200).json({ message: 'Login successful', user: { id: user.userid, name: user.name, lastname: user.lastname, email: user.email, permissions: user.permissions } });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

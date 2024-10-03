@@ -16,7 +16,7 @@ exports.addCarImage = async (req, res) => {
 // Get all images for a specific car
 exports.getCarImages = async (req, res) => {
     try {
-        const carImages = await CarImage.find({ CarId: req.params.carId }); // Make sure to use CarId instead of carId
+        const carImages = await CarImage.find({ CarId: req.params.carId }); 
         if (carImages.length === 0) {
             return res.status(404).json({ message: "No images found for this car." });
         }

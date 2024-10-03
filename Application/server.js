@@ -25,10 +25,10 @@ async function connect() {
 
 connect();
 
+app.use(express.json());//middleware for user routes
+
 app.use("/", carColorRoutes);
 app.use("/", carImageRoutes);
-
-app.use(express.json());//middleware for user routes
 app.use("/",UserRoutes);
 
 
