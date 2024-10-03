@@ -27,12 +27,14 @@ exports.createUser = async (req, res) => {
 //get all users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find(req.params.userid);
+    console.log("user are:",users);
     if (users.length === 0) {
       return res.status(404).json({ message: 'No users found' });
     }
     res.status(200).json(users);
   } catch (error) {
+    console.log("error message");
     res.status(500).json({ message: error.message });
   }
 };
