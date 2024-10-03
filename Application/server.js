@@ -28,7 +28,7 @@ connect();
 app.use("/", carColorRoutes);
 app.use("/", carImageRoutes);
 
-app.use(express.json());//middleware for userroutes
+app.use(express.json());//middleware for user routes
 app.use("/",UserRoutes);
 
 
