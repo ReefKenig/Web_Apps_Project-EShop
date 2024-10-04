@@ -5,6 +5,7 @@ const carColorRoutes = require("./routes/carColors");
 const carImageRoutes = require("./routes/carImages");
 const userRoutes = require("./routes/users");
 const carRoutes=require("./routes/cars");
+const ManufacturersRoutes=require("./routes/manufacturers");
 // const { db } = require("./models");
 
 dotenv.config();
@@ -32,6 +33,7 @@ app.use("/", carImageRoutes);
 app.use("/", userRoutes);
 app.use("/",carRoutes);
 
+app.use("/",ManufacturersRoutes);
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
 });
