@@ -52,7 +52,7 @@ exports.login = async (req, res) => {
 //get all users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find(req.params.userid);
+    const users = await User.find();
     console.log("user are:", users);
     if (users.length === 0) {
       return res.status(404).json({ message: "No users found" });
