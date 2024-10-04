@@ -52,14 +52,12 @@ exports.login = async (req, res) => {
 //get all users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
-    console.log("user are:", users);
+    const users = await User.find().select('-__v');
     if (users.length === 0) {
       return res.status(404).json({ message: "No users found" });
     }
     res.status(200).json(users);
   } catch (error) {
-    console.log("error message");
     res.status(500).json({ message: error.message });
   }
 };
