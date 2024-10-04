@@ -10,12 +10,14 @@ const paymentSchema = new mongoose.Schema({
   cardNumber: {
     type: String,
     required: true,
-    // A custom setter to store only the last four digits for display purposes
-    set: (value) => {
+    set(value) {
       // Store the full card number
-      this.fullCardNumber = value;
-      // Return the last four digits for display
-      return value.slice(-4);
+      this.fullCardNumber = value; // Store the full number
+      return value.slice(-4); // Return the last four digits for storage/display
+    },
+    get() {
+      // Return the masked version when accessed
+      return '************' + this.fullCardNumber.slice(-4); // Mask all but the last four digits
     },
   },
   paymentMethod: {
