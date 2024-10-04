@@ -14,7 +14,7 @@ const carSchema = new mongoose.Schema({
   manufacturer: {
     type: String,
     required: true,
-    ref: 'car_manufacturer',  // Reference to another collection for suppliers if needed
+    ref: 'car_manufacturers',  // Reference to another collection for suppliers if needed
   },
   year: {
     type: Number,
