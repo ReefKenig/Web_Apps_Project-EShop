@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 // Define the schema for Payments
 const paymentSchema = new mongoose.Schema({
   paymentId: {
@@ -27,7 +26,6 @@ const paymentSchema = new mongoose.Schema({
   u_id: {
     type: Number,
     required: true,  // Reference to the user making the payment
-    ref: 'users',
   },
   expiryDate: {
     type: String,
@@ -36,9 +34,15 @@ const paymentSchema = new mongoose.Schema({
   status:{
     type:Boolean,
    required:true,
+   default:false,
   }
 });
-
+paymentSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v; // Remove the __v field
+    return ret; // Return the modified object
+  },
+})
 // Create a model from the schema
 const Payment = mongoose.model('payments', paymentSchema);
 

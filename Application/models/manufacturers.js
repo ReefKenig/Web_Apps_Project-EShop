@@ -12,7 +12,12 @@ const manufacturerSchema = new mongoose.Schema({
     required: true,
   },
 });
-
+manufacturerSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v; // Remove the __v field
+    return ret; // Return the modified object
+  },
+})
 // Create a model from the schema
 const Manufacturer = mongoose.model("manufacturers", manufacturerSchema);
 

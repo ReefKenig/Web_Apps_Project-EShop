@@ -20,6 +20,11 @@ const carImageSchema = new mongoose.Schema({
         required:true,
     }
 }, { timestamps: true });
-
+carImageSchema.set('toJSON', {
+    transform: (doc, ret) => {
+      delete ret.__v; // Remove the __v field
+      return ret; // Return the modified object
+    },
+  })
 const CarImages=mongoose.model("car_images", carImageSchema);
 module.exports = CarImages;

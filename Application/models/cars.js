@@ -54,7 +54,12 @@ const carSchema = new mongoose.Schema({
     default: false,  // Default to false, meaning not approved unless specified
   }
 });
-
+carSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v; // Remove the __v field
+    return ret; // Return the modified object
+  },
+})
 // Create a model from the schema
 const Car = mongoose.model('cars', carSchema);
 

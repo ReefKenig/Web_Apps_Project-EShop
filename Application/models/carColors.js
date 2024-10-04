@@ -18,7 +18,12 @@ const carColorSchema = new mongoose.Schema(
     },
   },
 );
-
+carColorSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v; // Remove the __v field
+    return ret; // Return the modified object
+  },
+})
 const CarColors = mongoose.model("car_colors", carColorSchema);
 
 module.exports = CarColors;
