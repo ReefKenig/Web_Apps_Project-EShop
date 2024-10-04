@@ -13,15 +13,11 @@ const paymentSchema = new mongoose.Schema({
     set(value) {
       // Store the full card number
       this.fullCardNumber = value; // Store the full number
-      return value.slice(-4); // Return the last four digits for storage/display
-    },
-    get() {
-      // Return the masked version when accessed
-      return '************' + this.fullCardNumber.slice(-4); // Mask all but the last four digits
+      return "************"+value.slice(-4); // Return the last four digits for storage/display
     },
   },
   paymentMethod: {
-    type: String,
+    type: String, 
     required: true,
   },
   creditType:{
