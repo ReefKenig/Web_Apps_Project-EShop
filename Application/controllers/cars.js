@@ -69,10 +69,7 @@ exports.updateCar = async (req, res) => {
 // Delete a car by ID
 exports.deleteCar = async (req, res) => {
   try {
-    const deletedCar = await Car.findByIdAndDelete(req.params.carid);
-    if (!deletedCar) {
-      return res.status(404).json({ message: 'Car not found' });
-    }
+      await Car.deleteOne({carId:carId});
     res.status(204).send();
   } catch (error) {
     res.status(500).json({ message: error.message });
