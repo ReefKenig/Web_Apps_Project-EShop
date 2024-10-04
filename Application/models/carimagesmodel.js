@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const carImageSchema = new mongoose.Schema({
     CarId: {
         type: Number,
-        ref: 'Car',  // Assuming you have a Car model that this relates to
+        ref: 'cars',  // Assuming you have a Car model that this relates to
         required: true,
         unique:true,
     },

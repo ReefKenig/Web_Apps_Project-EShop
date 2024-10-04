@@ -3,7 +3,7 @@ const CarColors = require("../models/carColors");
 // Create a new color
 exports.createCarColor = async (req, res) => {
   const { colorId, colorName, colorCode } = req.body;
-  const newColor = new CarColors({ colorId, colorName, colorCode }); 
+  const newColor = new CarColors({ colorId:colorId, colorName:colorName, colorCode:colorCode }); 
 
   try {
     const savedColor = await newColor.save();

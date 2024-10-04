@@ -3,7 +3,7 @@ const CarImage = require('../models/carimagesmodel');
 // Add new car image
 exports.addCarImage = async (req, res) => {
     const { CarId, CarName, ImageUrl, CarDescription } = req.body;
-    const newCarImage = new CarImage({ CarId, CarName, ImageUrl, CarDescription });
+    const newCarImage = new CarImage({ CarId:carId, CarName:CarName, ImageUrl:ImageUrl, CarDescription:CarDescription });
 
     try {
         const savedCarImage = await newCarImage.save(); // Save the new car image
