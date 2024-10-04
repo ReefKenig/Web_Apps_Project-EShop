@@ -20,6 +20,28 @@ exports.createPayment = async (req, res) => {
   }
 };
 
+// Check if payment went through
+exports.checkPaymentStatus = async (req, res) => {
+    const { paymentId } = req.params;
+    try {
+      // Simulate checking the payment status (for example, from a database or payment gateway)
+      const payment = await Payment.findOne({ paymentId });
+  
+      if (!payment) {
+        return res.status(404).json({ message: 'Payment not found' });
+      }
+  
+      // Simulating a payment status (randomly setting success/failure)
+      const isSuccessful = Math.random() >= 0.5; // Randomly returns true or false
+  
+      const statusMessage = isSuccessful ? "Payment went through" : "Payment failed";
+      res.status(200).json({ paymentId, status: isSuccessful, message: statusMessage });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+
 // Get all payments
 exports.getAllPayments = async (req, res) => {
   try {

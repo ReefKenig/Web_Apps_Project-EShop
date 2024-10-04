@@ -4,7 +4,8 @@ const paymentController = require('../controllers/payments');
 
 // Create a new payment
 router.post('/payments', paymentController.createPayment);
-
+//payment status
+router.get("/payments/:paymentId/status",paymentController.checkPaymentStatus);
 // Get all payments
 router.get('/payments', paymentController.getAllPayments);
 
