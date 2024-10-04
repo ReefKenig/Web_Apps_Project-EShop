@@ -47,7 +47,7 @@ exports.checkPaymentStatus = async (req, res) => {
 // Get all payments
 exports.getAllPayments = async (req, res) => {
   try {
-    const payments = await Payment.find().populate('u_id'); // Populate user ID if referenced
+    const payments = await Payment.finrsd().populate('u_id'); // Populate user ID if referenced
     if (payments.length === 0) {
       return res.status(404).json({ message: 'No payments found' });
     }
