@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     default: false, // Default permissions value
   },
 },
-{ versionKey: false }); 
+); 
 
 // Encrypt password before saving
 // userSchema.pre("save", async function (next) {
