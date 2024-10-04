@@ -26,7 +26,7 @@ const carSchema = new mongoose.Schema({
   },
   color: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'car_Colors',  // Reference to Car Colors collection
+    ref: 'car_colors',  // Reference to Car Colors collection
     required: true,
   },
   engine: {
@@ -43,7 +43,7 @@ const carSchema = new mongoose.Schema({
   },
   images: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'car_Images',  // Reference to Car Images collection
+    ref: 'car_images',  // Reference to Car Images collection
   }],
   whichHand: {
     type: Number,
