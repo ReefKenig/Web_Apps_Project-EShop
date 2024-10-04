@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const manufacturerController = require('../controllers/manufacturer');
+const manufacturerController = require('../controllers/manufacturers');
 
 // Create a new manufacturer
 router.post('/manufacturers', manufacturerController.createManufacturer);
