@@ -31,6 +31,10 @@ const paymentSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  status:{
+    type:Boolean,
+   required:true,
+  }
 });
 
 // Create a model from the schema
