@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const users=require("../controllers/users");
 // Define the schema for Payments
 const paymentSchema = new mongoose.Schema({
   paymentId: {
