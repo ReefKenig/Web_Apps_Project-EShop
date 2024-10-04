@@ -1,22 +1,22 @@
-const Car = require('../models/cars.js');
+const Car = require('../models/cars');
 
 // Create a new car
 exports.createCar = async (req, res) => {
   const { carId, carName, manufacturer, year, price, color, engine, kilometers, chalk, images, whichHand, approved } = req.body;
   
   const newCar = new Car({
-    carId,
-    carName,
-    manufacturer,
-    year,
-    price,
-    color,
-    engine,
-    kilometers,
-    chalk,
-    images,
-    whichHand,
-    approved
+    carId:carId,
+    carName:carName,
+    manufacturer:manufacturer,
+    year:year,
+    price:price,
+    color:color,
+    engine:engine,
+    kilometers:kilometers,
+    chalk:chalk,
+    images:images,
+    whichHand:whichHand,
+    approved:approved
   });
 
   try {
