@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const users=require("../controllers/users");
 // Define the schema for Payments
 const paymentSchema = new mongoose.Schema({
   paymentId: {
@@ -24,8 +25,9 @@ const paymentSchema = new mongoose.Schema({
     required:true,
   },
   u_id: {
-    type: Number,
+    type:mongoose.Schema.Types.ObjectId ,
     required: true,  // Reference to the user making the payment
+    ref:"users"
   },
   expiryDate: {
     type: String,
