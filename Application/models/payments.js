@@ -22,13 +22,17 @@ const paymentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  creditType:{
+    type:String,
+    required:true,
+  },
   u_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     required: true,  // Reference to the user making the payment
     ref: 'users',
   },
   expiryDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   status:{
