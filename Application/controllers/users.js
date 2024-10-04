@@ -52,7 +52,7 @@ exports.login = async (req, res) => {
 //get all users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select('-__v');
+    const users = await User.find().
     if (users.length === 0) {
       return res.status(404).json({ message: "No users found" });
     }
@@ -78,9 +78,9 @@ exports.getUserById = async (req, res) => {
 // Update a user
 exports.updateUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.userid, req.body, {
+    const user = await User.findByIdAndUpdate(req.params.userid, req.body,{
       new: true,
-    });
+    })
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
