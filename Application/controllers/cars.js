@@ -30,7 +30,7 @@ exports.createCar = async (req, res) => {
 // Get all cars
 exports.getAllCars = async (req, res) => {
   try {
-    const cars = await Car.find()
+    const cars = await Car.find().populate('color').populate('images');
     if (cars.length === 0) {
       return res.status(404).json({ message: 'No cars found' });
     }
@@ -42,7 +42,7 @@ exports.getAllCars = async (req, res) => {
 // Get a car by ID
 exports.getCarByCarId= async (req, res) => {
   try {
-    const car = await Car.findById(req.params.carId)
+    const car = await Car.findById(req.params.carId).populate('color').populate('images');
     if (!car) {
       return res.status(404).json({ message: 'Car not found' });
     }
@@ -55,7 +55,7 @@ exports.getCarByCarId= async (req, res) => {
 // Update a car by ID
 exports.updateCar = async (req, res) => {
   try {
-    const updatedCar = await Car.findByIdAndUpdate(req.params.carId,req.body, { new: true })
+    const updatedCar = await Car.findByIdAndUpdate(req.params.carId,req.body, { new: true }).populate('color').populate('images');
     if (!updatedCar) {
       return res.status(404).json({ message: 'Car not found' });
     }
