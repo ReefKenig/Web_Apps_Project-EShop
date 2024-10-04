@@ -2,7 +2,7 @@ const Payment = require('../models/payments');
 
 // Create a new payment
 exports.createPayment = async (req, res) => {
-  const { paymentId, cardNumber, paymentMethod, u_id, expiryDate } = req.body;
+  const { paymentId, cardNumber, paymentMethod, u_id, expiryDate,status,creditType } = req.body;
 
   const newPayment = new Payment({
     paymentId:paymentId,
@@ -10,6 +10,8 @@ exports.createPayment = async (req, res) => {
     paymentMethod:paymentMethod,
     u_id:u_id,
     expiryDate:expiryDate,
+    status:status,
+    creditType:creditType,
   });
 
   try {
