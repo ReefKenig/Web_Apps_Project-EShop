@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const carColorRoutes = require("./routes/carColors");
-const carImageRoutes = require("./routes/carImages");
 const userRoutes = require("./routes/users");
 const carRoutes=require("./routes/cars");
 const ManufacturersRoutes=require("./routes/manufacturers");
@@ -30,7 +29,6 @@ connect();
 app.use(express.json()); //middleware for user routes
 
 app.use("/", carColorRoutes);
-app.use("/", carImageRoutes);
 app.use("/", userRoutes);
 app.use("/",carRoutes);
 app.use("/",ManufacturersRoutes);
