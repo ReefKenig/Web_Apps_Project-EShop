@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const carColorRoutes = require("./routes/carColors");
 const PaymentsRoutes=require("./routes/payments");
+const userRoutes=require("./routes/users");
 // const { db } = require("./models");
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.json()); //middleware for user routes
 
 app.use("/", carColorRoutes);
 app.use("/",PaymentsRoutes);
+app.use("/",userRoutes);
 
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
