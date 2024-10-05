@@ -28,15 +28,8 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false, // Default permissions value
   },
-},
-); 
+});
 
-userSchema.set('toJSON', {
-  transform: (doc, ret) => {
-    delete ret.__v; // Remove the __v field
-    return ret; // Return the modified object
-  },
-})
 // Encrypt password before saving
 // userSchema.pre("save", async function (next) {
 //   if (this.isModified("password")) {
