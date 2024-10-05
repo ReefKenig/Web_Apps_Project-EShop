@@ -22,8 +22,6 @@ async function connect() {
 
 connect();
 
-app.use(express.json()); //middleware for user routes
-
 app.use("/", carColorRoutes);
 
 
