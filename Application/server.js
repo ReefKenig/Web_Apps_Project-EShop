@@ -8,8 +8,8 @@ dotenv.config();
 const app = express();
 
 const uri = `mongodb+srv://rkenig:${encodeURIComponent(
-  "Rk@DB090320"
-)}@carseshop.uecqa.mongodb.net/?retryWrites=true&w=majority&appName=CarsEshop`;
+  "&f9-&Hy!NvaKvQX"
+)}@carseshop.uecqa.mongodb.net/CarsEShop`;
 
 async function connect() {
   try {
@@ -22,9 +22,9 @@ async function connect() {
 
 connect();
 
-app.use("./",carColorRoutes);
-app.use("./",userRoutes);
-app.use("./",paymentRoutes);
+app.use("/",carColorRoutes);
+app.use("/",userRoutes);
+app.use("/",paymentRoutes);
 
 
 app.listen(process.env.PORT || 3030, () => {
