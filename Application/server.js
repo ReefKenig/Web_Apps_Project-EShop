@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const carColorRoutes = require("./routes/carColors");
-const carImageRoutes = require("./routes/carimagesroute");
+const imageRoutes = require("./routes/images");
 const userRoutes = require("./routes/users");
 // const { db } = require("./models");
 
@@ -26,9 +26,9 @@ connect();
 
 app.use(express.json()); //middleware for user routes
 
-app.use("/", carColorRoutes);
-app.use("/", carImageRoutes);
-app.use("/", userRoutes);
+app.use("/color", carColorRoutes);
+app.use("/image", imageRoutes);
+app.use("/user", userRoutes);
 
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
