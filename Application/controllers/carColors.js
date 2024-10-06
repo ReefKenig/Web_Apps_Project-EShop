@@ -1,9 +1,9 @@
-const CarColors = require("../models/carColors");
+const CarColor = require("../models/carColors");
 
 // Create a new color
 exports.createCarColor = async (req, res) => {
   const { colorId, colorName, colorCode } = req.body;
-  const newColor = new CarColors({ colorId, colorName, colorCode });
+  const newColor = new CarColor({ colorId, colorName, colorCode });
 
   try {
     const savedColor = await newColor.save();
@@ -16,8 +16,8 @@ exports.createCarColor = async (req, res) => {
 // Get all colors
 exports.getAllCarColors = async (req, res) => {
   try {
-    const colors = await CarColors.find({});
-    console.log('Fetched colors:', colors);
+    const colors = await CarColor.find({});
+    console.log("Fetched colors:", colors);
     res.json(colors);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -30,7 +30,7 @@ exports.updateCarColor = async (req, res) => {
   const { colorName, colorCode } = req.body;
 
   try {
-    const updatedColor = await CarColors.findOneAndUpdate(
+    const updatedColor = await CarColor.findOneAndUpdate(
       { colorId },
       { colorName, colorCode },
       { new: true }
@@ -49,7 +49,7 @@ exports.deleteCarColor = async (req, res) => {
   const { colorId } = req.params;
 
   try {
-    const deletedColor = await CarColors.deleteOne({ colorId });
+    const deletedColor = await CarColor.deleteOne({ colorId });
     if (deletedColor.deletedCount === 0) {
       return res.status(404).json({ message: "Color not found" });
     }

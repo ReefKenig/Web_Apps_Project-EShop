@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const carColorRoutes = require("./routes/carColors");
-const { db } = require("./models/carColors");
 
 dotenv.config();
 const app = express();
@@ -14,9 +13,6 @@ const uri = `mongodb+srv://rkenig:${encodeURIComponent(
 async function connect() {
   try {
     await mongoose.connect(uri);
-    console.log("Connected to MongoDB");
-    const collections = await db.listCollections();
-    collections.forEach((collection) => console.log(collection.name));
   } catch (error) {
     console.log(error);
   }
@@ -24,7 +20,7 @@ async function connect() {
 
 connect();
 
-app.use("/", carColorRoutes);
+app.use("/color", carColorRoutes);
 
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
