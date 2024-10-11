@@ -1,4 +1,4 @@
-const CarImage = require("../models/carimages");
+const CarImage = require("../models/carImages");
 
 // Create a new image
 exports.createImage = async (req, res) => {

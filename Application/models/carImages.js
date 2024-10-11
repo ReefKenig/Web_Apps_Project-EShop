@@ -8,7 +8,7 @@ const carImageSchema = new mongoose.Schema({
   },
   carId: {
     type: Number,
-    ref: "cars", // Assuming you have a Car model that this relates to
+    ref: "cars",
     required: true,
   },
   url: {
