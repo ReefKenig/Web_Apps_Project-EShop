@@ -1,20 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const manufacturerController = require('../controllers/manufacturers');
+const manufacturerController = require("../controllers/manufacturers");
 
 // Create a new manufacturer
-router.post('/manufacturers', manufacturerController.createManufacturer);
+router.post("/", manufacturerController.createManufacturer);
 
 // Get all manufacturers
-router.get('/manufacturers', manufacturerController.getAllManufacturers);
+router.get("/", manufacturerController.getAllManufacturers);
 
 // Get a manufacturer by ID
-router.get('/manufacturers/:manufacturerId', manufacturerController.getManufacturerById);
+router.get("/:id", manufacturerController.getManufacturerById);
 
 // Update a manufacturer by ID
-router.put('/manufacturers/:manufacturerId', manufacturerController.updateManufacturer);
+router.put("/:id", manufacturerController.updateManufacturer);
 
 // Delete a manufacturer by ID
-router.delete('/manufacturers/:manufacturerId', manufacturerController.deleteManufacturer);
+router.delete("/:id", manufacturerController.deleteManufacturer);
 
 module.exports = router;
