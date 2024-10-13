@@ -17,7 +17,7 @@ exports.createImage = async (req, res) => {
 // Get all images
 exports.getAllImages = async (req, res) => {
   try {
-    const images = await CarImage.find({});
+    const images = await CarImage.find({}, { _id: 0, __v: 0 });
     res.status(200).json(images);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -27,7 +27,10 @@ exports.getAllImages = async (req, res) => {
 // Get image by ID
 exports.getImageById = async (req, res) => {
   try {
-    const image = await CarImage.findOne({ imageId: req.params.id });
+    const image = await CarImage.findOne(
+      { imageId: req.params.id },
+      { _id: 0, __v: 0 }
+    );
 
     if (!image) return res.status(404).json({ message: "Image not found" });
   } catch (error) {

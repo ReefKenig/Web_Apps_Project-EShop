@@ -17,7 +17,7 @@ exports.createColor = async (req, res) => {
 // Get all colors
 exports.getAllColors = async (req, res) => {
   try {
-    const colors = await CarColor.find({});
+    const colors = await CarColor.find({}, { _id: 0 });
     res.status(200).json(colors);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -27,7 +27,10 @@ exports.getAllColors = async (req, res) => {
 // Get a color by ID
 exports.getColorById = async (req, res) => {
   try {
-    const color = await CarColor.findOne({ colorId: req.params.colorId });
+    const color = await CarColor.findOne(
+      { colorId: req.params.colorId },
+      { _id: 0 }
+    );
 
     if (!color) {
       return res.status(404).json({ message: "Color not found" });

@@ -15,9 +15,7 @@ app.use("/color", carColorRoutes);
 app.use("/image", carImageRoutes);
 
 // MongoDB connection
-const uri = `mongodb+srv://rkenig:${encodeURIComponent(
-  "&f9-&Hy!NvaKvQX"
-)}@carseshop.uecqa.mongodb.net/CarsEShop`;
+const uri = process.env.MONGODB_URI;
 
 async function connect() {
   try {
