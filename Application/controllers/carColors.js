@@ -1,59 +1,76 @@
 const CarColor = require("../models/carColors");
 
 // Create a new color
-exports.createCarColor = async (req, res) => {
-  const { colorId, colorName, colorCode } = req.body;
-  const newColor = new CarColor({ colorId, colorName, colorCode });
-
+exports.createColor = async (req, res) => {
   try {
-    const savedColor = await newColor.save();
-    res.status(201).json(savedColor);
+    const { colorId, colorName, colorCode } = req.body;
+    const newColor = new CarColor({ colorId, colorName, colorCode });
+    await newColor.save();
+    res
+      .status(201)
+      .json({ message: "Color created successfully", data: newColor });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
 // Get all colors
-exports.getAllCarColors = async (req, res) => {
+exports.getAllColors = async (req, res) => {
   try {
     const colors = await CarColor.find({});
-    console.log("Fetched colors:", colors);
-    res.json(colors);
+    res.status(200).json(colors);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get a color by ID
+exports.getColorById = async (req, res) => {
+  try {
+    const color = await CarColor.findOne({ colorId: req.params.colorId });
+
+    if (!color) {
+      return res.status(404).json({ message: "Color not found" });
+    }
+
+    res.status(200).json(color);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
 // Update color
-exports.updateCarColor = async (req, res) => {
-  const { colorId } = req.params;
-  const { colorName, colorCode } = req.body;
-
+exports.updateColor = async (req, res) => {
   try {
+    const { colorName, colorCode } = req.body;
     const updatedColor = await CarColor.findOneAndUpdate(
-      { colorId },
+      { colorId: req.params.colorId },
       { colorName, colorCode },
-      { new: true }
+      { new: true, runValidators: true }
     );
+
     if (!updatedColor) {
       return res.status(404).json({ message: "Color not found" });
     }
-    res.json(updatedColor);
+
+    res.status(200).json({ message: "Color updated", data: updatedColor });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
 // Delete color
-exports.deleteCarColor = async (req, res) => {
-  const { colorId } = req.params;
-
+exports.deleteColor = async (req, res) => {
   try {
-    const deletedColor = await CarColor.deleteOne({ colorId });
-    if (deletedColor.deletedCount === 0) {
+    const deletedColor = await CarColor.findOneAndDelete({
+      colorId: req.params.colorId,
+    });
+
+    if (!deletedColor) {
       return res.status(404).json({ message: "Color not found" });
     }
-    res.json({ message: `Color with colorId ${colorId} deleted successfully` });
+
+    res.status(200).json({ message: "Color deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
