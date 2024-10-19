@@ -1,17 +1,18 @@
-const Manufacturer = require('../models/manufacturers');
+const Manufacturer = require("../models/manufacturers");
 
 // Create a new manufacturer
 exports.createManufacturer = async (req, res) => {
-  const { manufacturerId, manufacturerName } = req.body;
-
-  const newManufacturer = new Manufacturer({
-    manufacturerId:manufacturerId,
-    manufacturerName:manufacturerName,
-  });
-
   try {
-    const savedManufacturer = await newManufacturer.save();
-    res.status(201).json(savedManufacturer);
+    const { manufacturerId, manufacturerName } = req.body;
+    const newManufacturer = new Manufacturer({
+      manufacturerId,
+      manufacturerName,
+    });
+    await newManufacturer.save();
+    res.status(201).json({
+      message: "Manufacturer created successfully",
+      data: newManufacturer,
+    });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -20,10 +21,7 @@ exports.createManufacturer = async (req, res) => {
 // Get all manufacturers
 exports.getAllManufacturers = async (req, res) => {
   try {
-    const manufacturers = await Manufacturer.find();
-    if (manufacturers.length === 0) {
-      return res.status(404).json({ message: 'No manufacturers found' });
-    }
+    const manufacturers = await Manufacturer.find({});
     res.status(200).json(manufacturers);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -33,9 +31,11 @@ exports.getAllManufacturers = async (req, res) => {
 // Get a manufacturer by ID
 exports.getManufacturerById = async (req, res) => {
   try {
-    const manufacturer = await Manufacturer.findById(req.params.manufacturerId);
+    const manufacturer = await Manufacturer.findOne({
+      manufacturerId: req.params.id,
+    });
     if (!manufacturer) {
-      return res.status(404).json({ message: 'Manufacturer not found' });
+      return res.status(404).json({ message: "Manufacturer not found" });
     }
     res.status(200).json(manufacturer);
   } catch (error) {
@@ -46,15 +46,19 @@ exports.getManufacturerById = async (req, res) => {
 // Update a manufacturer by ID
 exports.updateManufacturer = async (req, res) => {
   try {
-    const updatedManufacturer = await Manufacturer.findByIdAndUpdate(
-      req.params.manufacturerId,
-      req.body,
-      { new: true }
+    const { manufacturerName } = req.body;
+    const updatedManufacturer = await Manufacturer.findOneAndUpdate(
+      { manufacturerId: req.params.id },
+      { manufacturerName },
+      { new: true, runValidators: true }
     );
+
     if (!updatedManufacturer) {
-      return res.status(404).json({ message: 'Manufacturer not found' });
+      return res.status(404).json({ message: "Manufacturer not found" });
     }
-    res.status(200).json(updatedManufacturer);
+    res
+      .status(200)
+      .json({ message: "Manufacturer updated", data: updatedManufacturer });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -62,10 +66,15 @@ exports.updateManufacturer = async (req, res) => {
 
 // Delete a manufacturer by ID
 exports.deleteManufacturer = async (req, res) => {
-    const{manufacturerId}=req.params;
-      try {
-await Manufacturer.deleteOne({manufacturerId:manufacturerId});
-    res.status(204).send();
+  try {
+    const deletedManufacturer = await Manufacturer.findOneAndDelete({
+      manufacturerId: req.params.id,
+    });
+    if (!deletedManufacturer) {
+      return res.status(404).json({ message: "Manufacturer not found" });
+    }
+
+    res.status(200).json({ message: "Manufacturer deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
