@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const carColorRoutes = require("./routes/carColors");
 const carImageRoutes = require("./routes/carImages");
+const manufacturerRoutes = require("./routes/manufacturers");
 
 dotenv.config();
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 // Routes
 app.use("/color", carColorRoutes);
 app.use("/image", carImageRoutes);
+app.use("/manufacturer", manufacturerRoutes);
 
 // MongoDB connection
 const uri = process.env.MONGODB_URI;
