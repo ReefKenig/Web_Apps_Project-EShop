@@ -9,12 +9,12 @@ router.post("/", carColorController.createColor);
 router.get("/", carColorController.getAllColors);
 
 // Get a color by ID
-router.get("/:colorId", carColorController.getColorById);
+router.get("/:id", carColorController.getColorById);
 
 // Update a color
-router.put("/:colorId", carColorController.updateColor);
+router.put("/:id", carColorController.updateColor);
 
 // Delete a color
-router.delete("/:colorId", carColorController.deleteColor);
+router.delete("/:id", carColorController.deleteColor);
 
 module.exports = router;

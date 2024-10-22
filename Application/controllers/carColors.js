@@ -28,7 +28,7 @@ exports.getAllColors = async (req, res) => {
 exports.getColorById = async (req, res) => {
   try {
     const color = await CarColor.findOne(
-      { colorId: req.params.colorId },
+      { colorId: req.params.id },
       { _id: 0 }
     );
 
@@ -47,7 +47,7 @@ exports.updateColor = async (req, res) => {
   try {
     const { colorName, colorCode } = req.body;
     const updatedColor = await CarColor.findOneAndUpdate(
-      { colorId: req.params.colorId },
+      { colorId: req.params.id },
       { colorName, colorCode },
       { new: true, runValidators: true }
     );
@@ -66,7 +66,7 @@ exports.updateColor = async (req, res) => {
 exports.deleteColor = async (req, res) => {
   try {
     const deletedColor = await CarColor.findOneAndDelete({
-      colorId: req.params.colorId,
+      colorId: req.params.id,
     });
 
     if (!deletedColor) {
