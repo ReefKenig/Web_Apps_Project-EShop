@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const carColorRoutes = require("./routes/carColors");
 const carImageRoutes = require("./routes/carImages");
 const manufacturerRoutes = require("./routes/manufacturers");
+const userRoutes = require("./routes/users");
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/color", carColorRoutes);
 app.use("/image", carImageRoutes);
 app.use("/manufacturer", manufacturerRoutes);
+app.use("/user", userRoutes);
 
 // MongoDB connection
 const uri = process.env.MONGODB_URI;

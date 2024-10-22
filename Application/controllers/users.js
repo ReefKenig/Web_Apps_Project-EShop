@@ -6,18 +6,19 @@ const THIRTY_DAYS = 60 * 1000 * 24 * 60 * 30;
 
 // Create a new user
 exports.register = async (req, res) => {
-  const { userId, firstName, lastName, email, password, isAdmin } = req.body;
   const salt = await bcrypt.genSalt();
-  const hashPassword = await bcrypt.hash(password, salt);
-  const newUser = new User({
-    userId,
-    firstName,
-    lastName,
-    email,
-    password: hashPassword,
-    isAdmin,
-  });
   try {
+    const { userId, firstName, lastName, email, password, isAdmin } = req.body;
+    const hashPassword = await bcrypt.hash(password, salt);
+    const newUser = new User({
+      userId,
+      firstName,
+      lastName,
+      email,
+      password: hashPassword,
+      isAdmin,
+    });
+
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
@@ -27,8 +28,8 @@ exports.register = async (req, res) => {
 
 // User login
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
     const user = await User.findOne({ email: email });
     const match = await bcrypt.compare(password, user.password);
 
@@ -56,7 +57,6 @@ exports.login = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find(req.params.userid);
-    console.log("user are:", users);
     if (users.length === 0) {
       return res.status(404).json({ message: "No users found" });
     }
@@ -70,7 +70,7 @@ exports.getAllUsers = async (req, res) => {
 // Get a user by ID
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.userid);
+    const user = await User.findOne({ userId: req.params.id });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -82,10 +82,16 @@ exports.getUserById = async (req, res) => {
 
 // Update a user
 exports.updateUser = async (req, res) => {
+  const salt = await bcrypt.genSalt();
   try {
-    const user = await User.findByIdAndUpdate(req.params.userid, req.body, {
-      new: true,
-    });
+    const { firstName, lastName, email, password, isAdmin } = req.body;
+    const hashPassword = await bcrypt.hash(password, salt);
+    const user = await User.findOneAndUpdate(
+      { userId: req.params.id },
+      { firstName, lastName, email, hashPassword, isAdmin },
+      { new: true, runValidators: true }
+    );
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -97,13 +103,14 @@ exports.updateUser = async (req, res) => {
 
 // Delete a user
 exports.deleteUser = async (req, res) => {
-  const { userid } = req.params;
   try {
-    await User.deleteOne({ userId: userid });
-    // if (!user) {
-    //   return res.status(404).json({ message: "User not found" });
-    // }
-    res.status(204).send();
+    const { userId } = req.params.id;
+    await User.deleteOne({ userId: userId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(204).send({ message: "User deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
