@@ -10,12 +10,12 @@ exports.register = async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
   const newUser = new User({
-    userId: userId,
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
+    userId,
+    firstName,
+    lastName,
+    email,
     password: hashPassword,
-    isAdmin: isAdmin,
+    isAdmin,
   });
   try {
     const savedUser = await newUser.save();
@@ -31,13 +31,16 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ email: email });
     const match = await bcrypt.compare(password, user.password);
+
     if (!match) return res.status(400).json({ msg: "Wrong password" });
+
     const userId = user.userId;
     const accessToken = jwt.sign(
       { userId, email },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30d" }
     );
+
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       maxAge: THIRTY_DAYS,
