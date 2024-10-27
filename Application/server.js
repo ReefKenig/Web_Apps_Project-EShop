@@ -14,10 +14,14 @@ const app = express();
 app.use(express.json());
 
 // Routes
+
+// Old
 app.use("/color", carColorRoutes);
 app.use("/image", carImageRoutes);
 app.use("/manufacturer", manufacturerRoutes);
 app.use("/user", userRoutes);
+
+// New
 app.use("/api/car", carRoutes);
 
 // MongoDB connection
