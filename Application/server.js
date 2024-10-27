@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const path = require('path')
 const carColorRoutes = require("./routes/carColors");
 const carImageRoutes = require("./routes/carImages");
 const manufacturerRoutes = require("./routes/manufacturers");
@@ -37,6 +38,16 @@ async function connect() {
 }
 
 connect();
+
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 
 // Start server
 app.listen(process.env.PORT || 3030, () => {
