@@ -569,7 +569,7 @@ header .text .arrow .left:after, header .text .arrow .right:after, header .text 
 header {
     height: calc(100vh - 22px);
     background-size: cover;
-    background: url("/client/src/assets/primary-image-car.png") fixed bottom;
+    background: url("./src/assets/primary-image-car.png") fixed bottom;
     padding: 20px 70px;
     width: 100%;
     background-repeat: no-repeat;
@@ -757,7 +757,7 @@ header .arrow-down {
 /*Start Recipes*/
 .recipes .image {
     height: 350px;
-    background: url("/client/src/assets/blue-car2.webp") fixed center;
+    background: url("./src/assets/blue-car2.webp") fixed center;
     background-size: cover;
 }
 /*End Recipes*/
@@ -832,7 +832,7 @@ header .arrow-down {
 
 /*Start fixed-image*/
 .fixed-image {
-    background: url("/client/src/assets/back-car-on-road.webp") fixed center;
+    background: url("./src/assets/back-car-on-road.webp") fixed center;
     background-size: cover;
     height: 400px;
 }
