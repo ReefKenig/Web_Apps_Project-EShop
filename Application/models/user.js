@@ -23,13 +23,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  orderHistory:
-   [
+  orderHistory: [
     {
       orderId: {
-        type: Number,
-        required: true,
-        unique:true,
+        type: mongoose.Types.ObjectId,
+        default: () => new mongoose.Types.ObjectId(), 
       },
       date: {
         type: Date,
@@ -39,7 +37,7 @@ const userSchema = new mongoose.Schema({
       items: [
         {
           carId: {
-            type: Number,
+            type: mongoose.Types.ObjectId,
             required: true,
           },
           brand: {
@@ -65,7 +63,7 @@ const userSchema = new mongoose.Schema({
   shoppingCart: [
     {
       carId: {
-        type: Number,
+        type: mongoose.Types.ObjectId,
         required: true,
       },
       brand: {
