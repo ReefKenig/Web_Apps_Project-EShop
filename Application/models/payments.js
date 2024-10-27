@@ -26,7 +26,7 @@ const paymentSchema = new mongoose.Schema({
   u_id: {
     type:mongoose.Schema.Types.ObjectId ,
     required: true,  // Reference to the user making the payment
-    ref:"users"
+    ref:"user"
   },
   expiryDate: {
     type: String,
