@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  orderHistory: [
+  orderHistory: 
+  [
     {
       date: {
         type: Date,

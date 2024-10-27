@@ -21,7 +21,7 @@ router.put('/:id', userController.updateUser);//works
 router.delete('/:id', userController.deleteUser);//works
 
 // Add an order to a user's order history
-router.post('/:id/order', userController.addOrder);
+router.post('/:id/order', userController.addOrder);//works
 
 module.exports = router;
 
