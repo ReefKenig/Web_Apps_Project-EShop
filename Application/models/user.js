@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
+const userSchema = Schema({
   firstName: {
     type: String,
     required: true,
@@ -33,8 +34,9 @@ const userSchema = new mongoose.Schema({
       },
       items: [
         {
-          brand: {
-            type: String,
+          carId: {
+            type: Schema.Types.objectId,
+            ref: "Car",
             required: true,
           },
           price: {
