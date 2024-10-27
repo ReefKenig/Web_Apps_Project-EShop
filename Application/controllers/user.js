@@ -1,15 +1,53 @@
 const User = require('../models/user'); // Adjust the path as needed
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
+const THIRTY_DAYS = 60 * 1000 * 24 * 60 * 30;
 
 // Create a new user
 exports.createUser = async (req, res) => {
-  try {
-    const user = new User(req.body);
-    await user.save();
-    res.status(201).json(user);
+    const { firstName, lastName, email, password, isAdmin,orderHistory,shoppingCart } = req.body;
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(password, salt);
+    try {
+    const user = new User({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: hashPassword,
+        isAdmin: isAdmin,
+        orderHistory:orderHistory,
+        shoppingCart:shoppingCart,
+    });
+    const savedUser=await user.save();
+    res.status(201).json(savedUser);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ msg: "User already exists", error: err });
   }
 };
+
+exports.login = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+      const user = await User.findOne({ email: email });
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) return res.status(400).json({ msg: "Wrong password" });
+      const userId = user.userId;
+      const accessToken = jwt.sign(
+        { userId, email },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "30d" }
+      );
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        maxAge: THIRTY_DAYS,
+      });
+      res.json({ token: accessToken });
+    } catch (err) {
+      console.log(err);
+      res.status(404).json({ msg: "User not found" });
+    }
+  };
 
 // Get a user by ID
 exports.getUserById = async (req, res) => {

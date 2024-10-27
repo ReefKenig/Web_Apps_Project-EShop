@@ -6,7 +6,7 @@ const THIRTY_DAYS = 60 * 1000 * 24 * 60 * 30;
 
 // Create a new user
 exports.register = async (req, res) => {
-  const { userId, firstName, lastName, email, password, isAdmin } = req.body;
+  const { userId, firstName, lastName, email, password, isAdmin,orderHistory} = req.body;
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
   const newUser = new User({

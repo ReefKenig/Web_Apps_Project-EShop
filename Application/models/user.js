@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  userId: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   firstName: {
     type: String,
     required: true,
@@ -28,7 +23,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  orderHistory: [
+  orderHistory:
+   [
     {
       orderId: {
         type: Number,
@@ -61,6 +57,26 @@ const userSchema = new mongoose.Schema({
         },
       ],
       totalPrice: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+  shoppingCart: [
+    {
+      carId: {
+        type: Number,
+        required: true,
+      },
+      brand: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      quantity: {
         type: Number,
         required: true,
       },
