@@ -1,5 +1,5 @@
 const express = require('express');
-const userController = require('../controllers/user'); 
+const userController = require('../controllers/users'); 
 const router = express.Router();
 
 // Create a new user
@@ -19,9 +19,6 @@ router.put('/:id', userController.updateUser);//works
 
 // Delete a user by ID
 router.delete('/:id', userController.deleteUser);//works
-
-// Add an order to a user's order history
-router.post('/:id/order', userController.addOrder);//works
 
 module.exports = router;
 

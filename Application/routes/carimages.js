@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const carImageController = require('../controllers/carImages');
+// const express = require('express');
+// const router = express.Router();
+// const carImageController = require('../controllers/carImages');
 
-router.post('/images', carImageController.addCarImage);
-router.get('/images', carImageController.getCarImages);
-router.put('/images/:carid', carImageController.updateCarImage);
-router.delete('/images/:carid', carImageController.deleteCarImage);
+// router.post('/images', carImageController.addCarImage);
+// router.get('/images', carImageController.getCarImages);
+// router.put('/images/:carid', carImageController.updateCarImage);
+// router.delete('/images/:carid', carImageController.deleteCarImage);
 
-module.exports = router;
+// module.exports = router;
