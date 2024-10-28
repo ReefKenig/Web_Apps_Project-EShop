@@ -5,7 +5,7 @@ const carColorRoutes = require("./routes/carColors");
 const carImageRoutes = require("./routes/carImages");
 const manufacturerRoutes = require("./routes/manufacturers");
 const userRoutes = require("./routes/users");
-const carRoutes = require("./routes/car");
+const carRoutes = require("./routes/cars");
 
 dotenv.config();
 const app = express();
