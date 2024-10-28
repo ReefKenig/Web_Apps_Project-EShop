@@ -6,12 +6,11 @@ const dotenv = require("dotenv");
 // const ManufacturersRoutes=require("./routes/manufacturers");
 // const PaymentsRoutes=require("./routes/payments");
 // const CarImagesRoutes=require("./routes/carimages");
-const usersRoutes=require("./routes/user")
+const usersRoutes=require("./routes/users")
 // const { db } = require("./models");
 
 dotenv.config();
-const app = express();
-
+const app = express()
 const uri = `mongodb+srv://rkenig:${encodeURIComponent(
   "&f9-&Hy!NvaKvQX"
 )}@carseshop.uecqa.mongodb.net/CarsEShop`;
