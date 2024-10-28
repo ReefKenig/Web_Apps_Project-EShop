@@ -41,6 +41,8 @@ connect();
 
 app.use(express.static(path.join(__dirname, 'client')));
 
+
+
 // Start server
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);

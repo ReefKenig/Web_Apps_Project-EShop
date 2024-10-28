@@ -1,7 +1,9 @@
 /*Start Global*/
+
 * {
     box-sizing: border-box;
 }
+
 body {
     margin: 0;
     padding: 12px;
@@ -570,6 +572,7 @@ header {
     height: calc(100vh - 22px);
     background-size: cover;
     background: url("./src/assets/primary-image-car.png") fixed bottom;
+    /* background: url("./src/assets/primary-image-car.png") fixed bottom; */
     padding: 20px 70px;
     width: 100%;
     background-repeat: no-repeat;
