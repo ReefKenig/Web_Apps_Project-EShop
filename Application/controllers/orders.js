@@ -6,56 +6,59 @@ const Car = require('../models/cars');
 // Create a new order
 exports.createOrder = async (req, res) => {
   try {
-    const { userId, items, paymentMethod, transactionId } = req.body;
+    const { userId, items, totalCost, paymentInfo } = req.body;
 
-    // Calculate total cost
-    let totalCost = 0;
+    // Validate the input
+    if (!userId || !items || items.length === 0 || !totalCost || !paymentInfo) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Check if userId is valid
+    const userExists = await User.findById(userId);
+    if (!userExists) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if all carIds in items are valid
     for (const item of items) {
-      const car = await Car.findById(item.carId);
-      if (car && car.unitsInStock >= item.quantity) {
-        totalCost += car.price * item.quantity;
-        car.unitsInStock -= item.quantity;
-        await car.save();
-      } else {
-        return res.status(400).json({ message: `Car with ID ${item.carId} is out of stock or insufficient stock` });
+      const carExists = await Car.findById(item.carId);
+      if (!carExists) {
+        return res.status(404).json({ message: `Car with ID ${item.carId} not found` });
       }
     }
 
-    // Create order
     const order = new Order({
       userId,
       items,
-      orderStatus: 'Pending',
       totalCost,
-      paymentInfo: {
-        paymentMethod,
-        transactionId,
-      },
+      paymentInfo,
     });
 
     const savedOrder = await order.save();
-
-    // Update user's order history
-    await User.findByIdAndUpdate(
-      userId,
-      { $push: { orderHistory: savedOrder } }
-    );
-
     res.status(201).json(savedOrder);
   } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({}); // Fetch orders
+    console.log('Raw orders:', JSON.stringify(orders, null, 2)); // Log raw orders
+
+    // Populate user details and car details in items
+    const populatedOrders = await Order.find({})
+      .populate('userId')
+      .populate('items.carId');
+
+    console.log('Populated orders:', JSON.stringify(populatedOrders, null, 2)); // Log populated orders
+    res.status(200).json(populatedOrders);
+  } catch (error) {
+    console.error('Error fetching orders:', error);
     res.status(500).json({ message: error.message });
   }
 };
 
-// Get all orders (Admin view)
-exports.getAllOrders = async (req, res) => {
-  try {
-    const orders = await Order.find().populate('userId').populate('items.carId');
-    res.status(200).json(orders);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 
 // Get order by ID
 exports.getOrderById = async (req, res) => {
