@@ -36,7 +36,7 @@ const userSchema = Schema({
         {
           carId: {
             type: Schema.Types.ObjectId,
-            ref: "Car",
+            ref: "cars",
             required: true,
           },
           price: {
