@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 // const carColorRoutes = require("./routes/carColors");
- const carRoutes=require("./routes/cars");
+//  const carRoutes=require("./routes/cars");
 // const ManufacturersRoutes=require("./routes/manufacturers");
 // const PaymentsRoutes=require("./routes/payments");
 // const CarImagesRoutes=require("./routes/carimages");
@@ -30,7 +30,7 @@ connect();
 app.use(express.json()); 
 
 // app.use("/api/carColor", carColorRoutes);
-app.use("/api/car",carRoutes);
+// app.use("/api/car",carRoutes);
 // app.use("/manufacturs",ManufacturersRoutes);
 // app.use("/",PaymentsRoutes);
 // app.use("/",CarImagesRoutes);
