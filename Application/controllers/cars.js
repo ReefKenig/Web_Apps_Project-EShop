@@ -13,7 +13,7 @@ exports.createCar = async (req, res) => {
 
 exports.getAllCars = async (req, res) => {
   try {
-    const cars = Car.find({}, "-__v");
+    const cars = await Car.find({}, "-__v");
     res.status(200).json(cars);
   } catch (error) {
     res.status(500).json({ message: error.message });
