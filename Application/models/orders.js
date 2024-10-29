@@ -42,9 +42,9 @@ const orderSchema = new Schema({
       required: true,
     },
   },
-}, { timestamps: true },{collection:"order"}
+}, { timestamps: true },
 );
 
-const Order = mongoose.model('order', orderSchema);
+const Order = mongoose.model('orders', orderSchema);
 
 module.exports = Order;
