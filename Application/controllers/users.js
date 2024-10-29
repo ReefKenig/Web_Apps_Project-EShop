@@ -1,117 +1,146 @@
-const User = require("../models/users");
-const bcrypt = require("bcrypt");
+const User = require('../models/users'); 
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const THIRTY_DAYS = 60 * 1000 * 24 * 60 * 30;
 
-// Create a new user
-exports.register = async (req, res) => {
-  const salt = await bcrypt.genSalt();
-  try {
-    const { userId, firstName, lastName, email, password, isAdmin } = req.body;
-    const hashPassword = await bcrypt.hash(password, salt);
-    const newUser = new User({
-      userId,
-      firstName,
-      lastName,
-      email,
-      password: hashPassword,
-      isAdmin,
-    });
+exports.createUser = async (req, res) => {
+    const { firstName, lastName, email, password, isAdmin, orderHistory, shoppingCart } = req.body;
 
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
-  } catch (err) {
-    res.status(404).json({ msg: "User already exists", error: err });
-  }
-};
+    try {
+        // Check if the user already exists
+        let user = await User.findOne({ email });
 
-// User login
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
-    const match = await bcrypt.compare(password, user.password);
+        if (user) {
+            return res.status(400).json({ msg: "User already exists" });
+        } 
 
-    if (!match) return res.status(400).json({ msg: "Wrong password" });
+        // Hash the password and create a new user
+        const salt = await bcrypt.genSalt();
+        const hashPassword = await bcrypt.hash(password, salt);
+        user = new User({
+            firstName,
+            lastName,
+            email,
+            password: hashPassword,
+            isAdmin,
+            orderHistory,
+            shoppingCart,
+        });
 
-    const userId = user.userId;
-    const accessToken = jwt.sign(
-      { userId, email },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30d" }
-    );
-
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      maxAge: THIRTY_DAYS,
-    });
-    res.json({ token: accessToken });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({ msg: "User not found" });
-  }
-};
-
-//get all users
-exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find(req.params.userid);
-    if (users.length === 0) {
-      return res.status(404).json({ message: "No users found" });
+        const savedUser = await user.save();
+        res.status(201).json(savedUser);
+    } catch (error) {
+        res.status(400).json({ msg: "Error occurred", error: error.message });
     }
-    res.status(200).json(users);
-  } catch (error) {
-    console.log("error message");
-    res.status(500).json({ message: error.message });
-  }
 };
+
+// Function to login a user
+exports.userLogin= async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Check if the user exists
+        const user = await User.findOne({ email });
+        
+        if (!user) {
+            return res.status(400).json({ msg: "User not found" });
+        }
+
+        // Check the password
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return res.status(400).json({ msg: "Wrong password" });
+        }
+        
+        // Generate a new token
+        const accessToken = jwt.sign(
+            { userId: user._id, email }, // Use the MongoDB ObjectId
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: "30d" }
+        );
+        
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            maxAge: THIRTY_DAYS,
+        });
+
+        return res.json({ token: accessToken });
+    } catch (error) {
+        res.status(400).json({ msg: "Error occurred", error: error.message });
+    }
+};
+
 
 // Get a user by ID
 exports.getUserById = async (req, res) => {
-  try {
-    const user = await User.findOne({ userId: req.params.id });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    try {
+        const user = await User.findById(req.params.id); // Uses MongoDB ObjectId
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 };
 
-// Update a user
+
+// Update user information
 exports.updateUser = async (req, res) => {
-  const salt = await bcrypt.genSalt();
-  try {
-    const { firstName, lastName, email, password, isAdmin } = req.body;
-    const hashPassword = await bcrypt.hash(password, salt);
-    const user = await User.findOneAndUpdate(
-      { userId: req.params.id },
-      { firstName, lastName, email, hashPassword, isAdmin },
-      { new: true, runValidators: true }
-    );
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+        });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
 };
 
-// Delete a user
+// Delete a user by ID
 exports.deleteUser = async (req, res) => {
-  try {
-    const { userId } = req.params.id;
-    await User.deleteOne({ userId: userId });
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    try {
+        const user = await User.findByIdAndDelete(req.params.id); // Uses MongoDB ObjectId
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-    res.status(204).send({ message: "User deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+};
+
+// Get all users
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Add an order to user's orderHistory
+exports.addOrder = async (req, res) => {
+    try {
+        const { order } = req.body;
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Add the order to orderHistory
+        user.orderHistory.push(order);
+        await user.save();
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };

@@ -1,29 +1,19 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
-  userId: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
+const userSchema = Schema({
   firstName: {
     type: String,
     required: true,
-    trim: true,
   },
   lastName: {
     type: String,
     required: true,
-    trim: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    lowercase: true,
-    trim: true,
-    match: [/.+@.+\..+/, "Please enter a valid email address"],
   },
   password: {
     type: String,
@@ -32,10 +22,60 @@ const userSchema = new mongoose.Schema({
   isAdmin: {
     type: Boolean,
     required: true,
-    default: false, // false = customer, true = admin
+    default: false,
   },
-});
+  orderHistory: 
+  [
+    {
+      date: {
+        type: Date,
+        required: true,
+        default: Date.now,
+      },
+      items: [
+        {
+          carId: {
+            type: Schema.Types.objectId,
+            ref: "Car",
+            required: true,
+          },
+          price: {
+            type: Number,
+            required: true,
+          },
+          quantity: {
+            type: Number,
+            required: true,
+          },
+        },
+      ],
+      totalPrice: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+  shoppingCart: [
+    {
+      brand: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+},
+{collection:"user"},
+);
 
-const User = mongoose.model("User", userSchema);
+
+const User = mongoose.model('user', userSchema);
 
 module.exports = User;
