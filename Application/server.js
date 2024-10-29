@@ -1,27 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const carColorRoutes = require("./routes/carColors");
-const carImageRoutes = require("./routes/carImages");
-const manufacturerRoutes = require("./routes/manufacturers");
-const userRoutes = require("./routes/users");
-const carRoutes = require("./routes/cars");
+// const carColorRoutes = require("./routes/carColors");
+ const carRoutes=require("./routes/cars");
+// const ManufacturersRoutes=require("./routes/manufacturers");
+// const PaymentsRoutes=require("./routes/payments");
+// const CarImagesRoutes=require("./routes/carimages");
+const usersRoutes=require("./routes/users")
+// const { db } = require("./models");
 
 dotenv.config();
-const app = express();
-
-// Middleware
-app.use(express.json());
-
-// Routes
-app.use("/color", carColorRoutes);
-app.use("/image", carImageRoutes);
-app.use("/manufacturer", manufacturerRoutes);
-app.use("/user", userRoutes);
-app.use("/api/car", carRoutes);
-
-// MongoDB connection
-const uri = process.env.MONGODB_URI;
+const app = express()
+const uri = `mongodb+srv://rkenig:${encodeURIComponent(
+  "&f9-&Hy!NvaKvQX"
+)}@carseshop.uecqa.mongodb.net/CarsEShop`;
 
 async function connect() {
   try {
@@ -34,7 +26,16 @@ async function connect() {
 
 connect();
 
-// Start server
+//middleware
+app.use(express.json()); 
+
+// app.use("/api/carColor", carColorRoutes);
+app.use("/api/car",carRoutes);
+// app.use("/manufacturs",ManufacturersRoutes);
+// app.use("/",PaymentsRoutes);
+// app.use("/",CarImagesRoutes);
+app.use("/api/user",usersRoutes);
+
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
 });
