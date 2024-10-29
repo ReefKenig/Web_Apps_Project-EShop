@@ -125,22 +125,3 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-// Add an order to user's orderHistory
-exports.addOrder = async (req, res) => {
-    try {
-        const { order } = req.body;
-        const user = await User.findById(req.params.id);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        // Add the order to orderHistory
-        user.orderHistory.push(order);
-        await user.save();
-
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
