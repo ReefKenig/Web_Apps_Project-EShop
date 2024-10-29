@@ -35,7 +35,7 @@ const userSchema = Schema({
       items: [
         {
           carId: {
-            type: Schema.Types.objectId,
+            type: Schema.Types.ObjectId,
             ref: "Car",
             required: true,
           },
