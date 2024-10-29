@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 // const ManufacturersRoutes=require("./routes/manufacturers");
 // const PaymentsRoutes=require("./routes/payments");
 // const CarImagesRoutes=require("./routes/carimages");
-const usersRoutes=require("./routes/users")
+const usersRoutes=require("./routes/user")
 // const { db } = require("./models");
 
 dotenv.config();
