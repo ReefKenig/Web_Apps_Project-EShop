@@ -1,11 +1,10 @@
+// Imports
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const path = require('path')
-// const carColorRoutes = require("./routes/carColors");
-// const carImageRoutes = require("./routes/carImages");
-// const manufacturerRoutes = require("./routes/manufacturers");
-// const userRoutes = require("./routes/user");
+const path = require("path");
+
+// Routers
 const carRoutes = require("./routes/car");
 
 dotenv.config();
@@ -15,7 +14,6 @@ const app = express();
 app.use(express.json());
 
 // Routes
-// app.use("/api/user", userRoutes);
 app.use("/api/car", carRoutes);
 
 // MongoDB connection
@@ -32,7 +30,7 @@ async function connect() {
 
 connect();
 
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, "client")));
 
 // Start server
 app.listen(process.env.PORT || 3030, () => {
