@@ -43,16 +43,12 @@ exports.createOrder = async (req, res) => {
 
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({}); // Fetch orders
-    console.log('Raw orders:', JSON.stringify(orders, null, 2)); // Log raw orders
-
     // Populate user details and car details in items
-    const populatedOrders = await Order.find({})
+    const Orders = await Order.find({})
       .populate('userId')
       .populate('items.carId');
 
-    console.log('Populated orders:', JSON.stringify(populatedOrders, null, 2)); // Log populated orders
-    res.status(200).json(populatedOrders);
+    res.status(200).json(Orders);
   } catch (error) {
     console.error('Error fetching orders:', error);
     res.status(500).json({ message: error.message });
