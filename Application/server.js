@@ -8,6 +8,8 @@ const manufacturerRoutes = require("./routes/manufacturers");
 const userRoutes = require("./routes/users");
 const carRoutes = require("./routes/car");
 
+
+
 dotenv.config();
 const app = express();
 
@@ -32,6 +34,7 @@ async function connect() {
   try {
     await mongoose.connect(uri);
     console.log("Connected to MongoDB");
+
   } catch (error) {
     console.log(error);
   }

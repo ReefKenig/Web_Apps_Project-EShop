@@ -9,7 +9,7 @@ router.post("/", carColorController.createColor);
 router.get("/", carColorController.getAllColors);
 
 // Get a color by ID
-router.get("/:id", carColorController.getColorById);
+router.get("/colors/:id", carColorController.getColorById);
 
 // Update a color
 router.put("/:id", carColorController.updateColor);
