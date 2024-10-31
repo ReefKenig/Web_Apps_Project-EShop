@@ -23,7 +23,6 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
     const modelParagraph = document.createElement("p");
     modelParagraph.textContent = carModel;
 
-    //Add 
 
     // Add publish date
     const publishDateSpan = document.createElement("span");
@@ -46,23 +45,47 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
 }
 
 
-
-
-// function generateGrid(carImage, carManufacturer, carModel, Price, rows, cols) {
-//     const output = document.getElementById("car-output");
-//     output.className = "grid-container"; // This will apply the grid styles
-
-//     // Clear previous content if any
-//     output.innerHTML = "";
-
-//     // Generate grid items and add them to the container
-//     for(let j = 0; j < cols; j++){
-//         for (let i = 0; i < rows; i++) {
-//             const gridItem = generateCarTemplate(carImage, carManufacturer, carModel, Price);
-//             output.appendChild(gridItem);
-//         }
-//     }
+// function createPrevPageButton() {
+//     const button = document.createElement("button");
+//     button.className = "butt";
+//     button.textContent = "PREVIUS PAGE";
+//     button.style = "position: absolute; bottom: 0;"
+//     return button;
 // }
+// function createNextPageButton() {
+//     const button = document.createElement("button");
+//     button.className = "butt";
+//     button.textContent = "NEXT PAGE";
+//     button.style = "position: absolute; right: 0;  bottom: 0;"
+//     return button;
+// }
+
+function createPageButtons(){
+
+    const container = document.createElement("div")
+
+    const next = document.createElement("button");
+    const prev = document.createElement("button");
+
+    next.className = "butt";
+    prev.className = "butt";
+
+    next.textContent = "NEXT PAGE";
+    prev.textContent = "PREVIUS PAGE";
+
+    // next.style = "right: 0;"
+    // prev.style = ";"
+
+    container.appendChild(prev);
+    container.appendChild(next);
+
+    container.style = "bottom: 0;"
+
+    return container;
+
+
+}
+
 
 
 function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, rows, cols) {
@@ -81,4 +104,5 @@ function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, rows, 
         const gridItem = generateCarTemplate(carImage, carManufacturer, carModel, dateOfPublish);
         output.appendChild(gridItem);
     }
+    output.appendChild(createPageButtons());
 }
