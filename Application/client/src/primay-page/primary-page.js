@@ -14,6 +14,7 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
 
     // Create a div to hold the manufacturer, model, and publish date
     const detailsDiv = document.createElement("div");
+    
 
     // Add car manufacturer
     const manufacturerStrong = document.createElement("strong");
@@ -62,12 +63,13 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
 
 function createPageButtons(){
 
-    const container = document.createElement("div")
+    const container = document.createElement("div");
+    container.className = "grid-container";
 
     const next = document.createElement("button");
     const prev = document.createElement("button");
 
-    next.className = "butt";
+    next.className = "butt text-end";
     prev.className = "butt";
 
     next.textContent = "NEXT PAGE";
@@ -88,21 +90,23 @@ function createPageButtons(){
 
 
 
-function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, rows, cols) {
+function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items) {
     const output = document.getElementById("car-output");
     output.className = "grid-container"; // Apply grid container styling
 
     // Clear previous content if any
     output.innerHTML = "";
 
-    output.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-    // Set the number of columns in the CSS dynamically
-    output.style.gridTemplateColumns = `repeat(${cols}, 1fr)`; // Ensure exact number of columns
 
     // Generate grid items and add them to the container
-    for (let i = 0; i < rows * cols; i++) {
+    for (let i = 0; i < items; i++) {
         const gridItem = generateCarTemplate(carImage, carManufacturer, carModel, dateOfPublish);
         output.appendChild(gridItem);
+        console.log(i);
     }
-    output.appendChild(createPageButtons());
+    // output.appendChild(createPageButtons());
 }
+
+
+
+

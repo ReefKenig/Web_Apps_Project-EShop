@@ -2,6 +2,7 @@
   color: white;
   position: relative;
   font-family: sans-serif;
+  z-index: 2;
 }
 
 
@@ -15,6 +16,8 @@
   backdrop-filter: blur(20px);
   border-radius: 0.7rem;
   transition: all ease 0.3s;
+  z-index: 2;
+
 }
 
 .container .box {
@@ -32,6 +35,8 @@
 .container .box div strong {
   display: block;
   margin-bottom: 0.5rem;
+  z-index: 2;
+
 }
 
 .container .box div p {
@@ -77,22 +82,42 @@
 }
 
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Flexible columns */
-  grid-template-rows: repeat(3, 1fr); /* You can set the height or leave it to adjust automatically */
-  gap: 16px; /* Space between grid items */
-  padding: 16px;
+
+
+
+  .grid-container {
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 0.1fr));
+    gap: 15px;
+    justify-content: center;
+  }
+
+  /* Individual grid items */
+
+
+
+
+
+
+  @media (min-width:540px) and (max-width:1080px) {
+    .container .box{
+  /* 
+  width: 11.875em;
+  height: 15.875em;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.074);
+  border: 1px solid rgba(255, 255, 255, 0.222);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 0.7rem;
+  transition: all ease 0.3s;
+   */
+    /* width: 5.875em;
+    height: 7.85394736844em;
+    padding: 0.4947368421; */
+
+
+
+    }
 }
-
-.grid-item {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  padding: 20px;
-  text-align: center;
-  font-size: 16px;
-}
-
-
-
-

@@ -6,7 +6,7 @@
 
 body {
     margin: 0;
-    padding: 12px;
+    padding: 0px;
 }
 body.hide-scroll::-webkit-scrollbar {
     display: none;
@@ -568,16 +568,41 @@ header .text .arrow .left:after, header .text .arrow .right:after, header .text 
 /*Start Home Page*/
 
 /*Start Header*/
-header {
+.scroll-header {
     height: calc(100vh - 22px);
     background-size: cover;
     background: url("./src/assets/primary-image-car.png") fixed bottom;
-    /* background: url("./src/assets/primary-image-car.png") fixed bottom; */
     padding: 20px 70px;
     width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
 }
+.static-header {
+    height: calc(100vh - 22px);
+    padding: 20px 70px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    
+}
+.static-header::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('./src/assets/primary-image-car.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: -1; /* Places the background behind the content */
+    background-repeat: no-repeat;
+
+  }
+
+
+
 header nav {
     position: fixed;
     top: 0;
