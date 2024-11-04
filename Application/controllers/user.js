@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Car = require("../models/car");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -86,11 +87,11 @@ exports.getAllUsers = async (req, res) => {
     const users = await User.find({}, "-__v")
       .populate({
         path: "orderHistory",
-        populate: { path: "items.carId", model: "Car" },
+        populate: { path: "items.carId", model: Car },
       })
       .populate({
         path: "shoppingCart.carId",
-        model: "Car",
+        model: Car,
       });
 
     res.status(200).json(users);
@@ -105,11 +106,11 @@ exports.getUserById = async (req, res) => {
     const user = await User.findById(req.params.id, "-__v")
       .populate({
         path: "orderHistory",
-        populate: { path: "items.carId", model: "Car" },
+        populate: { path: "items.carId", model: Car },
       })
       .populate({
         path: "shoppingCart.carId",
-        model: "Car",
+        model: Car,
       });
 
     if (!user) {
