@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const usersRoutes=require("./routes/users")
+const userRoutes=require("./routes/user")
 
 dotenv.config();
 const app = express()
@@ -23,7 +23,7 @@ connect();
 //middleware
 app.use(express.json()); 
 
-app.use("/api/user",usersRoutes);
+app.use("/api/user",userRoutes);
 
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
