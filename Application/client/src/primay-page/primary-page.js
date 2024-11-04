@@ -46,46 +46,12 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
 }
 
 
-// function createPrevPageButton() {
-//     const button = document.createElement("button");
-//     button.className = "butt";
-//     button.textContent = "PREVIUS PAGE";
-//     button.style = "position: absolute; bottom: 0;"
-//     return button;
-// }
-// function createNextPageButton() {
-//     const button = document.createElement("button");
-//     button.className = "butt";
-//     button.textContent = "NEXT PAGE";
-//     button.style = "position: absolute; right: 0;  bottom: 0;"
-//     return button;
-// }
+function nextPage(){
+    console.log("NEXT PAGE PRESSED");
+}
 
-function createPageButtons(){
-
-    const container = document.createElement("div");
-    container.className = "grid-container";
-
-    const next = document.createElement("button");
-    const prev = document.createElement("button");
-
-    next.className = "butt text-end";
-    prev.className = "butt";
-
-    next.textContent = "NEXT PAGE";
-    prev.textContent = "PREVIUS PAGE";
-
-    // next.style = "right: 0;"
-    // prev.style = ";"
-
-    container.appendChild(prev);
-    container.appendChild(next);
-
-    container.style = "bottom: 0;"
-
-    return container;
-
-
+function prevPage(){
+    console.log("PREV PAGE");
 }
 
 
@@ -104,7 +70,36 @@ function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items)
         output.appendChild(gridItem);
         console.log(i);
     }
-    // output.appendChild(createPageButtons());
+    //  output.appendChild(createPageButtons());
+
+    // Previous page button
+    string = `<button class="butt prev" onclick="prevPage()">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
+    </svg>
+    <div class="butt-text prev">
+        Prev Page
+    </div>
+  </button>`
+    range = document.createRange();
+    fragment = range.createContextualFragment(string)
+    output.appendChild(fragment)
+
+
+    // Next page button
+    string = `<button class="butt next" onclick="nextPage()">
+        <div class="butt-text next">
+            Next Page
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
+        </svg>
+
+      </button>`
+      fragment = range.createContextualFragment(string)
+      output.appendChild(fragment)
+
+
 }
 
 
