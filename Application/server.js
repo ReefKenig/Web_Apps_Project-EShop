@@ -22,9 +22,11 @@ const uri = process.env.MONGODB_URI;
 
 connect(uri);
 
-app.use(express.static(path.join(__dirname, "client")));
+//middleware
+app.use(express.json()); 
 
-// Start server
+app.use("/api/user",userRoutes);
+
 app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
 });
