@@ -1,13 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-// const carColorRoutes = require("./routes/carColors");
-//  const carRoutes=require("./routes/cars");
-// const ManufacturersRoutes=require("./routes/manufacturers");
-// const PaymentsRoutes=require("./routes/payments");
-// const CarImagesRoutes=require("./routes/carimages");
 const usersRoutes=require("./routes/users")
-// const { db } = require("./models");
 
 dotenv.config();
 const app = express()
@@ -29,11 +23,6 @@ connect();
 //middleware
 app.use(express.json()); 
 
-// app.use("/api/carColor", carColorRoutes);
-// app.use("/api/car",carRoutes);
-// app.use("/manufacturs",ManufacturersRoutes);
-// app.use("/",PaymentsRoutes);
-// app.use("/",CarImagesRoutes);
 app.use("/api/user",usersRoutes);
 
 app.listen(process.env.PORT || 3030, () => {
