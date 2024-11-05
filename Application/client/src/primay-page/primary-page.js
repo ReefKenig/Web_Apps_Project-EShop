@@ -45,13 +45,21 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
     return container;
 }
 
+function generatePageButtons(string){
 
-function nextPage(){
-    console.log("NEXT PAGE PRESSED");
+    const range = document.createRange();
+    const fragment = range.createContextualFragment(string);
+
+    console.log(string);
+    return fragment;
 }
 
-function prevPage(){
-    console.log("PREV PAGE");
+
+
+function changePage(string){
+
+
+    
 }
 
 
@@ -68,26 +76,30 @@ function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items)
     for (let i = 0; i < items; i++) {
         const gridItem = generateCarTemplate(carImage, carManufacturer, carModel, dateOfPublish);
         output.appendChild(gridItem);
-        console.log(i);
     }
-    //  output.appendChild(createPageButtons());
+
+
 
     // Previous page button
-    string = `<button class="butt prev" onclick="prevPage()">
+
+    output.appendChild(generatePageButtons(
+    `
+    <button class="butt prev" onclick="prevPage()">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
     </svg>
     <div class="butt-text prev">
         Prev Page
     </div>
-  </button>`
-    range = document.createRange();
-    fragment = range.createContextualFragment(string)
-    output.appendChild(fragment)
+  </button>
+  `
+    ))
 
 
     // Next page button
-    string = `<button class="butt next" onclick="nextPage()">
+      output.appendChild(generatePageButtons(
+        `
+        <button class="butt next" onclick="nextPage()">
         <div class="butt-text next">
             Next Page
         </div>
@@ -95,9 +107,9 @@ function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items)
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
         </svg>
 
-      </button>`
-      fragment = range.createContextualFragment(string)
-      output.appendChild(fragment)
+      </button>
+      `
+    ))
 
 
 }
