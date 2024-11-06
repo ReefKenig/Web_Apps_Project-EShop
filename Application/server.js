@@ -7,6 +7,7 @@ const connect = require("./config/db");
 // Routers
 const carRoutes = require("./routes/car");
 const userRoutes = require("./routes/user");
+const departmentRoutes = require("./routes/department");
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 // Routes
 app.use("/api/cars", carRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/info", departmentRoutes);
 
 // MongoDB connection
 const uri = process.env.MONGODB_URI;
