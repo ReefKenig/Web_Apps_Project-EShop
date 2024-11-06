@@ -1,5 +1,5 @@
 const body = document.querySelector("body"),
-    loader = document.querySelector(".loader-wrap"),
+    // link = document.querySelector(".link-wrap"),
     links = document.querySelectorAll('a[href="#"]'),
     nav = document.querySelector("header nav"),
     navToggle = document.querySelector("header nav .toggle"),
@@ -29,6 +29,10 @@ const body = document.querySelector("body"),
     boxModelImage = document.querySelector(".menu .box-model img"),
     pageTitle = document.querySelector("title");
 
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'path/to/your/styles.css';
+    
 
 // window.onload = function() {
 //     const hash = window.location.hash.substring(1);
@@ -55,17 +59,17 @@ const body = document.querySelector("body"),
 //     }
 //   }
 
-// remove loader
+// remove link
 function fadeOutEffect() {
     const fadeEffect = setInterval(function() {
-        if (!loader.style.opacity) {
-            loader.style.opacity = 1;
+        if (!link.style.opacity) {
+            link.style.opacity = 1;
         }
-        if (loader.style.opacity > 0) {
-            loader.style.opacity -= 0.4;
+        if (link.style.opacity > 0) {
+            link.style.opacity -= 0.4;
         } else {
             body.classList.remove('stop-scroll');
-            loader.classList.add('remove');
+            link.classList.add('remove');
             clearInterval(fadeEffect);
         }
     }, 100);
