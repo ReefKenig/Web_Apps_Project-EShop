@@ -18,7 +18,7 @@ app.use(express.json());
 // Routes
 app.use("/api/cars", carRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/info", departmentRoutes);
+app.use("/api/departments", departmentRoutes);
 
 // MongoDB connection
 const uri = process.env.MONGODB_URI;

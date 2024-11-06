@@ -2,7 +2,26 @@ const Department = require("../models/department");
 
 exports.createDepartment = async (req, res) => {
   try {
-  } catch (error) {}
+    const { name, address, phoneNumber, openingHours } = req.body;
+
+    const newDept = new Department({
+      name,
+      address,
+      phoneNumber,
+      openingHours,
+    });
+
+    await newDept.save();
+
+    res.status(201).json({
+      message: "Department created successfully",
+      department: newDept,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error creating department", error: error.message });
+  }
 };
 
 exports.getAllDepartments = async (req, res) => {
@@ -30,7 +49,28 @@ exports.getDepartmentById = async (req, res) => {
 
 exports.updateDepartment = async (req, res) => {
   try {
-  } catch (error) {}
+    const deptId = req.params.id;
+    const { name, address, phoneNumber, openingHours } = req.body;
+
+    const updatedDept = await Department.findByIdAndUpdate(
+      deptId,
+      { name, address, phoneNumber, openingHours },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedDept) {
+      return res.status(404).json({ message: "Department not found" });
+    }
+
+    res.status(200).json({
+      message: "Department updated successfully",
+      department: updatedDept,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating department", error: error.message });
+  }
 };
 
 exports.deleteDepartment = async (req, res) => {
