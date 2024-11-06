@@ -45,12 +45,11 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
     return container;
 }
 
-function generatePageButtons(string){
+function generateElementFromString(string){
 
     const range = document.createRange();
     const fragment = range.createContextualFragment(string);
 
-    console.log(string);
     return fragment;
 }
 
@@ -66,10 +65,14 @@ function changePage(string){
 
 function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items) {
     const output = document.getElementById("car-output");
+    // const grid = document.createElement('div');
     output.className = "grid-container"; // Apply grid container styling
 
     // Clear previous content if any
     output.innerHTML = "";
+
+    // Generate Filter Dropdown
+
 
 
     // Generate grid items and add them to the container
@@ -82,7 +85,7 @@ function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items)
 
     // Previous page button
 
-    output.appendChild(generatePageButtons(
+    output.appendChild(generateElementFromString(
     `
     <button class="butt prev" onclick="prevPage()">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -97,7 +100,7 @@ function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items)
 
 
     // Next page button
-      output.appendChild(generatePageButtons(
+    output.appendChild(generateElementFromString(
         `
         <button class="butt next" onclick="nextPage()">
         <div class="butt-text next">
@@ -110,6 +113,8 @@ function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items)
       </button>
       `
     ))
+
+    output.appendChild(grid);
 
 
 }
