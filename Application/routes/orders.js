@@ -10,18 +10,15 @@ router.post('/', orderController.createOrder);
 router.get('/', orderController.getAllOrders);
 
 // Get order by ID
-router.get('/:orderId', orderController.getOrderById);
+router.get('/:id', orderController.getOrderById);
 
 // Get orders by user ID
-router.get('/user/:userId', orderController.getOrdersByUserId);
+router.get('/user/:id', orderController.getOrdersByUserId);
 
 // Update order details
-router.put('/:orderId', orderController.updateOrder);
+router.put('/:id', orderController.updateOrder);
 
 // Delete an order
-router.delete('/:orderId', orderController.deleteOrder);
-
-// Update order status
-router.patch('/:orderId/status', orderController.updateOrderStatus);
+router.delete('/:id', orderController.deleteOrder);
 
 module.exports = router;
