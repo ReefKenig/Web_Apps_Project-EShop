@@ -1,6 +1,5 @@
-const Car = require("../models/car");
+const Car = require("../models/cars");
 
-// Add a new car
 exports.createCar = async (req, res) => {
   try {
     const car = new Car(req.body);
@@ -12,22 +11,18 @@ exports.createCar = async (req, res) => {
   }
 };
 
-// Get all cars
 exports.getAllCars = async (req, res) => {
   try {
     const cars = await Car.find({}, "-__v");
-
     res.status(200).json(cars);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// Get a car by ID
 exports.getCarById = async (req, res) => {
   try {
     const car = await Car.findById(req.params.id, "-__v");
-
     if (car) {
       res.status(200).json(car);
     } else {
@@ -38,14 +33,12 @@ exports.getCarById = async (req, res) => {
   }
 };
 
-// Update car entry
 exports.updateCar = async (req, res) => {
   try {
     const updatedCar = await Car.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
-
     if (updatedCar) {
       res.status(200).json(updatedCar);
     } else {
@@ -56,11 +49,9 @@ exports.updateCar = async (req, res) => {
   }
 };
 
-// Delete car
 exports.deleteCar = async (req, res) => {
   try {
     const deletedCar = await Car.findByIdAndDelete(req.params.id);
-
     if (deletedCar) {
       res.status(200).json({ message: "Car deleted successfully" });
     } else {

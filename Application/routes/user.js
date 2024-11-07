@@ -6,13 +6,16 @@ const router = express.Router();
 router.post("/register", userController.register);
 
 // User login
-router.post("/login", userController.login);
+router.post('/login', userController.userLogin); 
 
 // Get all users
-router.get("/", userController.getAllUsers);
+router.get('/', userController.getAllUsers);
 
 // Get a user by ID
-router.get("/:id", userController.getUserById);
+router.get('/:id', userController.getUserById);
+
+// Update a user by ID
+router.put('/:id', userController.updateUser);
 
 // Update a user by ID
 router.put("/:id", userController.updateUser);
@@ -21,3 +24,4 @@ router.put("/:id", userController.updateUser);
 router.delete("/:id", userController.deleteUser);
 
 module.exports = router;
+
