@@ -93,7 +93,7 @@ window.onscroll = function() {
 
     // header welcome fade out and in
     if (window.pageYOffset > 0) {
-        headerText?.style.opacity = -window.pageYOffset / 300 + 1;
+        headerText.style.opacity = -window.pageYOffset / 300 + 1;
     }
     // home page JS
     if (pageTitle.text === "ROSA- Restaurant") {

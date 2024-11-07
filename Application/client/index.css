@@ -598,16 +598,14 @@ header .text .arrow .left:after, header .text .arrow .right:after, header .text 
     background-attachment: fixed;
     z-index: -1; /* Places the background behind the content */
     background-repeat: no-repeat;
-
-  }
-
-
+}
 
 header nav {
     position: fixed;
     top: 0;
-    padding: 36px 36px 20px;
+    padding: 25px 35px 0px;
     z-index: 20;
+    border-radius: unset;
 }
 header nav .toggle {
     display: none;
@@ -746,8 +744,9 @@ header .arrow-down {
 /*End Header*/
 
 /*Start About-Us*/
-.about-us, .reservation {
+.about-us, .reservation, .menu {
     padding: 60px;
+    background-color: #ffffff;
 }
 .about-us .text, .reservation .text {
     flex: 50%;
