@@ -108,28 +108,30 @@ svgUp.addEventListener("click", () => {
 });
 
 window.onscroll = function() {
-    // make navbar fixed & change logo color
-    if (window.pageYOffset > headerSection.offsetHeight - 75) {
-        nav.classList.add("active");
-        logoImage.src = "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988525/logo-rosa.png";
-    } else {
-        nav.classList.remove("active");
-        logoImage.src = "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/logo-rosa-white.png";
-    }
+    // if(logoImage !== null) {
+        // make navbar fixed & change logo color
+        if (window.pageYOffset > headerSection?.offsetHeight - 75 ) {
+            nav?.classList.add("active");
+            logoImage.src = "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988525/logo-rosa.png";
+        } else {
+            nav?.classList.remove("active");
+            logoImage.src = "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/logo-rosa-white.png";
+        }
+    // }
 
     // header welcome fade out and in
-    if (window.pageYOffset > 0) {
+    if (window.pageYOffset > 0 && headerText !== null) {
         headerText.style.opacity = -window.pageYOffset / 300 + 1;
     }
     // home page JS
     if (pageTitle.text === "ROSA- Restaurant") {
         //change dots background color
-        if (window.pageYOffset < headerSection.offsetHeight * 0.5) {
+        if (window.pageYOffset < headerSection?.offsetHeight * 0.5) {
             dots.forEach(dot => dot.classList.remove("black"));
             dotTwo.classList.remove("active");
             dotOne.classList.add("active");
         } else if (
-            window.pageYOffset > headerSection.offsetHeight * 0.5 &&
+            window.pageYOffset > headerSection?.offsetHeight * 0.5 &&
             window.pageYOffset < recipeSection.offsetTop * 0.72
         ) {
             dots.forEach(dot => dot.classList.add("black"));
