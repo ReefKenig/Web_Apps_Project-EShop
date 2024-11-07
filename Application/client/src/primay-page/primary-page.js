@@ -77,22 +77,25 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
     return container;
 }
 
-function generatePageButtons(string){
+function generateElementFromString(string){
 
     const range = document.createRange();
     const fragment = range.createContextualFragment(string);
 
-    console.log(string);
     return fragment;
 }
 
 
 function generateGrid(items) {
     const output = document.getElementById("car-output");
+    // const grid = document.createElement('div');
     output.className = "grid-container"; // Apply grid container styling
 
     // Clear previous content if any
     output.innerHTML = "";
+
+    // Generate Filter Dropdown
+
 
 
     // Generate grid items and add them to the container
@@ -105,34 +108,36 @@ function generateGrid(items) {
 
     // Previous page button
 
-    output.appendChild(generatePageButtons(
-    `
-    <button class="butt prev" onclick="prevPage()">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
-    </svg>
-    <div class="butt-text prev">
-        Prev Page
-    </div>
-  </button>
-  `
-    ))
+//     output.appendChild(generateElementFromString(
+//     `
+//     <button class="butt prev" onclick="prevPage()">
+//     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+//       <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
+//     </svg>
+//     <div class="butt-text prev">
+//         Prev Page
+//     </div>
+//   </button>
+//   `
+//     ))
 
 
     // Next page button
-      output.appendChild(generatePageButtons(
-        `
-        <button class="butt next" onclick="nextPage()">
-        <div class="butt-text next">
-            Next Page
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
-        </svg>
+    // output.appendChild(generateElementFromString(
+    //     `
+    //     <button class="butt next" onclick="nextPage()">
+    //     <div class="butt-text next">
+    //         Next Page
+    //     </div>
+    //     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+    //       <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
+    //     </svg>
 
-      </button>
-      `
-    ))
+    //   </button>
+    //   `
+    // ))
+
+    output.appendChild(grid);
 
 
 }

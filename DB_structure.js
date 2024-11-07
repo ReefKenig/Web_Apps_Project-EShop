@@ -97,6 +97,7 @@ const orders = {
       required: true,
     },
   },
+  purchaseDate: { type: Date, default: Date.now },
 };
 
 const store_info = {
