@@ -1,3 +1,35 @@
+window.onload = function() {
+  if (window.location.pathname.includes("/primay-page")) {
+      loadPage();
+  }
+};
+
+async function loadPage(page) {
+  try {
+    // Wrap the $.ajax call in a Promise
+    const data = await new Promise((resolve, reject) => {
+      $.ajax({
+        url: 'http://localhost:3030/api/cars',
+        type: 'GET',
+        success: function(response) {
+          if (Array.isArray(response)) {
+            console.log(response);
+              generateGrid(response);
+              resolve(response);  // Resolve with the valid data
+          } else {
+            reject('Response is not an array');
+          }
+        },
+        error: function(error) {
+          reject(error);  // Reject the Promise if there’s an error
+        }
+      });
+    });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
 function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
     // Create a container div
     const container = document.createElement("div");
@@ -54,16 +86,7 @@ function generateElementFromString(string){
 }
 
 
-
-function changePage(string){
-
-
-    
-}
-
-
-
-function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items) {
+function generateGrid(items) {
     const output = document.getElementById("car-output");
     // const grid = document.createElement('div');
     output.className = "grid-container"; // Apply grid container styling
@@ -76,8 +99,8 @@ function generateGrid(carImage, carManufacturer, carModel, dateOfPublish, items)
 
 
     // Generate grid items and add them to the container
-    for (let i = 0; i < items; i++) {
-        const gridItem = generateCarTemplate(carImage, carManufacturer, carModel, dateOfPublish);
+    for (let i = 0; i < items.length; i++) {
+        const gridItem = generateCarTemplate(items[i].media.pictures[0], items[i].manufacturer, items[i].brand, items[i].price);
         output.appendChild(gridItem);
     }
 

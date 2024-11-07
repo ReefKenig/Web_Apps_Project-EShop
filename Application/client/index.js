@@ -32,32 +32,6 @@ const body = document.querySelector("body"),
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'path/to/your/styles.css';
-    
-
-// window.onload = function() {
-//     const hash = window.location.hash.substring(1);
-//     if (hash) {
-//       loadPage(hash);
-//     }
-//   };
-
-//   async function loadPage(page) {
-//     try {
-//       const response = await fetch(page);
-//       if (!response.ok) {
-//         throw new Error(`Could not fetch ${page}: ${response.statusText}`);
-//       }
-//       const content = await response.text();
-//       document.getElementById('content').innerHTML = content;
-//       window.history.pushState({ page }, '', `#${page}`);
-//       $(".hamburger").click(function(){
-//         $(".wrapper").toggleClass("collapse");
-//      });
-//     } catch (error) {
-//       document.getElementById('content').innerHTML = `<p>Error loading page.</p>`;
-//       console.error(error);
-//     }
-//   }
 
 // remove link
 function fadeOutEffect() {
@@ -84,8 +58,8 @@ links.forEach(link =>
 );
 
 // toggle hamburger menu button
-navToggle.addEventListener("click", () => {
-    navToggle.classList.toggle("active");
+navToggle?.addEventListener("click", () => {
+    navToggle?.classList.toggle("active");
     navSpanMiddle.classList.toggle("hide");
     navNavigationBar.classList.toggle("show");
 });
@@ -100,7 +74,7 @@ navNavigationBarLi.forEach(li =>
 );
 
 // svg-up smooth scroll
-svgUp.addEventListener("click", () => {
+svgUp?.addEventListener("click", () => {
     window.scroll({
         top: 0,
         behavior: "smooth"
@@ -119,7 +93,7 @@ window.onscroll = function() {
 
     // header welcome fade out and in
     if (window.pageYOffset > 0) {
-        headerText.style.opacity = -window.pageYOffset / 300 + 1;
+        headerText?.style.opacity = -window.pageYOffset / 300 + 1;
     }
     // home page JS
     if (pageTitle.text === "ROSA- Restaurant") {
