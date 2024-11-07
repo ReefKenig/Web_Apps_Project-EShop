@@ -6,7 +6,7 @@ const connect = require("./config/db");
 const cors = require("cors");
 
 // Routers
-const carRoutes = require("./routes/car");
+const carRoutes = require("./routes/cars");
 const userRoutes = require("./routes/user");
 
 dotenv.config();
@@ -17,7 +17,6 @@ app.use(cors());
 
 // Middleware
 app.use(express.json());
-// app.use(express.static('public'));
 
 // Routes
 app.use("/api/cars", carRoutes);
