@@ -7,7 +7,8 @@ const cors = require("cors");
 
 // Routers
 const carRoutes = require("./routes/cars");
-const userRoutes = require("./routes/user");
+const userRoutes = require("./routes/users");
+const orderRoutes = require("./routes/orders");
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.json());
 // Routes
 app.use("/api/cars", carRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 
 // MongoDB connection
 const uri = process.env.MONGODB_URI;
