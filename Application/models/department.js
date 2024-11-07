@@ -26,7 +26,7 @@ const departmentSchema = Schema({
           "Tuesday",
           "Wednesday",
           "Thursday",
-          "Firday",
+          "Friday",
           "Saturday",
         ],
         required: true,
@@ -43,6 +43,14 @@ const departmentSchema = Schema({
       },
     },
   ],
+  latitude: {
+    type: Number,
+    required: true,
+  },
+  longitude: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Department = mongoose.model("departments", departmentSchema);

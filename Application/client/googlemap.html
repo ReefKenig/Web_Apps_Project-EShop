@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Map</title>
+    <style>
+        /* Style the map to take up space */
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Department Locations</h1>
+    <div id="map"></div>
+    
+    <!-- Google Maps API -->
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzIyXAJ55W0uN0sRyd8AtTZCaNiEXXpdc&callback=initMap&v=weekly"
+    async
+    defer
+    ></script>
+
+    <script>
+        let map;
+
+        // Initialize the map
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 31.7683, lng: 35.2137 }, // Default center to Israel (Jerusalem)
+                zoom: 7, // Zoom level
+            });
+
+            // Fetch department data from the backend API
+            fetch("/departments")
+                .then((response) => response.json())
+                .then((departments) => {
+                    departments.forEach((department) => {
+                        const { name, latitude, longitude, address } = department;
+
+                        if (latitude && longitude) {
+                            // Create a marker for each department
+                            const marker = new google.maps.Marker({
+                                position: { lat: latitude, lng: longitude },
+                                map: map,
+                                title: name,
+                            });
+
+                            // Create an info window to show details when a marker is clicked
+                            const infoWindow = new google.maps.InfoWindow({
+                                content: `
+                                    <h3>${name}</h3>
+                                    <p>${address.street}, ${address.city}, ${address.zipCode}</p>
+                                `,
+                            });
+
+                            // Open the info window when the marker is clicked
+                            marker.addListener("click", function () {
+                                infoWindow.open(map, marker);
+                            });
+                        } else {
+                            console.warn(`Missing coordinates for department: ${name}`);
+                        }
+                    });
+                })
+                .catch((error) => console.error("Error fetching departments:", error));
+        }
+    </script>
+</body>
+</html>

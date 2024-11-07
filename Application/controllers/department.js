@@ -2,13 +2,15 @@ const Department = require("../models/department");
 
 exports.createDepartment = async (req, res) => {
   try {
-    const { name, address, phoneNumber, openingHours } = req.body;
+    const { name, address, phoneNumber, openingHours, latitude, longitude } = req.body;
 
     const newDept = new Department({
       name,
       address,
       phoneNumber,
       openingHours,
+      latitude,
+      longitude,
     });
 
     await newDept.save();
@@ -18,11 +20,10 @@ exports.createDepartment = async (req, res) => {
       department: newDept,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error creating department", error: error.message });
+    res.status(500).json({ message: "Error creating department", error: error.message });
   }
 };
+
 
 exports.getAllDepartments = async (req, res) => {
   try {
@@ -32,6 +33,7 @@ exports.getAllDepartments = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch departments" });
   }
 };
+
 
 exports.getDepartmentById = async (req, res) => {
   try {
