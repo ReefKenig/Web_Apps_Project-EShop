@@ -2,6 +2,7 @@ const User = require("../models/users");
 const Car = require("../models/cars");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const buildFilters = require("../helpers/filters");
 
 const THIRTY_DAYS = 60 * 1000 * 24 * 60 * 30;
 

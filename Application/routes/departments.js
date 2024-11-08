@@ -4,9 +4,9 @@ const departmentController = require("../controllers/departments");
 
 router.post("/", departmentController.createDepartment);
 
-router.get("/", departmentController.getAllDepartments);
+router.get("/search", departmentController.getDepartments);
 
-router.get("/:id", departmentController.getDepartmentById);
+router.get("/search/:id", departmentController.getDepartmentById);
 
 router.put("/:id", departmentController.updateDepartment);
 

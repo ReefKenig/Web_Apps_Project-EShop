@@ -1,4 +1,5 @@
 const Car = require("../models/cars");
+const createFilters = require("../helpers/filters");
 
 exports.createCar = async (req, res) => {
   try {
@@ -11,12 +12,18 @@ exports.createCar = async (req, res) => {
   }
 };
 
-exports.getAllCars = async (req, res) => {
+exports.getCars = async (req, res) => {
   try {
-    const cars = await Car.find({}, "-__v");
+    const filterableFields = ["manufacturer", "brand", "yearOfManufacture", "color"];
+    const filters = createFilters(req.query, filterableFields);
+
+    const cars = await Car.find(filters, "-__v");
+
     res.status(200).json(cars);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res
+      .status(500)
+      .json({ message: "Could not fetch cars", error: error.message });
   }
 };
 
