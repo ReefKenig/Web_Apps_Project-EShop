@@ -12,6 +12,8 @@ router.get('/', orderController.getAllOrders);
 // Get order by ID
 router.get('/:id', orderController.getOrderById);
 
+//get revenue by month
+router.get('./id',orderController.)
 // Get orders by user ID
 router.get('/user/:id', orderController.getOrdersByUserId);
 
@@ -20,5 +22,6 @@ router.put('/:id', orderController.updateOrder);
 
 // Delete an order
 router.delete('/:id', orderController.deleteOrder);
+
 
 module.exports = router;

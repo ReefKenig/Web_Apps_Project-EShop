@@ -78,6 +78,48 @@ exports.getOrdersByUserId = async (req, res) => {
   }
 };
 
+// Aggregation function to get total revenue by month for a specific year
+const getRevenueByMonth = async (year) => {
+  try {
+    const revenueData = await Order.aggregate([
+      {
+        $match: {
+          // Filter orders by the given year
+          createdAt: {
+            $gte: new Date(`${year}-01-01T00:00:00`),
+            $lt: new Date(`${year + 1}-01-01T00:00:00`),  // Year + 1 to get all of 2024
+          },
+          orderStatus: { $in: ["Shipped", "Delivered"] },  // Only count completed orders
+        }
+      },
+      {
+        $project: {
+          month: { $month: "$createdAt" },  // Extract the month from createdAt
+          totalCost: 1,  // Include the totalCost field for revenue
+        }
+      },
+      {
+        $group: {
+          _id: "$month",  // Group by month
+          totalRevenue: { $sum: "$totalCost" },  // Sum the totalCost for each month
+        }
+      },
+      { $sort: { _id: 1 } }  // Sort by month (ascending order)
+    ]);
+    
+    // Return data in a more usable format (optional)
+    return revenueData.map(d => ({
+      month: d._id,  // Month (1-12)
+      totalRevenue: d.totalRevenue,  // Total revenue for that month
+    }));
+  } catch (err) {
+    console.error("Error in aggregation:", err);
+    return [];
+  }
+};
+
+
+
 // Update order details
 exports.updateOrder = async (req, res) => {
   try {
