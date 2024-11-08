@@ -137,7 +137,7 @@ function generateGrid(items) {
     //   `
     // ))
 
-    output.appendChild(grid);
+    // output.appendChild(grid);
 
 
 }

@@ -251,7 +251,7 @@ nav{
 
 .input-container input[type="number"]:focus ~ .label,
 .input-container input[type="number"]:valid ~ .label {
-  top: -20px;
+  top: -12px;
   font-size: 16px;
   color: #fffefe;
 }
