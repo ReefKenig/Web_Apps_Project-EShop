@@ -25,6 +25,7 @@
 
     <script>
         let map;
+        let infoWindow;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
@@ -34,37 +35,7 @@
         
             // Example color array
             const colors = [
-            'red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'gray', 'black',
-            'white', 'violet', 'indigo', 'turquoise', 'teal', 'cyan', 'magenta', 'lime', 'crimson', 'navy',
-            'maroon', 'gold', 'silver', 'plum', 'beige', 'peach', 'salmon', 'coral', 'mint', 'lavender',
-            'cherry', 'fuchsia', 'azure', 'chartreuse', 'periwinkle', 'blush', 'ivory', 'emerald', 'amber', 'ruby',
-            'sapphire', 'topaz', 'onyx', 'jade', 'cerulean', 'emerald', 'scarlet', 'sienna', 'snow', 'wheat',
-            'pearl', 'tan', 'teal', 'fawn', 'seafoam', 'copper', 'tangerine', 'aquamarine', 'lavenderblush', 'saffron',
-            'orchid', 'rose', 'babyblue', 'apricot', 'lemonchiffon', 'blueviolet', 'cadetblue', 'lightgreen', 'darkgreen', 'lightblue',
-            'lightyellow', 'lightpink', 'platinum', 'sunset', 'mistyrose', 'palegoldenrod', 'goldenrod', 'mediumvioletred', 'tomato', 'chocolate',
-            'teal', 'darkslategray', 'lightseagreen', 'seashell', 'darkorange', 'firebrick', 'forestgreen', 'palevioletred', 'slateblue', 'sandybrown',
-            'darkturquoise', 'mediumslateblue', 'indianred', 'yellowgreen', 'lightcoral', 'darkkhaki', 'mediumturquoise', 'palegreen', 'lightgray', 'snow',
-            'beige', 'midnightblue', 'gainsboro', 'hotpink', 'lawngreen', 'thistle', 'antiquewhite', 'cornflowerblue', 'chartreuse', 'lightsteelblue',
-            'lightcyan', 'deepskyblue', 'forestgreen', 'limegreen', 'forestgreen', 'yellowgreen', 'mediumseagreen', 'darkseagreen', 'lightblue', 'skyblue',
-            'dodgerblue', 'cadetblue', 'lightpink', 'mediumorchid', 'lightskyblue', 'darksalmon', 'royalblue', 'mediumblue', 'mediumorchid', 'orangered',
-            'lightgoldenrodyellow', 'peachpuff', 'navajowhite', 'goldenrod', 'rosybrown', 'burlywood', 'firebrick', 'lightblue', 'yellow', 'palevioletred',
-            'orchid', 'seashell', 'darkcyan', 'bisque', 'slategray', 'oldlace', 'blue', 'wheat', 'aliceblue', 'darksalmon', 'lightsteelblue',
-            'slateblue', 'aquamarine', 'floralwhite', 'greenyellow', 'seashell', 'darkblue', 'cornflowerblue', 'chartreuse', 'indigo', 'plum',
-            'snow', 'darkred', 'darkgreen', 'darkgoldenrod', 'darkviolet', 'whitesmoke', 'mediumturquoise', 'mediumvioletred', 'yellowgreen', 'mediumspringgreen',
-            'chartreuse', 'orangered', 'powderblue', 'darkkhaki', 'lightgreen', 'slategray', 'thistle', 'mediumseagreen', 'fuchsia', 'indianred',
-            'peru', 'lightseagreen', 'lavender', 'aquamarine', 'slategray', 'seashell', 'darkviolet', 'mediumspringgreen', 'mediumslateblue', 'moccasin',
-            'darkorange', 'mediumturquoise', 'slateblue', 'mediumblue', 'powderblue', 'forestgreen', 'sienna', 'darkolivegreen', 'plum', 'orangered',
-            'darkslateblue', 'dodgerblue', 'yellowgreen', 'mediumseagreen', 'steelblue', 'darkgray', 'lightgoldenrodyellow', 'mediumaquamarine', 'coral', 'seashell',
-            'paleturquoise', 'rebeccapurple', 'darkslategray', 'darkorchid', 'lightpink', 'thistle', 'slategray', 'lightgoldenrodyellow', 'chocolate', 'chartreuse',
-            'springgreen', 'blue', 'orchid', 'palegreen', 'palebrown', 'indigo', 'mediumslateblue', 'mediumvioletred', 'turquoise', 'darkturquoise',
-            'slateblue', 'darkslategray', 'darkred', 'slateblue', 'lightskyblue', 'blue', 'red', 'lightyellow', 'whitesmoke', 'aquamarine',
-            'mediumseagreen', 'snow', 'blanchedalmond', 'seashell', 'lightsteelblue', 'mediumspringgreen', 'thistle', 'powderblue', 'forestgreen', 'peru',
-            'mediumvioletred', 'darkorchid', 'gainsboro', 'teal', 'midnightblue', 'rosybrown', 'lightcoral', 'lightpink', 'lime', 'yellowgreen',
-            'peach', 'darkgray', 'palegoldenrod', 'springgreen', 'lightyellow', 'beige', 'darkcyan', 'mediumblue', 'seashell', 'honeydew',
-            'blush', 'lightgray', 'slateblue', 'yellowgreen', 'lightseagreen', 'blue', 'aquamarine', 'royalblue', 'wheat', 'aliceblue',
-            'teal', 'lightgreen', 'cornflowerblue', 'thistle', 'fawn', 'palevioletred', 'pink', 'lightcoral', 'salmon', 'ivory'
-        ];
-        
+                'red', 'green', 'blue', 'yellow', 'purple'];
         
             // Fetch department data from the backend API
             fetch("http://localhost:3030/api/departments")
@@ -76,15 +47,16 @@
                 })
                 .then((departments) => {
                     departments.forEach((department, index) => {
-                        const { name, latitude, longitude, address } = department;
+                        const { name, latitude, longitude, address, phoneNumber } = department;
         
                         if (latitude && longitude) {
                             // Create content for the advanced marker
                             const markerContent = document.createElement("div");
                             markerContent.innerHTML = `
-                                <div style="background-color:#4285f4; color:white; padding:5px; border-radius:5px;">
+                                <div style="background-color:white; color:black; padding:10px; border-radius:5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
                                     <strong>${name}</strong>
                                     <p>${address.street}, ${address.city}, ${address.zipCode}</p>
+                                    <p><strong>Phone:</strong> ${phoneNumber || 'Not Available'}</p>
                                 </div>
                             `;
         
@@ -102,24 +74,25 @@
         
                             // Create an info window with department details
                             const infoWindow = new google.maps.InfoWindow({
-                                content: `
-                                    <h3>${name}</h3>
-                                    <p>${address.street}, ${address.city}, ${address.zipCode}</p>
-                                `,
+                                content: markerContent,
                             });
         
-                            // Add a click listener to the marker
-                            marker.addListener("click", () => {
+                            // Add event listener for mouseover to show the info window
+                            marker.addListener("mouseover", () => {
                                 infoWindow.open(map, marker);
                             });
-                        } else {
-                            console.warn(`Missing coordinates for department: ${name}`);
+        
+                            // Add event listener for mouseout to close the info window
+                            marker.addListener("mouseout", () => {
+                                infoWindow.close();
+                            });
                         }
                     });
                 })
-                .catch((error) => console.error("Error fetching departments:", error));
+                .catch((error) => {
+                    console.error("There was a problem with the fetch operation:", error);
+                });
         }
-        
     </script>
 </body>
 </html>
