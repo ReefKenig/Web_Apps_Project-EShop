@@ -1,5 +1,6 @@
-const Department = require("../models/department");
+const Department = require("../models/departments");
 
+// Create a new department
 exports.createDepartment = async (req, res) => {
   try {
     const { name, address, phoneNumber, openingHours } = req.body;
@@ -15,7 +16,7 @@ exports.createDepartment = async (req, res) => {
 
     res.status(201).json({
       message: "Department created successfully",
-      department: newDept,
+      data: newDept,
     });
   } catch (error) {
     res
@@ -24,6 +25,7 @@ exports.createDepartment = async (req, res) => {
   }
 };
 
+// Get all departments
 exports.getAllDepartments = async (req, res) => {
   try {
     const departments = await Department.find({}, "-__v");
@@ -33,6 +35,7 @@ exports.getAllDepartments = async (req, res) => {
   }
 };
 
+// Get department by ID
 exports.getDepartmentById = async (req, res) => {
   try {
     const department = await Department.findById(req.params.id, "-__v");
@@ -47,6 +50,7 @@ exports.getDepartmentById = async (req, res) => {
   }
 };
 
+// Update department
 exports.updateDepartment = async (req, res) => {
   try {
     const deptId = req.params.id;
@@ -73,6 +77,7 @@ exports.updateDepartment = async (req, res) => {
   }
 };
 
+// Delete department
 exports.deleteDepartment = async (req, res) => {
   try {
     const deletedDept = await Department.findByIdAndDelete(req.params.id);

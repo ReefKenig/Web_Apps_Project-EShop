@@ -7,7 +7,7 @@ const connect = require("./config/db");
 // Routers
 const carRoutes = require("./routes/car");
 const userRoutes = require("./routes/user");
-const departmentRoutes = require("./routes/department");
+const departmentRoutes = require("./routes/departments");
 
 dotenv.config();
 const app = express();
