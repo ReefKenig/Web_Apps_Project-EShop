@@ -582,9 +582,9 @@ header .text .arrow .left:after, header .text .arrow .right:after, header .text 
     background-size: cover;
 }
 .static-header {
-    height: calc(100vh - 22px);
+    /* height: calc(100vh - 22px); */
     padding: 20px 70px;
-    width: 100%;
+    /* width: 100%; */
     background-size: cover;
     background-position: center;
     
