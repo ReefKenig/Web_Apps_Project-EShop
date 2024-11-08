@@ -30,8 +30,10 @@ async function loadPage(page) {
   }
 }
 
-function generateCarTemplate(carImage, carManufacturer, carModel, Price, yearOfManufacture) {
+function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, yearOfManufacture) {
     // Create a container div
+    const sender = document.createElement('a');
+    sender.href = '';
     const container = document.createElement("div");
     container.className = "container";
 
@@ -44,10 +46,6 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price, yearOfM
     if(carImage)
     {
       eImg.src = carImage;
-    }
-    else
-    {
-    eImg.src = 'https://cdn.hswstatic.com/gif/8-automotive-lemons-1.jpg';
     }
 
     // Create a div to hold the manufacturer, model, and publish date
@@ -105,7 +103,7 @@ function generateGrid(items) {
 
     // Generate grid items and add them to the container
     for (let i = 0; i < items.length; i++) {
-        const gridItem = generateCarTemplate(items[i].media.pictures[0], items[i].manufacturer, items[i].brand, items[i].price, items[i].yearOfManufacture);
+        const gridItem = generateCarTemplate(items[i]._id, items[i].media.pictures[0], items[i].manufacturer, items[i].brand, items[i].price, items[i].yearOfManufacture);
         output.appendChild(gridItem);
     }
 
