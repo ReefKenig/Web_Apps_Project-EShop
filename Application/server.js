@@ -9,6 +9,7 @@ const cors = require("cors");
 const carRoutes = require("./routes/cars");
 const userRoutes = require("./routes/users");
 const orderRoutes = require("./routes/orders");
+const departmentRoutes = require("./routes/departments");
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/api/cars", carRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/departments", departmentRoutes);
 
 // MongoDB connection
 const uri = process.env.MONGODB_URI;
@@ -35,7 +37,7 @@ app.listen(process.env.PORT || 3030, () => {
 
 // app.get('/api/header', (req, res) => {
 //   const headerPath = path.join(__dirname, 'public/header.html');
-  
+
 //   // Read the header HTML file and send its content as the response
 //   fs.readFile(headerPath, 'utf8', (err, data) => {
 //     if (err) {
