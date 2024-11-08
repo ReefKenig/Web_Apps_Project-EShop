@@ -1,5 +1,5 @@
-const User = require("../models/user");
-const Car = require("../models/car");
+const User = require("../models/users");
+const Car = require("../models/cars");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 

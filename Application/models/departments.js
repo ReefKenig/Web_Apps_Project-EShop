@@ -10,6 +10,18 @@ const departmentSchema = Schema({
     street: { type: String, required: true },
     city: { type: String, required: true },
     zipCode: { type: String, match: /^[A-Za-z0-9\s-]{3,10}$/ },
+    longitude: {
+      type: Number,
+      required: true,
+      min: -180,
+      max: 180,
+    },
+    latitude: {
+      type: Number,
+      required: true,
+      min: -90,
+      max: 90,
+    },
   },
   phoneNumber: {
     type: String,

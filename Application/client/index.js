@@ -1,5 +1,5 @@
 const body = document.querySelector("body"),
-    loader = document.querySelector(".loader-wrap"),
+    // link = document.querySelector(".link-wrap"),
     links = document.querySelectorAll('a[href="#"]'),
     nav = document.querySelector("header nav"),
     navToggle = document.querySelector("header nav .toggle"),
@@ -29,43 +29,21 @@ const body = document.querySelector("body"),
     boxModelImage = document.querySelector(".menu .box-model img"),
     pageTitle = document.querySelector("title");
 
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'path/to/your/styles.css';
 
-// window.onload = function() {
-//     const hash = window.location.hash.substring(1);
-//     if (hash) {
-//       loadPage(hash);
-//     }
-//   };
-
-//   async function loadPage(page) {
-//     try {
-//       const response = await fetch(page);
-//       if (!response.ok) {
-//         throw new Error(`Could not fetch ${page}: ${response.statusText}`);
-//       }
-//       const content = await response.text();
-//       document.getElementById('content').innerHTML = content;
-//       window.history.pushState({ page }, '', `#${page}`);
-//       $(".hamburger").click(function(){
-//         $(".wrapper").toggleClass("collapse");
-//      });
-//     } catch (error) {
-//       document.getElementById('content').innerHTML = `<p>Error loading page.</p>`;
-//       console.error(error);
-//     }
-//   }
-
-// remove loader
+// remove link
 function fadeOutEffect() {
     const fadeEffect = setInterval(function() {
-        if (!loader.style.opacity) {
-            loader.style.opacity = 1;
+        if (!link.style.opacity) {
+            link.style.opacity = 1;
         }
-        if (loader.style.opacity > 0) {
-            loader.style.opacity -= 0.4;
+        if (link.style.opacity > 0) {
+            link.style.opacity -= 0.4;
         } else {
             body.classList.remove('stop-scroll');
-            loader.classList.add('remove');
+            link.classList.add('remove');
             clearInterval(fadeEffect);
         }
     }, 100);
@@ -80,8 +58,8 @@ links.forEach(link =>
 );
 
 // toggle hamburger menu button
-navToggle.addEventListener("click", () => {
-    navToggle.classList.toggle("active");
+navToggle?.addEventListener("click", () => {
+    navToggle?.classList.toggle("active");
     navSpanMiddle.classList.toggle("hide");
     navNavigationBar.classList.toggle("show");
 });
@@ -96,7 +74,7 @@ navNavigationBarLi.forEach(li =>
 );
 
 // svg-up smooth scroll
-svgUp.addEventListener("click", () => {
+svgUp?.addEventListener("click", () => {
     window.scroll({
         top: 0,
         behavior: "smooth"

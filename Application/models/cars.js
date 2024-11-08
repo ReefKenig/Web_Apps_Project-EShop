@@ -33,7 +33,7 @@ const carSchema = new mongoose.Schema(
       },
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const Car = mongoose.model("cars", carSchema);
