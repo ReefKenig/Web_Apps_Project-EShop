@@ -6,7 +6,7 @@ const Car = require("../models/cars");
 // Create a new order
 exports.createOrder = async (req, res) => {
   try {
-    const { userId, items, orderStatus, totalCost } = req.body;
+    const { userId, items, orderStatus, totalCost,purchaseDate } = req.body;
 
     // Check if userId is valid
     const userExists = await User.findById(userId);
@@ -25,6 +25,7 @@ exports.createOrder = async (req, res) => {
       items,
       orderStatus,
       totalCost,
+      purchaseDate
     });
 
     const savedOrder = await order.save();
