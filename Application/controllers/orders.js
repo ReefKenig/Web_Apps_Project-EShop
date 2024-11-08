@@ -97,7 +97,7 @@ exports.getRevenueByMonth = async (req, res) => {
       },
       {
         $project: {
-          month: { $month: "purchaseDate" }, 
+          month: { $month: "$purchaseDate" }, 
           totalCost: 1,
         }
       },
