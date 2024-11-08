@@ -1,0 +1,105 @@
+.template.container{
+    cursor: default;
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: 7%;
+}
+
+.template.container .box{
+    width: 200dvh;
+    height: 80dvh;
+    display: flex;
+    flex-direction: row;
+}
+
+.pictures{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row; 
+    gap: 10px;
+}
+
+.picture-menu.container .box {
+    width: auto;
+    max-width: 15dvh;
+    height: auto;
+    max-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    margin-top: 12%;
+    overflow-y: auto;
+    border-radius: 0.7rem;
+    backdrop-filter: none;
+    border: 1px solid #ddd;
+}
+
+.picture-menu.container .box img {
+    width: 100%;
+    cursor: pointer;
+    border-radius: 0.7rem;
+    transition: transform 0.3s;
+}
+
+.picture-menu img:hover {
+    transform: scale(1.1);
+}
+
+.selected-picture.container{
+    max-width: 40dvh;
+    flex-grow: 1;
+    padding: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+
+.selected-picture.container .box {
+    width: auto;
+    height: auto;
+    max-width: 55dvh;
+    max-height: 50dvh;
+    flex-grow: 1;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    backdrop-filter: none;
+}
+
+.selected-picture.container .box img {
+    max-width: 50dvh;
+    max-height: 50dvh;
+    border-radius: 0.7rem;
+    object-fit: contain;
+}
+
+.description.container{
+    margin-top: 2dvh;
+    margin-right: 29dvh;
+    justify-content: flex-start;
+}
+
+.description.container .box{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    max-width: 60dvh;
+    height: auto;
+    max-height: 40dvh;
+    backdrop-filter: none;
+}
+
+.description.container .box span{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.description.container .box p{
+    font-size: 12px;
+}
