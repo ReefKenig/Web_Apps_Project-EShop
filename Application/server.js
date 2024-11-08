@@ -3,7 +3,6 @@ const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const connect = require("./config/db");
-const cors=require('cors');
 const cors = require("cors");
 
 // Routers
@@ -15,8 +14,6 @@ const departmentRoutes = require("./routes/departments");
 dotenv.config();
 const app = express();
 
-// Enable CORS for all routes
-app.use(cors());
 
 // Middleware
 app.use(express.json());
