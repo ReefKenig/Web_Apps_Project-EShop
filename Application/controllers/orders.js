@@ -85,9 +85,6 @@ exports.getRevenueByMonth = async (req, res) => {
     const startDate = new Date(`${year}-01-01T00:00:00Z`);
 const endDate = new Date(`${year + 1}-01-01T00:00:00Z`);
 
-
-    console.log("Date Range:", startDate, "to", endDate); // Debugging the date range
-
     const revenueData = await Order.aggregate([
       {
         $match: {
