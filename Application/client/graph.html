@@ -19,9 +19,10 @@
         drawGraph(data);
       })
       .catch(err => console.error('Error fetching data:', err));
+
     // Function to draw the graph
     function drawGraph(data) {
-      const margin = { top: 20, right: 30, bottom: 40, left: 40 };
+      const margin = { top: 20, right: 30, bottom: 80, left: 80 }; // Increased space for labels
       const width = 800 - margin.left - margin.right;
       const height = 400 - margin.top - margin.bottom;
 
@@ -31,36 +32,56 @@
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      // Set up scales for X (month) and Y (revenue)
+      // Set up scales for X (order name) and Y (month names)
       const x = d3.scaleBand()
-        .domain(data.map(d => d.month))  // Use month data from backend (1–12)
+        .domain(data.map(d => d.orderName))  // Use order names from the data
         .range([0, width])
         .padding(0.1);
 
-      const y = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.totalRevenue)])
-        .nice()
-        .range([height, 0]);
+      const y = d3.scaleBand()  // Use scaleBand for months on the Y-axis
+        .domain(data.map(d => d.month))  // Use month data (1–12) or formatted month names
+        .range([height, 0])
+        .padding(0.1);
 
       // Append the bars for the bar chart
       svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
         .attr("class", "bar")
-        .attr("x", d => x(d.month))
-        .attr("y", d => y(d.totalRevenue))
+        .attr("x", d => x(d.orderName))  // Map order name to x position
+        .attr("y", d => y(d.month))  // Map month to y position
         .attr("width", x.bandwidth())
-        .attr("height", d => height - y(d.totalRevenue))
+        .attr("height", d => height - y(d.month))  // Adjust height based on month
         .attr("fill", "steelblue");
 
-      // Append the x axis (months)
+      // Append the x axis (order names)
       svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).tickFormat(d => `Month ${d}`));
+        .call(d3.axisBottom(x));
 
-      // Append the y axis (revenue)
+      // Append the y axis (month names)
       svg.append("g")
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y).tickFormat(d => {
+          const months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+          ];
+          return months[d - 1];  // Convert month number (1–12) to month name
+        }));
+
+      // Add title for the X axis (Orders)
+      svg.append("text")
+        .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom - 10) + ")")
+        .style("text-anchor", "middle")
+        .text("Orders");
+
+      // Add title for the Y axis (Months)
+      svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 20)
+        .attr("x", 0 - (height / 2))
+        .style("text-anchor", "middle")
+        .text("Months");
     }
   </script>
 </body>
