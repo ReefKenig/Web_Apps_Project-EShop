@@ -12,7 +12,7 @@
   
   <script>
     // Fetch data from your backend API
-    fetch('http://localhost:3030/api/orders')  // Fetch revenue data for 2024
+    fetch('http://localhost:3030/api/orders/revenue/2024')  // Fetch revenue data for 2024
       .then(response => response.json())
       .then(data => {
         // D3.js code to create graph
@@ -21,6 +21,8 @@
       })
       .catch(err => console.error('Error fetching data:', err));
 
+      google.charts.load('current',{packages:['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
     // Function to draw the graph
     function drawGraph(data) {
       const margin = { top: 20, right: 30, bottom: 40, left: 40 };
