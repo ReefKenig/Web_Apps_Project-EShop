@@ -87,16 +87,16 @@ exports.getRevenueByMonth = async (req, res) => {
     const revenueData = await Order.aggregate([
       {
         $match: {
-          createdAt: {
+          purchaseDate: {
             $gte: startDate,
             $lt: endDate,
           },
-          orderStatus: { $in: ["Shipped", "Delivered"] }, // Only include shipped or delivered orders
+          orderStatus: { $in: ["Shipped", "Delivered"] }, 
         }
       },
       {
         $project: {
-          month: { $month: "$createdAt" }, // Extract month from createdAt field
+          month: { $month: "purchaseDate" }, 
           totalCost: 1,
         }
       },

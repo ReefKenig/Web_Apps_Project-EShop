@@ -32,6 +32,9 @@ const orderSchema = new Schema(
       required: true,
       min: 0,
     },
+    purchaseDate: {
+      type: Date, 
+    },
   },
   { timestamps: true }
 );
