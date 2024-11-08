@@ -81,23 +81,22 @@ exports.getOrdersByUserId = async (req, res) => {
 exports.getRevenueByMonth = async (req, res) => {
   const year = parseInt(req.params.year, 10);
   try {
-    // Ensure the date range is correct by using new Date and adjusting it for the start and end of the year
     const startDate = new Date(`${year}-01-01T00:00:00Z`);
-const endDate = new Date(`${year + 1}-01-01T00:00:00Z`);
+    const endDate = new Date(`${year + 1}-01-01T00:00:00Z`);
 
     const revenueData = await Order.aggregate([
       {
         $match: {
-          purchaseDate: {
+          createdAt: {
             $gte: startDate,
             $lt: endDate,
           },
-          orderStatus: { $in: ["Shipped", "Delivered"] }, // Only including shipped or delivered orders
+          orderStatus: { $in: ["Shipped", "Delivered"] }, // Only include shipped or delivered orders
         }
       },
       {
         $project: {
-          month: { $month: "$purchaseDate" },
+          month: { $month: "$createdAt" }, // Extract month from createdAt field
           totalCost: 1,
         }
       },
@@ -107,7 +106,7 @@ const endDate = new Date(`${year + 1}-01-01T00:00:00Z`);
           totalRevenue: { $sum: "$totalCost" },
         }
       },
-      { $sort: { _id: 1 } }
+      { $sort: { _id: 1 } } // Sort by month in ascending order
     ]);
 
     res.status(200).json(
@@ -121,6 +120,8 @@ const endDate = new Date(`${year + 1}-01-01T00:00:00Z`);
     res.status(500).json({ message: err.message });
   }
 };
+
+
 
 
 
