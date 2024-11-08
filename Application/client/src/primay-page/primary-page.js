@@ -59,7 +59,7 @@ function generateCarTemplate(carImage, carManufacturer, carModel, Price) {
 
     // Add publish date
     const publishDateSpan = document.createElement("span");
-    publishDateSpan.textContent = Price;
+    publishDateSpan.textContent = `${Price}$`;
 
     // Append all elements to the details div
     detailsDiv.appendChild(manufacturerStrong);
