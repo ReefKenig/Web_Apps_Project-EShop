@@ -40,6 +40,17 @@ nav{
   letter-spacing: 0.1em;
 }
 
+
+.container .box img {
+  justify-self: center;
+  border: 1px solid rgba(255, 255, 255, 0.222);
+  border-radius: 0.7rem;
+}
+
+.container .box a{
+  text-decoration: none;
+}
+
 .container .box div strong {
   display: block;
   margin-bottom: 0.5rem;
