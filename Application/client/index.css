@@ -582,7 +582,7 @@ header .text .arrow .left:after, header .text .arrow .right:after, header .text 
     background-size: cover;
 }
 .static-header {
-    /* height: calc(100vh - 22px); */
+    height: calc(20vh - 22px);
     padding: 20px 70px;
     /* width: 100%; */
     background-size: cover;
@@ -610,6 +610,7 @@ header nav {
     padding: 25px 35px 0px;
     z-index: 20;
     border-radius: unset;
+    justify-content: space-around;
 }
 header nav .toggle {
     display: none;
@@ -651,7 +652,7 @@ header nav .toggle span:not(:last-of-type) {
     margin-bottom: 6px;
 }
 header nav .logo {
-    flex-basis: 56%;
+    flex-basis: 50%;
     padding-left: 50px;
 }
 header .navigation-bar.show {
@@ -1015,6 +1016,21 @@ footer .newsletter i {
     padding: 12px 30px;
     font-size: 12px;
 }
+
+.logout-button {
+    letter-spacing: 2.4px;
+    font-size: 12px;
+    font-family: source_sans_problack, sans-serif;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 5px 10px;
+    border: none;
+}
+
+.logout-button:hover {
+    color: #a96700;
+}
+
 /*End Contact Page*/
 
 /*Start Home Page Responsive*/

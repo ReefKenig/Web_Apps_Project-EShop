@@ -88,33 +88,19 @@ function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, ye
 
 function generateElementFromString(string){
 
-  const range = document.createRange();
-  const fragment = range.createContextualFragment(string);
-  return fragment;
+    const range = document.createRange();
+    const fragment = range.createContextualFragment(string);
+    return fragment;
 }
-
 
 function generateGrid(items) {
     const output = document.getElementById("car-output");
-    // const grid = document.createElement('div');
-    output.className = "grid-container"; // Apply grid container styling
+    output.className = "grid-container";
 
-    // Clear previous content if any
     output.innerHTML = "";
 
-    // Generate Filter Dropdown
-
-
-
-    // Generate grid items and add them to the container
     for (let i = 0; i < items.length; i++) {
         const gridItem = generateCarTemplate(items[i]._id, items[i].media.pictures[0], items[i].manufacturer, items[i].brand, items[i].price, items[i].yearOfManufacture);
         output.appendChild(gridItem);
     }
-
-
 }
-
-
-
-
