@@ -1,5 +1,4 @@
 const body = document.querySelector("body"),
-    // link = document.querySelector(".link-wrap"),
     links = document.querySelectorAll('a[href="#"]'),
     navToggle = document.querySelector("header nav .toggle"),
     navSpanMiddle = document.querySelector("header nav .toggle .middle"),
@@ -7,7 +6,7 @@ const body = document.querySelector("body"),
     navNavigationBarLi = document.querySelectorAll(
         "header nav .navigation-bar li"
     ),
-    // headerText = document.querySelector("header .text"),
+    headerText = document.querySelector("header .text"),
     headerSection = document.querySelector("header"),
     aboutSection = document.querySelector(".about-us"),
     recipeSection = document.querySelector(".recipes"),
@@ -28,9 +27,9 @@ const body = document.querySelector("body"),
     boxModelImage = document.querySelector(".menu .box-model img"),
     pageTitle = document.querySelector("title");
 
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'path/to/your/styles.css';
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = 'path/to/your/styles.css';
 
 // remove link
 function fadeOutEffect() {
@@ -97,6 +96,7 @@ window.onscroll = function() {
     if (window.pageYOffset > 0 && headerText) {
         headerText.style.opacity = -window.pageYOffset / 300 + 1;
     }
+
     // home page JS
     if (pageTitle.text === "ROSA- Restaurant") {
         //change dots background color

@@ -1,4 +1,5 @@
 const Department = require("../models/departments");
+const { createDepartmentFilters } = require("../helpers/filters");
 
 // Create a new department
 exports.createDepartment = async (req, res) => {
@@ -26,12 +27,16 @@ exports.createDepartment = async (req, res) => {
 };
 
 // Get all departments
-exports.getAllDepartments = async (req, res) => {
+exports.getDepartments = async (req, res) => {
   try {
-    const departments = await Department.find({}, "-__v");
+    const filters = createDepartmentFilters(req.query);
+    const departments = await Department.find(filters, "-__v");
+
     res.status(200).json(departments);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch departments" });
+    res
+      .status(500)
+      .json({ message: "Could not fetch departments", error: error.message });
   }
 };
 
