@@ -20,6 +20,38 @@ exports.getAllCars = async (req, res) => {
   }
 };
 
+
+// Function to get the count of cars per manufacturer
+const getCarDataForChart = async (req, res) => {
+  try {
+    // Aggregate the data by manufacturer and sum the unitsInStock
+    const data = await Car.aggregate([
+      {
+        $group: {
+          _id: "$manufacturer",        // Group by manufacturer
+          carCount: { $sum: "$unitsInStock" } // Sum the unitsInStock for each manufacturer
+        }
+      },
+      {
+        $project: {
+          manufacturer: "$_id",  // Rename _id to manufacturer
+          carCount: 1,           // Include carCount
+          _id: 0                 // Exclude _id
+        }
+      }
+    ]);
+
+    // Return the aggregated data in JSON format
+    res.json(data);
+  } catch (err) {
+    console.error('Error fetching data:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+module.exports = { getCarDataForChart };
+
+
 exports.getCarById = async (req, res) => {
   try {
     const car = await Car.findById(req.params.id, "-__v");
