@@ -33,7 +33,8 @@ async function loadPage(page) {
 function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, yearOfManufacture) {
     // Create a container div
     const sender = document.createElement('a');
-    sender.href = '';
+    sender.href = '../item-page.html';
+
     const container = document.createElement("div");
     container.className = "container";
 
@@ -77,8 +78,11 @@ function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, ye
     // Append the box to the container
     container.appendChild(box);
 
+    // Append the container into the sender
+    sender.appendChild(container);
+
     // Return the generated HTML as a string
-    return container;
+    return sender;
 }
 
 function generateElementFromString(string){

@@ -47,6 +47,10 @@ nav{
   border-radius: 0.7rem;
 }
 
+.container .box a{
+  text-decoration: none;
+}
+
 .container .box div strong {
   display: block;
   margin-bottom: 0.5rem;
