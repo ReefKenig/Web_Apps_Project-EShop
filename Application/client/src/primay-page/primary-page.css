@@ -12,6 +12,32 @@ nav{
   z-index: 2;
 }
 
+/* Ensuring flags appear next to the "Home" link */
+/* Ensuring flags appear at the far right */
+.navigation-bar ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding-left: 0;
+  justify-content: space-between; /* Distribute items across the bar */
+  width: 100%; /* Ensure full width */
+}
+
+.currency-switch {
+  display: flex;
+  align-items: center;
+  margin-left: 600px; /* Push the flags to the far right */
+}
+
+.currency-switch .flag {
+  width: 30px;  /* Set the width of the flag */
+  height: 20px; /* Set the height of the flag */
+  margin-left: 10px; /* Space between the two flag icons */
+  cursor: pointer;
+  z-index: 7500;
+}
+
+
 .container .box {
   width: 11.875em;
   height: 15.875em;
