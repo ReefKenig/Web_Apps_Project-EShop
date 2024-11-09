@@ -12,7 +12,6 @@ nav{
   z-index: 2;
 }
 
-
 .container .box {
   width: 11.875em;
   height: 15.875em;
@@ -31,7 +30,6 @@ nav{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
 }
 
 .container .box .title {
@@ -47,7 +45,7 @@ nav{
   border-radius: 0.7rem;
 }
 
-.container .box a{
+a{
   text-decoration: none;
 }
 
@@ -55,7 +53,6 @@ nav{
   display: block;
   margin-bottom: 0.5rem;
   z-index: 2;
-
 }
 
 .container .box div p {
@@ -91,7 +88,6 @@ nav{
   grid-auto-rows: auto;
   gap: 5px;
   justify-content: center;
-
 }
 
 /* Next and prev page buttons start */
@@ -111,12 +107,10 @@ nav{
 }
 .butt.next{
   /* margin-left: 345%; */
-
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 
 .butt:hover {
   box-shadow: 0px 0px 20px 1px #ffbb763f;
@@ -145,7 +139,6 @@ nav{
   transform: rotate(180deg) translateX(5px);
 }
 
-
 .butt-text {
   margin: 0 0.5em;
 }
@@ -163,7 +156,6 @@ nav{
 }
 
 /*Next and prev buttons End */
-
 
 /* Filter Dropdown Menu */
 
@@ -214,8 +206,6 @@ nav{
   -webkit-transform: scale(1.5);
   -webkit-transition: -webkit-transform .1s cubic-bezier(0, 0, .2, 1);
 }
-
-
 
 /* The up/down direction logic */
 
@@ -417,6 +407,14 @@ input[type="number"] {
   visibility: visible;
   transform: scale(1);
   transition: 0s;
+}
+
+.static-header {
+  height: calc(50vh - 22px);
+  padding: 20px 70px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
 }
 
 
