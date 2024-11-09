@@ -1,7 +1,7 @@
 const Order = require("../models/orders");
 const User = require("../models/users");
 const Car = require("../models/cars");
-const buildFilters = require("../helpers/filters");
+const createFilters = require("../helpers/filters");
 
 // Create a new order
 exports.createOrder = async (req, res) => {
@@ -38,16 +38,16 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.getAllOrders = async (req, res) => {
+exports.getOrders = async (req, res) => {
   try {
+    const filters = createFilters(req.query, "orders");
     // Populate user details and car details in items
-    const Orders = await Order.find({})
+    const orders = await Order.find(filters, "-__v")
       .populate("userId")
       .populate("items.carId");
 
-    res.status(200).json(Orders);
+    res.status(200).json(orders);
   } catch (error) {
-    console.error("Error fetching orders:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -60,19 +60,6 @@ exports.getOrderById = async (req, res) => {
       .populate("items.carId");
     if (!order) return res.status(404).json({ message: "Order not found" });
     res.status(200).json(order);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Get orders by user ID
-exports.getOrdersByUserId = async (req, res) => {
-  try {
-    const orders = await Order.find({ userId: req.params.id }).populate(
-      "items.carId"
-    );
-
-    res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

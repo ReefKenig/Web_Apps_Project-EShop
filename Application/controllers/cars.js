@@ -14,8 +14,7 @@ exports.createCar = async (req, res) => {
 
 exports.getCars = async (req, res) => {
   try {
-    const filterableFields = ["manufacturer", "brand", "yearOfManufacture", "color"];
-    const filters = createFilters(req.query, filterableFields);
+    const filters = createFilters(req.query, "cars");
 
     const cars = await Car.find(filters, "-__v");
 

@@ -1,5 +1,5 @@
 const Department = require("../models/departments");
-const buildFilters = require("../helpers/filters");
+const createFilters = require("../helpers/filters");
 
 // Create a new department
 exports.createDepartment = async (req, res) => {
@@ -29,16 +29,14 @@ exports.createDepartment = async (req, res) => {
 // Get all departments
 exports.getDepartments = async (req, res) => {
   try {
-    const filterableFields = ["city", "openingHours", "yearOfManufacture", "color"];
-    const filters = createFilters(req.query, filterableFields);
+    const filters = createFilters(req.query, "departments");
+    const departments = await Department.find(filters, "-__v");
 
-    const cars = await Car.find(filters, "-__v");
-
-    res.status(200).json(cars);
+    res.status(200).json(departments);
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Could not fetch cars", error: error.message });
+      .json({ message: "Could not fetch departments", error: error.message });
   }
 };
 
