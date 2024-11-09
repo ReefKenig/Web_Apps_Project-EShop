@@ -610,6 +610,7 @@ header nav {
     padding: 25px 35px 0px;
     z-index: 20;
     border-radius: unset;
+    justify-content: space-around;
 }
 header nav .toggle {
     display: none;
@@ -1015,6 +1016,21 @@ footer .newsletter i {
     padding: 12px 30px;
     font-size: 12px;
 }
+
+.logout-button {
+    letter-spacing: 2.4px;
+    font-size: 12px;
+    font-family: source_sans_problack, sans-serif;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 5px 10px;
+    border: none;
+}
+
+.logout-button:hover {
+    color: #a96700;
+}
+
 /*End Contact Page*/
 
 /*Start Home Page Responsive*/

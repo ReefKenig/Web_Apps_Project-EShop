@@ -236,3 +236,33 @@ if (pageTitle.text === "ROSA- Restaurant") {
     window.addEventListener("click", boxModelFun);
     boxModelArrow.addEventListener("click", boxModelFun);
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const token = localStorage.getItem("authToken");
+
+    if (token) {
+      const user = localStorage.getItem("user");
+      const registerLi = document.getElementById("register");
+        if (registerLi) {
+          registerLi.remove();
+          const logoutDiv = document.createElement("div"); 
+            const logoutButton = document.createElement("button");
+            logoutButton.textContent = "Logout";
+            logoutButton.classList.add("logout-button");
+            logoutButton.onclick = logout;
+            logoutDiv.appendChild(logoutButton);
+
+            // Insert the "Logout" button inside the navigation bar (after the <ul>)
+            const navigationBar = document.getElementById("nav");
+            navigationBar.appendChild(logoutDiv);
+        }
+    } else {
+      console.log("No token found in localStorage. Staying on index page.");
+    }
+  });
+
+  function logout() {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    window.location.href = "index.html";
+  }
