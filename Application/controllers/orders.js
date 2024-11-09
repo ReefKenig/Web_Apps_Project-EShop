@@ -1,4 +1,3 @@
-// controllers/orderController.js
 const Order = require("../models/orders");
 const User = require("../models/users");
 const Car = require("../models/cars");
