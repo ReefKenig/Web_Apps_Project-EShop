@@ -240,7 +240,7 @@ if (pageTitle.text === "ROSA- Restaurant") {
 }
 
 window.onload = function() {
-    if (window.location.pathname.includes("/client/index.html")) {
+    // if (window.location.pathname.includes("/client/index.html")) {
         loadHTML("../public/header.html");
         setTimeout(() => {
             const token = localStorage.getItem("authToken");
@@ -261,7 +261,7 @@ window.onload = function() {
               console.log("No token found in localStorage. Staying on index page.");
             }
         }, 100);
-    }
+    // }?
   };
 
   function handleUserNameElement(navigationBar) {

@@ -23,6 +23,32 @@ window.onload = function() {
    await getOrderHistory(userInfo.id);
   }
 
+  // function handleUserNameElement(navigationBar) {
+  //   const user = localStorage.getItem("user");
+  //   const userInfo = JSON.parse(user);
+  //   const userNameDiv = document.createElement("div"); 
+  //   userNameDiv.style.cssText = "max-width: 155px;";
+  //   const userNameSpan = document.createElement("span");
+  //   userNameSpan.style.color = '#b79d76';
+  //   userNameSpan.textContent = `Welcome ${userInfo.firstName} ${userInfo.lastName}`
+  //   userNameDiv.appendChild(userNameSpan);
+  //   navigationBar.appendChild(userNameDiv);
+  // }
+
+  // function handleLogoutElement(navigationBar) {
+  //   const registerLi = document.getElementById("register");
+  //   if (registerLi) {
+  //     registerLi.remove();
+  //     const logoutDiv = document.createElement("div"); 
+  //       const logoutButton = document.createElement("button");
+  //       logoutButton.textContent = "Logout";
+  //       logoutButton.classList.add("logout-button");
+  //       logoutButton.onclick = logout;
+  //       logoutDiv.appendChild(logoutButton);
+  //       navigationBar.appendChild(logoutDiv);
+  //   }
+  // }
+
   async function getOrderHistory(userId) {
     try {
       // Wrap the $.ajax call in a Promise
@@ -91,6 +117,19 @@ function renderOrderHistory(data) {
 
 function handleLinksLocation() {
   setTimeout(() => {
+    const token = localStorage.getItem("authToken");
+    if(token) {
+      const register = document.getElementById('register');
+      register.remove();
+    }
+    let ul = document.getElementById('ul');
+    let li = document.createElement('li');
+    let a = document.createElement('a');
+    a.href = '/views/user/user-profile.html';
+    a.textContent = 'Profile';
+
+    li.appendChild(a);
+    ul.appendChild(li);
     const home = document.getElementById('home');
     const logo = document.getElementById('logo');
     const shop = document.getElementById('shop');
