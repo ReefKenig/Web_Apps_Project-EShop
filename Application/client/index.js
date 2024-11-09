@@ -94,7 +94,7 @@ window.onscroll = function() {
     }
 
     // header welcome fade out and in
-    if (window.pageYOffset > 0) {
+    if (window.pageYOffset > 0 && headerText) {
         headerText.style.opacity = -window.pageYOffset / 300 + 1;
     }
     // home page JS

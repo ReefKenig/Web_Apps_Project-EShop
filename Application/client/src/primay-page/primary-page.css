@@ -404,7 +404,7 @@ input[type="number"] {
 }
 
 .static-header {
-  height: calc(50vh - 22px);
+  height: calc(20vh - 22px);
   padding: 20px 70px;
   width: 100%;
   background-size: cover;

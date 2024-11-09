@@ -1,12 +1,11 @@
-window.onload = function() {
-  if (window.location.pathname.includes("/primay-page")) {
-      loadHTML("../../../public/header.html");
-      handleLinksLocation();
-      loadPage();
-  }
-};
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.location.pathname.includes("/primary-page.html")) {
+    loadHTML("../../../public/header.html");
+    handleLinksLocation();
+    loadPage();
+}});
 
-async function loadPage(page) {
+async function loadPage() {
   try {
     // Wrap the $.ajax call in a Promise
     const data = await new Promise((resolve, reject) => {
@@ -86,7 +85,6 @@ function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, ye
 
     // Create a div to hold the manufacturer, model, and publish date
     const detailsDiv = document.createElement("div");
-    
 
     // Add car manufacturer
     const manufacturerStrong = document.createElement("strong");
@@ -95,7 +93,6 @@ function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, ye
     // Add car model
     const modelParagraph = document.createElement("p");
     modelParagraph.textContent = carModel + ' ' + yearOfManufacture;
-
 
     // Add publish date
     const publishDateSpan = document.createElement("span");
@@ -121,7 +118,6 @@ function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, ye
 }
 
 function generateElementFromString(string){
-
     const range = document.createRange();
     const fragment = range.createContextualFragment(string);
     return fragment;
@@ -130,7 +126,6 @@ function generateElementFromString(string){
 function generateGrid(items) {
     const output = document.getElementById("car-output");
     output.className = "grid-container";
-
     output.innerHTML = "";
 
     for (let i = 0; i < items.length; i++) {
