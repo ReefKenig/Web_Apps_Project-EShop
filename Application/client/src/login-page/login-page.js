@@ -53,6 +53,7 @@ function handleLocalStorage(data) {
   if (data.token) {
     localStorage.setItem("authToken", data.token);
     const userInfo = {
+      id: data.user._id,
       firstName: data.user.firstName,
       lastName: data.user.lastName,
       email: data.user.email

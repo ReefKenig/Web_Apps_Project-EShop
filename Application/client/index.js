@@ -239,27 +239,49 @@ if (pageTitle.text === "ROSA- Restaurant") {
 
 document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("authToken");
-
     if (token) {
-      const user = localStorage.getItem("user");
-      const registerLi = document.getElementById("register");
-        if (registerLi) {
-          registerLi.remove();
-          const logoutDiv = document.createElement("div"); 
-            const logoutButton = document.createElement("button");
-            logoutButton.textContent = "Logout";
-            logoutButton.classList.add("logout-button");
-            logoutButton.onclick = logout;
-            logoutDiv.appendChild(logoutButton);
+        let ul = document.getElementById('ul');
+        let li = document.createElement('li');
+        let a = document.createElement('a');
+        a.href = '/views/user/user-profile.html';
+        a.textContent = 'Profile';
 
-            // Insert the "Logout" button inside the navigation bar (after the <ul>)
-            const navigationBar = document.getElementById("nav");
-            navigationBar.appendChild(logoutDiv);
-        }
+        li.appendChild(a);
+        ul.appendChild(li);
+
+        const navigationBar = document.getElementById("nav");
+      handleUserNameElement(navigationBar);
+      handleLogoutElement(navigationBar);
     } else {
       console.log("No token found in localStorage. Staying on index page.");
     }
   });
+
+  function handleUserNameElement(navigationBar) {
+    const user = localStorage.getItem("user");
+    const userInfo = JSON.parse(user);
+    const userNameDiv = document.createElement("div"); 
+    userNameDiv.style.cssText = "max-width: 155px;";
+    const userNameSpan = document.createElement("span");
+    userNameSpan.style.color = '#b79d76';
+    userNameSpan.textContent = `Welcome ${userInfo.firstName} ${userInfo.lastName}`
+    userNameDiv.appendChild(userNameSpan);
+    navigationBar.appendChild(userNameDiv);
+  }
+
+  function handleLogoutElement(navigationBar) {
+    const registerLi = document.getElementById("register");
+    if (registerLi) {
+      registerLi.remove();
+      const logoutDiv = document.createElement("div"); 
+        const logoutButton = document.createElement("button");
+        logoutButton.textContent = "Logout";
+        logoutButton.classList.add("logout-button");
+        logoutButton.onclick = logout;
+        logoutDiv.appendChild(logoutButton);
+        navigationBar.appendChild(logoutDiv);
+    }
+  }
 
   function logout() {
     localStorage.removeItem("authToken");

@@ -652,7 +652,7 @@ header nav .toggle span:not(:last-of-type) {
     margin-bottom: 6px;
 }
 header nav .logo {
-    flex-basis: 56%;
+    flex-basis: 50%;
     padding-left: 50px;
 }
 header .navigation-bar.show {
