@@ -2,7 +2,7 @@ const User = require("../models/users");
 const Car = require("../models/cars");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const createFilters = require("../helpers/filters");
+const { createUserFilters } = require("../helpers/filters");
 
 const THIRTY_DAYS = 60 * 1000 * 24 * 60 * 30;
 
@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
 // Get all users
 exports.getUsers = async (req, res) => {
   try {
-    const filters = createFilters(req.query, "users");
+    const filters = createUserFilters(req.query, "users");
 
     const users = await User.find(filters, "-__v")
       .populate({

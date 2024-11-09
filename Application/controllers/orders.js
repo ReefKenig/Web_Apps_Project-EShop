@@ -1,7 +1,7 @@
 const Order = require("../models/orders");
 const User = require("../models/users");
 const Car = require("../models/cars");
-const createFilters = require("../helpers/filters");
+const { createOrderFilters } = require("../helpers/filters");
 
 // Create a new order
 exports.createOrder = async (req, res) => {
@@ -40,15 +40,16 @@ exports.createOrder = async (req, res) => {
 
 exports.getOrders = async (req, res) => {
   try {
-    const filters = createFilters(req.query, "orders");
-    // Populate user details and car details in items
-    const orders = await Order.find(filters, "-__v")
-      .populate("userId")
-      .populate("items.carId");
+    const user = req.user; // Assume `req.user` contains `userId` and `isAdmin`
+    const query = req.query;
+    const filters = createOrderFilters(query, user);
 
-    res.status(200).json(orders);
+    const orders = await Order.find(filters);
+    res.json(orders);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching orders", error: error.message });
   }
 };
 

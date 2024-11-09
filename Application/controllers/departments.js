@@ -1,5 +1,5 @@
 const Department = require("../models/departments");
-const createFilters = require("../helpers/filters");
+const { createDepartmentFilters } = require("../helpers/filters");
 
 // Create a new department
 exports.createDepartment = async (req, res) => {
@@ -29,7 +29,7 @@ exports.createDepartment = async (req, res) => {
 // Get all departments
 exports.getDepartments = async (req, res) => {
   try {
-    const filters = createFilters(req.query, "departments");
+    const filters = createDepartmentFilters(req.query);
     const departments = await Department.find(filters, "-__v");
 
     res.status(200).json(departments);

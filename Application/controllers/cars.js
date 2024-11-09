@@ -1,5 +1,5 @@
 const Car = require("../models/cars");
-const createFilters = require("../helpers/filters");
+const { createCarFilters } = require("../helpers/filters");
 
 exports.createCar = async (req, res) => {
   try {
@@ -14,7 +14,7 @@ exports.createCar = async (req, res) => {
 
 exports.getCars = async (req, res) => {
   try {
-    const filters = createFilters(req.query, "cars");
+    const filters = createCarFilters(req.query);
 
     const cars = await Car.find(filters, "-__v");
 
