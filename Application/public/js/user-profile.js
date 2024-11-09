@@ -1,5 +1,7 @@
 window.onload = function() {
     if (window.location.pathname.includes("/user/user-profile.html")) {
+        loadHTMLForUserProfile("../../public/header.html");
+        handleLinksLocation();
         loadPage();
     }
   };
@@ -85,4 +87,34 @@ function renderOrderHistory(data) {
         orderDiv.appendChild(itemsDiv);
         container.appendChild(orderDiv);
     });
+}
+
+function handleLinksLocation() {
+  setTimeout(() => {
+    const home = document.getElementById('home');
+    const logo = document.getElementById('logo');
+    const shop = document.getElementById('shop');
+    const contact = document.getElementById('contact');
+
+    home.href = '../../client/index.html';
+    logo.href = '../../client/index.html';
+    shop.href = '../../client/src/primay-page/primary-page.html';
+    contact.href = '../../client/src/contact-us/contact-us.html';
+}, 100);
+}
+
+function loadHTMLForUserProfile(page) {
+  fetch(page)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.text();
+      })
+      .then(html => {
+          document.getElementById("nav-template").innerHTML = html;
+      })
+      .catch(error => {
+          console.error('There has been a problem with your fetch operation:', error);
+      });
 }

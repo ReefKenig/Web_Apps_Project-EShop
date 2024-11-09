@@ -1,5 +1,7 @@
 window.onload = function() {
   if (window.location.pathname.includes("/primay-page")) {
+      loadHTML("../../../public/header.html");
+      handleLinksLocation();
       loadPage();
   }
 };
@@ -28,6 +30,38 @@ async function loadPage(page) {
   } catch (error) {
     console.error('Error fetching data:', error);
   }
+}
+
+function handleLinksLocation() {
+  setTimeout(() => {
+    const home = document.getElementById('home');
+    const logo = document.getElementById('logo');
+    const shop = document.getElementById('shop');
+    const register = document.getElementById('register2');
+    const contact = document.getElementById('contact');
+
+    home.href = '../../index.html';
+    logo.href = '../../index.html';
+    shop.href = '../primay-page/primary-page.html';
+    register.href = '../register-page/Register-Page.html';
+    contact.href = '../contact-us/contact-us.html';
+}, 100);
+}
+
+function loadHTML(page) {
+  fetch(page)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.text();
+      })
+      .then(html => {
+          document.getElementById("nav-template").innerHTML = html;
+      })
+      .catch(error => {
+          console.error('There has been a problem with your fetch operation:', error);
+      });
 }
 
 function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, yearOfManufacture) {

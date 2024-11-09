@@ -1,14 +1,13 @@
 const body = document.querySelector("body"),
     // link = document.querySelector(".link-wrap"),
     links = document.querySelectorAll('a[href="#"]'),
-    nav = document.querySelector("header nav"),
     navToggle = document.querySelector("header nav .toggle"),
     navSpanMiddle = document.querySelector("header nav .toggle .middle"),
     navNavigationBar = document.querySelector("header nav .navigation-bar"),
     navNavigationBarLi = document.querySelectorAll(
         "header nav .navigation-bar li"
     ),
-    headerText = document.querySelector("header .text"),
+    // headerText = document.querySelector("header .text"),
     headerSection = document.querySelector("header"),
     aboutSection = document.querySelector(".about-us"),
     recipeSection = document.querySelector(".recipes"),
@@ -19,7 +18,7 @@ const body = document.querySelector("body"),
     dotTwo = document.querySelector(".dots .two"),
     dotThree = document.querySelector(".dots .three"),
     dots = document.querySelectorAll(".dots > div"),
-    logoImage = document.querySelector("header nav .logo img"),
+    
     svgDown = document.querySelector("header .arrow-down"),
     svgUp = document.querySelector(".copyright .arrow-up"),
     menuImgs = document.querySelectorAll(".menu .menu-image-container img"),
@@ -83,6 +82,9 @@ svgUp?.addEventListener("click", () => {
 
 window.onscroll = function() {
     // make navbar fixed & change logo color
+    const nav = document.querySelector("header nav");
+    const logoImage = document.querySelector("header nav .logo img");
+    const headerText = document.querySelector("header .text");
     if (window.pageYOffset > headerSection.offsetHeight - 75) {
         nav.classList.add("active");
         logoImage.src = "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988525/logo-rosa.png";
@@ -237,25 +239,30 @@ if (pageTitle.text === "ROSA- Restaurant") {
     boxModelArrow.addEventListener("click", boxModelFun);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-        let ul = document.getElementById('ul');
-        let li = document.createElement('li');
-        let a = document.createElement('a');
-        a.href = '/views/user/user-profile.html';
-        a.textContent = 'Profile';
-
-        li.appendChild(a);
-        ul.appendChild(li);
-
-        const navigationBar = document.getElementById("nav");
-      handleUserNameElement(navigationBar);
-      handleLogoutElement(navigationBar);
-    } else {
-      console.log("No token found in localStorage. Staying on index page.");
+window.onload = function() {
+    if (window.location.pathname.includes("/client/index.html")) {
+        loadHTML("../public/header.html");
+        setTimeout(() => {
+            const token = localStorage.getItem("authToken");
+            if (token) {
+                let ul = document.getElementById('ul');
+                let li = document.createElement('li');
+                let a = document.createElement('a');
+                a.href = '/views/user/user-profile.html';
+                a.textContent = 'Profile';
+        
+                li.appendChild(a);
+                ul.appendChild(li);
+        
+                const navigationBar = document.getElementById("nav");
+              handleUserNameElement(navigationBar);
+              handleLogoutElement(navigationBar);
+            } else {
+              console.log("No token found in localStorage. Staying on index page.");
+            }
+        }, 100);
     }
-  });
+  };
 
   function handleUserNameElement(navigationBar) {
     const user = localStorage.getItem("user");
@@ -282,6 +289,22 @@ document.addEventListener("DOMContentLoaded", function () {
         navigationBar.appendChild(logoutDiv);
     }
   }
+
+  function loadHTML(page) {
+    fetch(page)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(html => {
+            document.getElementById("nav-template").innerHTML = html;
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
 
   function logout() {
     localStorage.removeItem("authToken");
