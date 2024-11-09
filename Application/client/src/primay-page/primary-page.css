@@ -20,7 +20,6 @@
 .currency-switch {
   display: flex;
   align-items: center;
-  margin-left: 600px; /* Push the flags to the far right */
 }
 
 .currency-switch .flag {
