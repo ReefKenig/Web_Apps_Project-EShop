@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Map</title>
+    <style>
+        /* Style the map to take up space */
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Department Locations</h1>
+    <div id="map"></div>
+
+    <!-- Google Maps API -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzIyXAJ55W0uN0sRyd8AtTZCaNiEXXpdc&callback=initMap&v=weekly&libraries=marker&gmp=advanced&loading=async"
+        async
+        defer
+    ></script>
+    
+    <script>
+        let map;
+        let infoWindow;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 31.7683, lng: 35.2137 }, // Default center (Jerusalem)
+                zoom: 7.5,
+            });
+        
+            // Example color array
+            const colors = [
+                'red', 'green', 'blue', 'yellow', 'purple'];
+        
+            // Fetch department data from the backend API
+            fetch("http://localhost:3030/api/departments")
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.statusText}`);
+                    }
+                    return response.json(); // Parse the JSON data from the API response
+                })
+                .then((departments) => {
+                    departments.forEach((department, index) => {
+                        const { name, latitude, longitude, address, phoneNumber } = department;
+        
+                        if (latitude && longitude) {
+                            // Create content for the advanced marker
+                            const markerContent = document.createElement("div");
+                            markerContent.innerHTML = `
+                                <div style="background-color:white; color:black; padding:10px; border-radius:5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+                                    <strong>${name}</strong>
+                                    <p>${address.street}, ${address.city}, ${address.zipCode}</p>
+                                    <p><strong>Phone:</strong> ${phoneNumber || 'Not Available'}</p>
+                                </div>
+                            `;
+        
+                            // Create a unique icon for each marker based on the index
+                            const iconUrl = `http://maps.google.com/mapfiles/ms/icons/${colors[index % colors.length]}-dot.png`;
+        
+                            // Create the advanced marker with a custom icon
+                            const marker = new google.maps.Marker({
+                                map: map,
+                                position: { lat: latitude, lng: longitude },
+                                content: markerContent, // Custom HTML content
+                                title: name, // Hover title for the marker
+                                icon: iconUrl, // Set custom colored icon
+                            });
+        
+                            // Create an info window with department details
+                            const infoWindow = new google.maps.InfoWindow({
+                                content: markerContent,
+                            });
+        
+                            // Add event listener for mouseover to show the info window
+                            marker.addListener("mouseover", () => {
+                                infoWindow.open(map, marker);
+                            });
+        
+                            // Add event listener for mouseout to close the info window
+                            marker.addListener("mouseout", () => {
+                                infoWindow.close();
+                            });
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.error("There was a problem with the fetch operation:", error);
+                });
+        }
+    </script>
+</body>
+</html>
+</html>

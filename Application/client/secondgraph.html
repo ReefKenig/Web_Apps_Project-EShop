@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manufacturers and Car Numbers</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <h1>Manufacturers and Car Numbers</h1>
+  <svg width="1000" height="400"></svg>
+
+  <script>
+    // Fetch data from your backend API
+    fetch('http://localhost:3030/api/cars/chart-data')  // Fetch car data (car count by manufacturer)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);  // Check the data format
+        drawGraph(data);
+      })
+      .catch(err => console.error('Error fetching data:', err));
+
+    // Function to draw the graph
+    function drawGraph(data) {
+      const margin = { top: 20, right: 100, bottom: 100, left: 80 };
+      const width = 1000 - margin.left - margin.right;
+      const height = 400 - margin.top - margin.bottom;
+
+      const svg = d3.select("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // Set the X scale for manufacturers
+      const x = d3.scaleBand()
+        .domain(data.map(d => d.manufacturer))
+        .range([0, width])
+        .padding(0.3);
+
+      // Set the Y scale for car count
+      const y = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.carCount) || 1])  // Handle small or zero values
+        .nice()
+        .range([height, 0]);
+
+      // Append the bars for each manufacturer
+      svg.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", d => x(d.manufacturer))
+        .attr("y", d => y(d.carCount || 0))
+        .attr("width", x.bandwidth())
+        .attr("height", d => height - y(d.carCount || 0))  // Ensure height is positive
+        .attr("fill", "steelblue");
+
+      // Append the X-axis (manufacturer names)
+      svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .style("text-anchor", "middle")
+        .style("font-size", "12px");
+
+      // Append the Y-axis (car count)
+      svg.append("g")
+        .call(d3.axisLeft(y).ticks(5));
+
+      // Add title for the X axis (Manufacturers)
+      svg.append("text")
+        .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom - 10) + ")")
+        .style("text-anchor", "middle")
+        .text("Manufacturers");
+
+      // Add title for the Y axis (Car Count)
+      svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 20)
+        .attr("x", 0 - (height / 2))
+        .style("text-anchor", "middle")
+        .text("CarsByManufacturs");
+
+      // Append the car count numbers next to each bar on the right side
+      svg.selectAll(".label")
+        .data(data)
+        .enter().append("text")
+        .attr("class", "label")
+        .attr("x", d => x(d.manufacturer) + x.bandwidth() / 2)
+        .attr("y", d => y(d.carCount || 0) - 10)
+        .attr("text-anchor", "middle")
+        .text(d => d.carCount)
+        .style("font-size", "12px")
+        .style("fill", "black");
+    }
+  </script>
+</body>
+</html>

@@ -6,7 +6,7 @@ const Car = require("../models/cars");
 // Create a new order
 exports.createOrder = async (req, res) => {
   try {
-    const { userId, items, orderStatus, totalCost } = req.body;
+    const { userId, items, orderStatus, totalCost,purchaseDate } = req.body;
 
     // Check if userId is valid
     const userExists = await User.findById(userId);
@@ -15,13 +15,9 @@ exports.createOrder = async (req, res) => {
     }
 
     // Check if all car IDs in items are valid
-    for (const item of items) {
-      const carExists = await Car.findById(item.carId);
-      if (!carExists) {
-        return res
-          .status(404)
-          .json({ message: `Car with ID ${item.carId} not found` });
-      }
+    const carsExist = await Promise.all(items.map(item => Car.findById(item.carId)));
+    if (carsExist.includes(null)) {
+      return res.status(404).json({ message: "One or more cars not found" });
     }
 
     const order = new Order({
@@ -29,11 +25,13 @@ exports.createOrder = async (req, res) => {
       items,
       orderStatus,
       totalCost,
+      purchaseDate
     });
 
     const savedOrder = await order.save();
     res.status(201).json(savedOrder);
   } catch (error) {
+    console.error("Error creating order:", error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -61,6 +59,7 @@ exports.getOrderById = async (req, res) => {
     if (!order) return res.status(404).json({ message: "Order not found" });
     res.status(200).json(order);
   } catch (error) {
+    console.error("Error fetching order by ID:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -74,9 +73,58 @@ exports.getOrdersByUserId = async (req, res) => {
 
     res.status(200).json(orders);
   } catch (error) {
+    console.error("Error fetching orders by user ID:", error);
     res.status(500).json({ message: error.message });
   }
 };
+
+// Aggregation function to get total revenue by month for a specific year
+exports.getRevenueByMonth = async (req, res) => {
+  const year = parseInt(req.params.year, 10);
+  try {
+    const startDate = new Date(`${year}-01-01T00:00:00Z`);
+    const endDate = new Date(`${year + 1}-01-01T00:00:00Z`);
+
+    const revenueData = await Order.aggregate([
+      {
+        $match: {
+          purchaseDate: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+          orderStatus: { $in: ["Shipped", "Delivered"] }, 
+        }
+      },
+      {
+        $project: {
+          month: { $month: "$purchaseDate" }, 
+          totalCost: 1,
+        }
+      },
+      {
+        $group: {
+          _id: "$month", // Group by month
+          totalRevenue: { $sum: "$totalCost" },
+        }
+      },
+      { $sort: { _id: 1 } } // Sort by month in ascending order
+    ]);
+
+    res.status(200).json(
+      revenueData.map(d => ({
+        month: d._id,
+        totalRevenue: d.totalRevenue,
+      }))
+    );
+  } catch (err) {
+    console.error("Error in revenue aggregation:", err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+
+
 
 // Update order details
 exports.updateOrder = async (req, res) => {
@@ -87,8 +135,9 @@ exports.updateOrder = async (req, res) => {
       { new: true }
     );
 
-    if (!updatedOrder)
+    if (!updatedOrder) {
       return res.status(404).json({ message: "Order not found" });
+    }
 
     // Update the user's order history with the modified order
     await User.updateOne(
@@ -96,10 +145,9 @@ exports.updateOrder = async (req, res) => {
       { $set: { "orderHistory.$": updatedOrder } }
     );
 
-    res
-      .status(200)
-      .json({ message: "Order updated successfully", data: updatedOrder });
+    res.status(200).json({ message: "Order updated successfully", data: updatedOrder });
   } catch (error) {
+    console.error("Error updating order:", error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -107,9 +155,10 @@ exports.updateOrder = async (req, res) => {
 // Delete an order
 exports.deleteOrder = async (req, res) => {
   try {
-    const deletedOrder = await Order.findByIdAndDelete(req.params.orderId);
-    if (!deletedOrder)
+    const deletedOrder = await Order.findByIdAndDelete(req.params.id); // Consistent usage of id
+    if (!deletedOrder) {
       return res.status(404).json({ message: "Order not found" });
+    }
 
     // Remove the order from user's order history
     await User.updateOne(
@@ -119,6 +168,7 @@ exports.deleteOrder = async (req, res) => {
 
     res.status(200).json({ message: "Order deleted" });
   } catch (error) {
+    console.error("Error deleting order:", error);
     res.status(500).json({ message: error.message });
   }
 };
