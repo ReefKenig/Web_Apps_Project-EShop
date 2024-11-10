@@ -260,7 +260,7 @@ function handleUserNameElement(navigationBar) {
   const user = localStorage.getItem("user");
   const userInfo = JSON.parse(user);
   const userNameDiv = document.createElement("div");
-  userNameDiv.style.cssText = "max-width: 155px;";
+  userNameDiv.style.cssText = "max-width: 155px; margin-right: 5px";
   const userNameSpan = document.createElement("span");
   userNameSpan.style.color = "#b79d76";
   userNameSpan.textContent = `Welcome ${userInfo.firstName} ${userInfo.lastName}`;
