@@ -1,7 +1,5 @@
 const body = document.querySelector("body"),
-    // link = document.querySelector(".link-wrap"),
     links = document.querySelectorAll('a[href="#"]'),
-    nav = document.querySelector("header nav"),
     navToggle = document.querySelector("header nav .toggle"),
     navSpanMiddle = document.querySelector("header nav .toggle .middle"),
     navNavigationBar = document.querySelector("header nav .navigation-bar"),
@@ -19,7 +17,7 @@ const body = document.querySelector("body"),
     dotTwo = document.querySelector(".dots .two"),
     dotThree = document.querySelector(".dots .three"),
     dots = document.querySelectorAll(".dots > div"),
-    logoImage = document.querySelector("header nav .logo img"),
+    
     svgDown = document.querySelector("header .arrow-down"),
     svgUp = document.querySelector(".copyright .arrow-up"),
     menuImgs = document.querySelectorAll(".menu .menu-image-container img"),
@@ -29,9 +27,9 @@ const body = document.querySelector("body"),
     boxModelImage = document.querySelector(".menu .box-model img"),
     pageTitle = document.querySelector("title");
 
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'path/to/your/styles.css';
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = 'path/to/your/styles.css';
 
 // remove link
 function fadeOutEffect() {
@@ -82,28 +80,31 @@ svgUp?.addEventListener("click", () => {
 });
 
 window.onscroll = function() {
-    // make navbar fixed & change logo color
-    if (window.pageYOffset > headerSection.offsetHeight - 75) {
-        nav.classList.add("active");
-        logoImage.src = "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988525/logo-rosa.png";
-    } else {
-        nav.classList.remove("active");
-        logoImage.src = "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/logo-rosa-white.png";
-    }
+    // if(logoImage !== null) {
+        // make navbar fixed & change logo color
+        if (window.pageYOffset > headerSection?.offsetHeight - 75 ) {
+            nav?.classList.add("active");
+            logoImage.src = "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988525/logo-rosa.png";
+        } else {
+            nav?.classList.remove("active");
+            logoImage.src = "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/logo-rosa-white.png";
+        }
+    // }
 
     // header welcome fade out and in
-    if (window.pageYOffset > 0) {
+    if (window.pageYOffset > 0 && headerText !== null) {
         headerText.style.opacity = -window.pageYOffset / 300 + 1;
     }
+
     // home page JS
     if (pageTitle.text === "ROSA- Restaurant") {
         //change dots background color
-        if (window.pageYOffset < headerSection.offsetHeight * 0.5) {
+        if (window.pageYOffset < headerSection?.offsetHeight * 0.5) {
             dots.forEach(dot => dot.classList.remove("black"));
             dotTwo.classList.remove("active");
             dotOne.classList.add("active");
         } else if (
-            window.pageYOffset > headerSection.offsetHeight * 0.5 &&
+            window.pageYOffset > headerSection?.offsetHeight * 0.5 &&
             window.pageYOffset < recipeSection.offsetTop * 0.72
         ) {
             dots.forEach(dot => dot.classList.add("black"));
@@ -236,3 +237,77 @@ if (pageTitle.text === "ROSA- Restaurant") {
     window.addEventListener("click", boxModelFun);
     boxModelArrow.addEventListener("click", boxModelFun);
 }
+
+window.onload = function() {
+        loadHTML("http://127.0.0.1:3000/Application/public/header.html");
+
+
+        setTimeout(() => {
+            const token = localStorage.getItem("authToken");
+            console.log("Token found:", token);
+            if (token) {
+                let ul = document.getElementById('ul');
+                let li = document.createElement('li');
+                let a = document.createElement('a');
+                a.href = '/views/user/user-profile.html';
+                a.textContent = 'Profile';
+        
+                li.appendChild(a);
+                ul.appendChild(li);
+        
+                const navigationBar = document.getElementById("nav");
+              handleUserNameElement(navigationBar);
+              handleLogoutElement(navigationBar);
+            } else {
+              console.log("No token found in localStorage. Staying on index page.");
+            }
+        }, 100);
+  };
+
+  function handleUserNameElement(navigationBar) {
+    const user = localStorage.getItem("user");
+    const userInfo = JSON.parse(user);
+    const userNameDiv = document.createElement("div"); 
+    userNameDiv.style.cssText = "max-width: 155px;";
+    const userNameSpan = document.createElement("span");
+    userNameSpan.style.color = '#b79d76';
+    userNameSpan.textContent = `Welcome ${userInfo.firstName} ${userInfo.lastName}`
+    userNameDiv.appendChild(userNameSpan);
+    navigationBar.appendChild(userNameDiv);
+  }
+
+  function handleLogoutElement(navigationBar) {
+    const registerLi = document.getElementById("register");
+    if (registerLi) {
+      registerLi.remove();
+      const logoutDiv = document.createElement("div"); 
+        const logoutButton = document.createElement("button");
+        logoutButton.textContent = "Logout";
+        logoutButton.classList.add("logout-button");
+        logoutButton.onclick = logout;
+        logoutDiv.appendChild(logoutButton);
+        navigationBar.appendChild(logoutDiv);
+    }
+  }
+
+  function loadHTML(page) {
+    fetch(page)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(html => {
+            document.getElementById("nav-template").innerHTML = html;
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+
+  function logout() {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    window.location.href = "index.html";
+  }

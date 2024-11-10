@@ -12,66 +12,52 @@
     <!-- Header -->
     <header class="static-header">
     <div id="content">
-        <nav>
-            <div class="logo">
-                <a href="../../index.html"><img src="https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/logo-rosa-white.png" alt="Rosa Logo"></a>
+        <div id="nav-template"></div>
+    </header>
+<div class="dropdown-filter">
+    <div class="container">
+        <div class="box">
+            <div style="display: flex; align-items: center;">
+                <span class="title">Filter</span>
+                <?xml version="1.0" ?><svg height="30" viewBox="0 0 1792 1792" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M1595 295q17 41-14 70l-493 493v742q0 42-39 59-13 5-25 5-27 0-45-19l-256-256q-19-19-19-45v-486l-493-493q-31-29-14-70 17-39 59-39h1280q42 0 59 39z"/></svg>
             </div>
-
-            <div class="navigation-bar">
-                <ul>
-                    <li><a href="../../index.html">Home<span class="underline"></span></a></li>
-                    <li class="active"><a href="./primary-page.html">Shop<span class="underline"></span></a></li>
-                    <li><a href="../Register-Page/Register-Page.html">Register<span class="underline"></span></a></li>
-                    <li><a href="../contact-us/contact-us.html">Contact<span class="underline"></span></a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-        <div class="dropdown-filter">
-            <div class="container">
-                <div class="box">
-                    <div style="display: flex; align-items: center;">
-                        <span class="title">Filter</span>
-                        <?xml version="1.0" ?><svg height="30" viewBox="0 0 1792 1792" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M1595 295q17 41-14 70l-493 493v742q0 42-39 59-13 5-25 5-27 0-45-19l-256-256q-19-19-19-45v-486l-493-493q-31-29-14-70 17-39 59-39h1280q42 0 59 39z"/></svg>
-                    </div>
-                    <div class="filter-options">
-                        <p id="Manufacturer">Manufacturer:</p>
-                        <p id="Model">Model:</p>
-                        <p id="Color">Color:</p>
-                        <p id="Year-of-Manufacturing">Year of Manufacturing:</p>
-                        <p>Price Range:</p>
-                        <label>From:</label>
-                        <!-- <input type="number" class="price" id="lValue" class="p-input"> -->
-                        <div class="input-container">
-                            <input type="number" id="lValue" required="">
-                            <label for="lValue" class="label">Mininum Price</label>
-                            <div class="underline"></div>
-                          </div>
-                        <label>To:</label>
-                        <!-- <input type="number" class="price" id="hValue" class="p-input"> -->
-                        <div class="input-container">
-                            <input type="number" id="hValue" required="">
-                            <label for="hValue" class="label">Maximum Price</label>
-                            <div class="underline"></div>
-                          </div>
-                        <p>Sort By:</p>
-                        <div class="radio-input">
-                            <form>
-                                <div style="display: flex; align-items: center;">
-                                    <input id="pAsc" name="radio" type="radio" class="input" checked="">
-                                    <label for="pAsc">Ascending</label>
-                                </div>
-                                <div style="display: flex; align-items: center;">
-                            <input id="pDesc" name="radio" type="radio" class="input" value="Asc">
-                            <label for="pDesc">Descendnig</label>
+            <div class="filter-options">
+                <p id="Manufacturer">Manufacturer:</p>
+                <p id="Model">Model:</p>
+                <p id="Color">Color:</p>
+                <p id="Year-of-Manufacturing">Year of Manufacturing:</p>
+                <p>Price Range:</p>
+                <label>From:</label>
+                <!-- <input type="number" class="price" id="lValue" class="p-input"> -->
+                <div class="input-container">
+                    <input type="number" id="lValue" required="">
+                    <label for="lValue" class="label">Mininum Price</label>
+                    <div class="underline"></div>
+                  </div>
+                <label>To:</label>
+                <!-- <input type="number" class="price" id="hValue" class="p-input"> -->
+                <div class="input-container">
+                    <input type="number" id="hValue" required="">
+                    <label for="hValue" class="label">Maximum Price</label>
+                    <div class="underline"></div>
+                  </div>
+                <p>Sort By:</p>
+                <div class="radio-input">
+                    <form>
+                        <div style="display: flex; align-items: center;">
+                            <input id="pAsc" name="radio" type="radio" class="input" checked="">
+                            <label for="pAsc">Ascending</label>
                         </div>
-                        </form>
-                        </div>
-                    </div>
+                        <div style="display: flex; align-items: center;">
+                    <input id="pDesc" name="radio" type="radio" class="input" value="Asc">
+                    <label for="pDesc">Descendnig</label>
                 </div>
+                </form>
+                </div>
+            </div>
         </div>
     </div>
-
+</div>
 
 <form class="form-search">
     <label for="search">
@@ -90,9 +76,12 @@
             </svg>
         </button>
     </label>
-</form>
+</form>.
+
+
     </header>
     <div id="car-output"></div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src='./primary-page.js'></script>
     <script src='../../index.js'></script>

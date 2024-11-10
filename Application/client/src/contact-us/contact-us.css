@@ -161,4 +161,13 @@
       line-height: 34px;
     }
   }
+
+  li {
+    list-style-type: none;
+  }
+
+  a {
+    color: #ffff;
+    font-size: larger;
+  }
   

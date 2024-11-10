@@ -32,6 +32,7 @@ const carSchema = new mongoose.Schema(
         },
       },
     },
+    description: { type: String },
   },
   { timestamps: true }
 );

@@ -1,0 +1,46 @@
+.static-header {
+    height: calc(20vh - 22px);
+    padding: 20px 70px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    font-family: Cabin, sans-serif;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    margin: 0;
+    font-family: source_sans_problack, sans-serif;
+    color: #c9a875;
+}
+
+h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h4 {
+    font-size: 30px;
+    color: #ffff;
+}
+
+p {
+    color: #ffff;
+}
+
+.order-history {
+    margin: 10px;
+}
+
+.order {
+    background: #57524aa6;
+    border-radius: 25px;
+    padding: 10px 30px;
+    margin-bottom: 30px;
+}

@@ -1,11 +1,12 @@
 const Order = require("../models/orders");
 const User = require("../models/users");
 const Car = require("../models/cars");
+const { createOrderFilters } = require("../helpers/filters");
 
 // Create a new order
 exports.createOrder = async (req, res) => {
   try {
-    const { userId, items, orderStatus, totalCost,purchaseDate } = req.body;
+    const { userId, items, orderStatus, totalCost, purchaseDate } = req.body;
 
     // Check if userId is valid
     const userExists = await User.findById(userId);
@@ -14,7 +15,9 @@ exports.createOrder = async (req, res) => {
     }
 
     // Check if all car IDs in items are valid
-    const carsExist = await Promise.all(items.map(item => Car.findById(item.carId)));
+    const carsExist = await Promise.all(
+      items.map((item) => Car.findById(item.carId))
+    );
     if (carsExist.includes(null)) {
       return res.status(404).json({ message: "One or more cars not found" });
     }
@@ -24,7 +27,7 @@ exports.createOrder = async (req, res) => {
       items,
       orderStatus,
       totalCost,
-      purchaseDate
+      purchaseDate,
     });
 
     const savedOrder = await order.save();
@@ -35,17 +38,18 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.getAllOrders = async (req, res) => {
+exports.getOrders = async (req, res) => {
   try {
-    // Populate user details and car details in items
-    const Orders = await Order.find({})
-      .populate("userId")
-      .populate("items.carId");
+    const user = req.user; // Assume `req.user` contains `userId` and `isAdmin`
+    const query = req.query;
+    const filters = createOrderFilters(query, user);
 
-    res.status(200).json(Orders);
+    const orders = await Order.find(filters);
+    res.json(orders);
   } catch (error) {
-    console.error("Error fetching orders:", error);
-    res.status(500).json({ message: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching orders", error: error.message });
   }
 };
 
@@ -62,68 +66,6 @@ exports.getOrderById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-// Get orders by user ID
-exports.getOrdersByUserId = async (req, res) => {
-  try {
-    const orders = await Order.find({ userId: req.params.id }).populate(
-      "items.carId"
-    );
-
-    res.status(200).json(orders);
-  } catch (error) {
-    console.error("Error fetching orders by user ID:", error);
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Aggregation function to get total revenue by month for a specific year
-exports.getRevenueByMonth = async (req, res) => {
-  const year = parseInt(req.params.year, 10);
-  try {
-    const startDate = new Date(`${year}-01-01T00:00:00Z`);
-    const endDate = new Date(`${year + 1}-01-01T00:00:00Z`);
-
-    const revenueData = await Order.aggregate([
-      {
-        $match: {
-          purchaseDate: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-          orderStatus: { $in: ["Shipped", "Delivered"] }, 
-        }
-      },
-      {
-        $project: {
-          month: { $month: "$purchaseDate" }, 
-          totalCost: 1,
-        }
-      },
-      {
-        $group: {
-          _id: "$month", // Group by month
-          totalRevenue: { $sum: "$totalCost" },
-        }
-      },
-      { $sort: { _id: 1 } } // Sort by month in ascending order
-    ]);
-
-    res.status(200).json(
-      revenueData.map(d => ({
-        month: d._id,
-        totalRevenue: d.totalRevenue,
-      }))
-    );
-  } catch (err) {
-    console.error("Error in revenue aggregation:", err);
-    res.status(500).json({ message: err.message });
-  }
-};
-
-
-
-
 
 // Update order details
 exports.updateOrder = async (req, res) => {
@@ -144,7 +86,9 @@ exports.updateOrder = async (req, res) => {
       { $set: { "orderHistory.$": updatedOrder } }
     );
 
-    res.status(200).json({ message: "Order updated successfully", data: updatedOrder });
+    res
+      .status(200)
+      .json({ message: "Order updated successfully", data: updatedOrder });
   } catch (error) {
     console.error("Error updating order:", error);
     res.status(400).json({ message: error.message });
@@ -168,6 +112,18 @@ exports.deleteOrder = async (req, res) => {
     res.status(200).json({ message: "Order deleted" });
   } catch (error) {
     console.error("Error deleting order:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get orders by user ID
+exports.getOrdersByUserId = async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.params.id }).populate(
+      "items.carId"
+    );
+    res.status(200).json(orders);
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
