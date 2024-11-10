@@ -19,7 +19,7 @@ app.use(cors());
 
 // Middleware
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 // Routes
 app.use("/api/cars", carRoutes);
@@ -38,14 +38,14 @@ app.listen(process.env.PORT || 3030, () => {
   console.log(`Server listening on port ${process.env.PORT || 3030}`);
 });
 
-app.get('/api/header', (req, res) => {
-  const headerPath = path.join(__dirname, 'public/header.html');
-  
+app.get("/api/header", (req, res) => {
+  const headerPath = path.join(__dirname, "public/header.html");
+
   // Read the header HTML file and send its content as the response
-  fs.readFile(headerPath, 'utf8', (err, data) => {
+  fs.readFile(headerPath, "utf8", (err, data) => {
     if (err) {
-      console.error('Error reading header file:', err);
-      return res.status(500).send('Error loading header');
+      console.error("Error reading header file:", err);
+      return res.status(500).send("Error loading header");
     }
     res.send(data);
   });

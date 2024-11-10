@@ -240,7 +240,7 @@ if (pageTitle.text === "ROSA- Restaurant") {
 }
 
 window.onload = function () {
-  loadHTML("http://127.0.0.1:3030/Application/client/header.html");
+  loadHTML("/header.html");
 
   setTimeout(() => {
     const token = localStorage.getItem("authToken");

@@ -1,7 +1,7 @@
 const apiUrl = "http://localhost:3030/api/users/register";
 
 document.addEventListener("DOMContentLoaded", function () {
-  // loadHTML("../header/header.html");
+  loadHTML("/header.html");
   handleLinksLocation();
   const form = document.getElementById("form");
   const submitBtn = document.getElementById("submitBtn");

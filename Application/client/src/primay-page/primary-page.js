@@ -4,7 +4,7 @@ let originalPrices = []; // Array to store the original prices of cars
 
 document.addEventListener("DOMContentLoaded", function () {
   if (window.location.pathname.includes("/primary-page.html")) {
-    // loadHTML("../header/header.html");
+    loadHTML("/header.html");
     handleLinksLocation();
     loadPage();
   }

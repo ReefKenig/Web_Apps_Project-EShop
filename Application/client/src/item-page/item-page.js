@@ -4,7 +4,7 @@ function selectPicture(imageSrc) {
 
 document.addEventListener("DOMContentLoaded", function () {
   if (window.location.pathname.includes("item-page")) {
-    loadHTML("../header/header.html");
+    loadHTML("/header.html");
     handleLinksLocation();
   }
 });
