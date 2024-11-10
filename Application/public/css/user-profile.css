@@ -44,3 +44,13 @@ p {
     padding: 10px 30px;
     margin-bottom: 30px;
 }
+
+.adminLinks {
+    flex-direction: column;
+    align-items: center;
+}
+
+a {
+    font-family: Cabin, sans-serif;
+    color: #ffff;
+}

@@ -1,8 +1,8 @@
 window.onload = function() {
     if (window.location.pathname.includes("/user/user-profile.html")) {
-        loadHTMLForUserProfile("/header.html");
-        handleLinksLocation();
-        loadPage();
+      loadHTMLForUserProfile("/header.html");
+      handleLinksLocation();
+      loadPage();
     }
   };
   
@@ -16,6 +16,9 @@ window.onload = function() {
         const email = document.getElementById("email");
         name.textContent = `${userInfo.firstName} ${userInfo.lastName}`;
         email.textContent = userInfo.email;
+        if (userInfo.isAdmin) {
+          document.getElementById('adminLinks').style.display = 'flex';
+        }
     } else {
       console.log("No user or password found in localStorage.");
     }
