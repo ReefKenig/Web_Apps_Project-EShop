@@ -146,19 +146,6 @@ function loadHTML(page) {
     });
 }
 
-function generateCarTemplate(
-  _id,
-  carImage,
-  carManufacturer,
-  carModel,
-  Price,
-  yearOfManufacture
-) {
-  // Create a container div
-  const sender = document.createElement("a");
-  sender.href = "../item-page/item-page.html";
-  sender.className = "a";
-}
 // Function to fetch exchange rate from the ExchangeRateAPI
 async function fetchExchangeRate(currency) {
   const apiKey = "a1fde19d71f04b2786ada2c0"; // Replace with your ExchangeRateAPI key

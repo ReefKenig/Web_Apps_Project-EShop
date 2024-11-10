@@ -1,8 +1,8 @@
 window.onload = function() {
     if (window.location.pathname.includes("/user/user-profile.html")) {
-        loadHTMLForUserProfile("../../public/header.html");
-        handleLinksLocation();
-        loadPage();
+      loadHTMLForUserProfile("/header.html");
+      handleLinksLocation();
+      loadPage();
     }
   };
   
@@ -16,6 +16,9 @@ window.onload = function() {
         const email = document.getElementById("email");
         name.textContent = `${userInfo.firstName} ${userInfo.lastName}`;
         email.textContent = userInfo.email;
+        if (userInfo.isAdmin) {
+          document.getElementById('adminLinks').style.display = 'flex';
+        }
     } else {
       console.log("No user or password found in localStorage.");
     }
@@ -47,6 +50,12 @@ window.onload = function() {
         logoutDiv.appendChild(logoutButton);
         navigationBar.appendChild(logoutDiv);
     }
+  }
+
+  function logout() {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    window.location.href = "/index.html";
   }
 
   async function getOrderHistory(userId) {
@@ -130,10 +139,10 @@ function handleLinksLocation() {
     const shop = document.getElementById('shop');
     const contact = document.getElementById('contact');
 
-    home.href = '../../client/index.html';
-    logo.href = '../../client/index.html';
-    shop.href = '../../client/src/primay-page/primary-page.html';
-    contact.href = '../../client/src/contact-us/contact-us.html';
+    home.href = '/index.html';
+    logo.href = '/index.html';
+    shop.href = '/src/primay-page/primary-page.html';
+    contact.href = '/src/contact-us/contact-us.html';
 
     const navigationBar = document.getElementById("nav");
     handleUserNameElement(navigationBar);

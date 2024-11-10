@@ -22,55 +22,47 @@
       href="./item-page.css"
     />
     <title>Element</title>
-  </head>
-  <body>
+</head>
+<body>
     <header class="static-header">
-      <div id="content">
+        <div id="content">
           <div id="nav-template"></div>
-      </header>
-    <div class="template container">
-      <div class="box">
-        <div class="pictures">
-          <div class="picture-menu container">
-            <div class="box">
-              <img
-                src="https://i.ytimg.com/vi/j6dGEH6vzJc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBx-0YyhS6E5PpJ2rgjiubV1DACNg"
-                onclick="selectPicture('https:/' + '/i.ytimg.com/vi/j6dGEH6vzJc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBx-0YyhS6E5PpJ2rgjiubV1DACNg')"
-              />
-              <img
-                src="https://lwr-shop.de/wp-content/uploads/2018/08/lwr_lada_nova-scaled.jpg"
-                onclick="selectPicture('https:/' + '/lwr-shop.de/wp-content/uploads/2018/08/lwr_lada_nova-scaled.jpg')"
-              />
-              <img
-                src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2018/07/04/17/lada-riva-estate.jpg?width=1200"
-                onclick="selectPicture('https:/' + '/static.independent.co.uk/s3fs-public/thumbnails/image/2018/07/04/17/lada-riva-estate.jpg?width=1200')"
-              />
-            </div>
-          </div>
-          <div class="selected-picture container">
-            <div class="box">
-              <img
-                id="main-picture"
-                src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Lada_2107_aka_Lada_Riva_October_1995_1452cc.jpg"
-              />
-            </div>
-          </div>
-        </div>
+                <div class="template container">
+                    <div class="box">
+                        <div class="main">
+                        <div class="pictures">
+                            <div class="selected-picture container">
+                                <div class="box">
+                                    <img id="main-picture">
+                                </div>
+                            </div>
+                        </div>
 
-        <div class="description container">
-          <div class="box">
-            <span>Lorem, ipsum.</span>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,
-              maxime? Labore cum voluptate perspiciatis rerum culpa, rem ullam
-              cumque adipisci nesciunt, fuga vitae deleniti? Praesentium ipsum
-              et rem voluptatum distinctio?
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+                        <div class="description container">
+                            <div class="box">
+                                <span id="des-name"></span>
+                                <p id="des-content"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buy container">
+                        <div class="box">
+                            <span id="price" class="underline"></span>
+                            <button class="buy-now">Buy Now!</button>
+                            <span>Or</span>
+                            <button class="buy-now">Add to Cart</button>
 
-    <script src="./item-page.js"></script>
-  </body>
+                        </div>
+
+                </div>
+
+                        </div>
+
+                        </div>
+
+        </header>
+
+        <script  src="./item-page.js"></script>
+        <script  src="../../index.js"></script>
+</body>
 </html>

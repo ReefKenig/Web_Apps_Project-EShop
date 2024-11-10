@@ -66,13 +66,8 @@ const createCarFilters = (body) => {
   return filters;
 };
 
-const createOrderFilters = (query, user) => {
+const createOrderFilters = (query, isAdmin) => {
   const filters = {};
-
-  // Allow admins to view all orders, restrict regular users to their own orders
-  if (!user.isAdmin) {
-    filters.userId = user.userId; // only show orders belonging to the user
-  }
 
   for (const [key, value] of Object.entries(query)) {
     if (key === "totalCost") {

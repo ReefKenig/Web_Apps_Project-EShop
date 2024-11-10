@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel='stylesheet' type='text/css' media='screen' href='../../client/index.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../../public/css/user-profile.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/index.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/user-profile.css'>
 </head>
 <body>
         <header class="static-header">
@@ -20,17 +20,22 @@
                         <h2 id="name"></h2>
                     </div>
                     <div>
-                        <p id="email"></p>
+                        <h3 id="email"></h3>
                     </div>
                 </div>
             </div>
+            <div class="adminLinks" id="adminLinks" style="display: none;">
+                <div>
+                  <a href="/views/admin/admin-dashboard-analytics.html">Go to admin dashboard</a>
+                </div>
+              </div>
         </section>
         <hr>
         <h1>Order History</h1>
     <div id="orderHistory" class="order-history"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../../client/index.js"></script>
-    <script src="../../public/js/user-profile.js"></script>
+    <script src="/index.js"></script>
+    <script src="/js/user-profile.js"></script>
 </body>
 </html>

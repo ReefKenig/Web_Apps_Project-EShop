@@ -6,7 +6,7 @@ const router = express.Router();
 // Create a new order
 router.post("/", orderController.createOrder);
 
-router.get("/search", orderController.getOrders);
+router.post("/search", orderController.getOrders);
 
 // Get order by ID
 router.get("/:id", orderController.getOrderById);
@@ -18,5 +18,8 @@ router.put("/:id", orderController.updateOrder);
 router.delete("/:id", orderController.deleteOrder);
 
 router.get('/user/:id', orderController.getOrdersByUserId);
+
+// Get total revenue by month for a specific year
+router.get('/revenue/:year',orderController.getRevenueByMonth);
 
 module.exports = router;
