@@ -1,7 +1,7 @@
 const apiUrl = "http://localhost:3030/api/users/login";
 
 document.addEventListener("DOMContentLoaded", function () {
-  loadHTML("http://127.0.0.1:3000/Application/public/header.html");
+  // loadHTML("http://127.0.0.1:3000/Application/public/header.html");
   handleLinksLocation();
 
   const form = document.getElementById("form");
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add event listeners to each input to check on input change
   inputs.forEach((input) => input.addEventListener("input", checkInputs));
-  inputs.forEach(input => input.addEventListener("input", checkInputs));
+  inputs.forEach((input) => input.addEventListener("input", checkInputs));
 
   // Add event listener to the form for handling submit
   form.addEventListener("submit", handleSubmit);
@@ -96,12 +96,11 @@ function handleLinksLocation() {
     register.href = "../register-page/Register-Page.html";
     contact.href = "../contact-us/contact-us.html";
   }, 100);
-    home.href = '../../index.html';
-    logo.href = '../../index.html';
-    shop.href = '../primay-page/primary-page.html';
-    register.href = '../register-page/Register-Page.html';
-    contact.href = '../contact-us/contact-us.html';
-  }, 100);
+  home.href = "../../index.html";
+  logo.href = "../../index.html";
+  shop.href = "../primay-page/primary-page.html";
+  register.href = "../register-page/Register-Page.html";
+  contact.href = "../contact-us/contact-us.html";
 }
 
 // Function to load HTML content into the page (like header)
@@ -123,4 +122,3 @@ function loadHTML(page) {
       );
     });
 }
-
