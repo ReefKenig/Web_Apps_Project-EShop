@@ -21,6 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 app.use('/views', express.static('views'));
+app.use('/assets', express.static(path.join(__dirname, 'client/src/assets')))
 
 // Routes
 app.use("/api/cars", carRoutes);

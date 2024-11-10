@@ -84,21 +84,15 @@ window.onscroll = function () {
     const headerText = document.querySelector("header .text");
   if (window.pageYOffset > headerSection?.offsetHeight - 75) {
     nav?.classList.add("active");
-    logoImage.src =
-      "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988525/logo-rosa.png";
   } else {
     nav?.classList.remove("active");
-    logoImage.src =
-      "https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/logo-rosa-white.png";
   }
-  // }
 
   // header welcome fade out and in
   if (window.pageYOffset > 0 && headerText !== null) {
     headerText.style.opacity = -window.pageYOffset / 300 + 1;
   }
 
-  // home page JS
   if (pageTitle.text === "ROSA- Restaurant") {
     //change dots background color
     if (window.pageYOffset < headerSection?.offsetHeight * 0.5) {
@@ -243,7 +237,6 @@ window.onload = function () {
 
   setTimeout(() => {
     const token = localStorage.getItem("authToken");
-    console.log("Token found:", token);
     if (token) {
       let ul = document.getElementById("ul");
       let li = document.createElement("li");

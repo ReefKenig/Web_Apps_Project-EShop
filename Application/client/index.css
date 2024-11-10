@@ -857,6 +857,12 @@ header .arrow-down {
   background: url("https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/arrow-down.png")
     no-repeat center;
 }
+
+.logo2 {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
 /*End Header*/
 
 /*Start About-Us*/
