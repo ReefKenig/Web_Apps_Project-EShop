@@ -39,13 +39,16 @@ exports.createOrder = async (req, res) => {
 };
 
 exports.getOrders = async (req, res) => {
-  try {
-    const user = req.user; // Assume `req.user` contains `userId` and `isAdmin`
+  try { 
     const query = req.query;
-    const filters = createOrderFilters(query, user);
+    if(req.body.isAdmin) {
+      const filters = createOrderFilters(query, req.body.isAdmin);
+      const orders = await Order.find(filters);
+      res.json(orders);
+    } else {
+      res.status(500).json({ message: "Error fetching orders - the user is not admin", error: error.message });
+    }
 
-    const orders = await Order.find(filters);
-    res.json(orders);
   } catch (error) {
     res
       .status(500)
@@ -125,5 +128,48 @@ exports.getOrdersByUserId = async (req, res) => {
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getRevenueByMonth = async (req, res) => {
+  const year = parseInt(req.params.year, 10);
+  try {
+    const startDate = new Date(`${year}-01-01T00:00:00Z`);
+    const endDate = new Date(`${year + 1}-01-01T00:00:00Z`);
+
+    const revenueData = await Order.aggregate([
+      {
+        $match: {
+          purchaseDate: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+          orderStatus: { $in: ["Shipped", "Delivered"] }, 
+        }
+      },
+      {
+        $project: {
+          month: { $month: "$purchaseDate" }, 
+          totalCost: 1,
+        }
+      },
+      {
+        $group: {
+          _id: "$month", // Group by month
+          totalRevenue: { $sum: "$totalCost" },
+        }
+      },
+      { $sort: { _id: 1 } } // Sort by month in ascending order
+    ]);
+
+    res.status(200).json(
+      revenueData.map(d => ({
+        month: d._id,
+        totalRevenue: d.totalRevenue,
+      }))
+    );
+  } catch (err) {
+    console.error("Error in revenue aggregation:", err);
+    res.status(500).json({ message: err.message });
   }
 };

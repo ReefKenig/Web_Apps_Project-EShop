@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/admin-dashboard.css'>
+    <title>Admin Dashboard</title>
+</head>
+<body onload="loadPage()">
+        <div id="content" class="container">
+            <!-- Sidebar Section -->
+            <aside>
+                <div class="toggle">
+                    <div class="logo">
+                        <a href="/index.html">
+                            <img src="/src/assets/logo.png">
+                        </a>
+                        <h2>Wheel&<span class="danger">&Deal</span></h2>
+                    </div>
+                    <div class="close" id="close-btn">
+                        <span class="material-icons-sharp">
+                            close
+                        </span>
+                    </div>
+                </div>
+
+                <div class="sidebar">
+                    <a href="#">
+                        <span class="material-icons-sharp">
+                            dashboard
+                        </span>
+                        <h3>Dashboard</h3>
+                    </a>
+                    <a href="./admin-dashboard-users.html"  class="active">
+                        <span class="material-icons-sharp">
+                            person_outline
+                        </span>
+                        <h3>Users</h3>
+                    </a>
+                    <a href="#">
+                        <span class="material-icons-sharp">
+                            receipt_long
+                        </span>
+                        <h3>History</h3>
+                    </a>
+                    <a href="./admin-dashboard-analytics.html">
+                        <span class="material-icons-sharp">
+                            insights
+                        </span>
+                        <h3>Analytics</h3>
+                    </a>
+
+                    </a>
+
+                    </a>
+                    <a href="/index.html">
+                        <span class="material-icons-sharp">
+                            meeting_room
+                        </span>
+                        <h3>Home Page</h3>
+                    </a>
+
+                    </a>
+                    <a href="#">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+                </div>
+                <!-- End of Sidebar Section -->
+            </aside>
+
+            <main class="center">
+                <div class="users" id="users">
+                </div>
+            </main>
+        </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/admin/admin-dashboard-users.js"></script>
+</body>
+</html>
