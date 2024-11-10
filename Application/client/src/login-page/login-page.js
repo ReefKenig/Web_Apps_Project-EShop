@@ -9,16 +9,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to check if all inputs have values
   function checkInputs() {
-    const allFilled = inputs.every(input => input.value.trim() !== "");
+    const allFilled = inputs.every((input) => input.value.trim() !== "");
     submitBtn.disabled = !allFilled;
   }
 
   // Add event listeners to each input to check on input change
-  inputs.forEach(input => input.addEventListener("input", checkInputs));
+  inputs.forEach((input) => input.addEventListener("input", checkInputs));
 });
 
 function handleSubmit(event) {
-    event.preventDefault();
+  event.preventDefault();
+  onLogin();
 }
 
 async function onLogin() {
@@ -26,8 +27,8 @@ async function onLogin() {
   const password = document.getElementById("password").value;
   const loginInfo = {
     email,
-    password
-  }
+    password,
+  };
   await login(loginInfo);
 }
 
@@ -36,15 +37,16 @@ async function login(loginInfo) {
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(loginInfo)
+      body: JSON.stringify(loginInfo),
     });
 
     if (!response.ok) {
       throw new Error("Error login: " + response.statusText);
     }
     const data = await response.json();
+    console.log("Login response data:", data); // Log to check if data is correct
     handleLocalStorage(data);
   } catch (error) {
     console.error("Error:", error);
@@ -55,12 +57,13 @@ function handleLocalStorage(data) {
   if (data.token) {
     localStorage.setItem("authToken", data.token);
     const userInfo = {
-      id: data.user._id,
-      firstName: data.user.firstName,
-      lastName: data.user.lastName,
-      email: data.user.email,
-      isAdmin: data.user.isAdmin
+      id: data.user?._id, // Using optional chaining in case data.user is undefined
+      firstName: data.user?.firstName,
+      lastName: data.user?.lastName,
+      email: data.user?.email,
+      isAdmin: data.user?.isAdmin,
     };
+    console.log("Storing user info in localStorage:", userInfo); // Check userInfo data
     localStorage.setItem("user", JSON.stringify(userInfo));
     window.location.href = "../../index.html";
   } else {
@@ -70,32 +73,35 @@ function handleLocalStorage(data) {
 
 function handleLinksLocation() {
   setTimeout(() => {
-    const home = document.getElementById('home');
-    const logo = document.getElementById('logo');
-    const shop = document.getElementById('shop');
-    const register = document.getElementById('register2');
-    const contact = document.getElementById('contact');
+    const home = document.getElementById("home");
+    const logo = document.getElementById("logo");
+    const shop = document.getElementById("shop");
+    const register = document.getElementById("register2");
+    const contact = document.getElementById("contact");
 
-    home.href = '../../index.html';
-    logo.href = '../../index.html';
-    shop.href = '../primay-page/primary-page.html';
-    register.href = '../register-page/Register-Page.html';
-    contact.href = '../contact-us/contact-us.html';
-}, 100);
+    home.href = "../../index.html";
+    logo.href = "../../index.html";
+    shop.href = "../primay-page/primary-page.html";
+    register.href = "../register-page/Register-Page.html";
+    contact.href = "../contact-us/contact-us.html";
+  }, 100);
 }
 
 function loadHTML(page) {
   fetch(page)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.text();
-      })
-      .then(html => {
-          document.getElementById("nav-template").innerHTML = html;
-      })
-      .catch(error => {
-          console.error('There has been a problem with your fetch operation:', error);
-      });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.text();
+    })
+    .then((html) => {
+      document.getElementById("nav-template").innerHTML = html;
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    });
 }
