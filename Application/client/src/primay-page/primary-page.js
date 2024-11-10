@@ -34,8 +34,8 @@ async function loadPage() {
 
 // Function to fetch exchange rate from the ExchangeRateAPI
 async function fetchExchangeRate(currency) {
-  const apiKey = '371bf7bb3f3aff589d68d64b';  // Replace with your ExchangeRateAPI key
-  const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;  // Fetching rates based on USD
+  const apiKey = 'a1fde19d71f04b2786ada2c0';  // Replace with your ExchangeRateAPI key
+  const url = `https://v6.exchangerate-api.com/v6/a1fde19d71f04b2786ada2c0/latest/USD`;  // Fetching rates based on USD
   try {
     const response = await fetch(url);
     const data = await response.json();
