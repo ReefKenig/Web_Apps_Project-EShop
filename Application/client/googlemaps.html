@@ -38,7 +38,7 @@
                 'red', 'green', 'blue', 'yellow', 'purple'];
         
             // Fetch department data from the backend API
-            fetch("http://localhost:3030/api/departments")
+            fetch("http://localhost:3030/api/departments/search")
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error(`Network response was not ok: ${response.statusText}`);
