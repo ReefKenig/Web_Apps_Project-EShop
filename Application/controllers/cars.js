@@ -14,8 +14,6 @@ exports.createCar = async (req, res) => {
 
 exports.filterCars = async (req, res) => {
   try {
-    console.log(req.body);
-
     const filters = createCarFilters(req.body); // Filters are now retrieved from req.body
 
     const cars = await Car.find(filters, "-__v");

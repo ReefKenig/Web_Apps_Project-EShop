@@ -24,7 +24,6 @@ document.getElementById("applyFilters").addEventListener("click", function () {
       document.getElementById("hValue").value === ""
         ? "9999999"
         : document.getElementById("hValue").value,
-    sortOrder: document.querySelector("input[name='sortOrder']:checked").value,
   };
 
   fetch("http://localhost:3030/api/cars/filter", {
@@ -36,7 +35,7 @@ document.getElementById("applyFilters").addEventListener("click", function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Filtered cars:", data);
+      generateGrid(data);
     })
     .catch((error) => {
       console.error("Error:", error);

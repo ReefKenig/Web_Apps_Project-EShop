@@ -63,8 +63,6 @@ const createCarFilters = (body) => {
       }
     }
   }
-  console.log(filters);
-
   return filters;
 };
 
