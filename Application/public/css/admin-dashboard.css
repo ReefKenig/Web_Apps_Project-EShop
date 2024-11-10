@@ -281,3 +281,26 @@ aside .sidebar a:hover span{
     transform: rotate(90deg) scale(1.2);
 }
 
+.users{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: center;
+    align-items: center;
+    gap: 5rem;
+    margin-left: 3rem;
+    border: 1px solid var(--color-danger);
+    border-radius: var(--border-radius-1);
+}
+
+.user{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-left: 1rem;
+}
+
+.center{
+    display: flex;
+    align-items: center;
+}
