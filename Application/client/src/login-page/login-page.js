@@ -1,8 +1,9 @@
 const apiUrl = "http://localhost:3030/api/users/login";
 
 document.addEventListener("DOMContentLoaded", function () {
-  loadHTML("../../../public/header.html");
+  loadHTML("http://127.0.0.1:3000/Application/public/header.html");
   handleLinksLocation();
+
   const form = document.getElementById("form");
   const submitBtn = document.getElementById("submitBtn");
   const inputs = Array.from(form.querySelectorAll("input[required]"));
@@ -11,17 +12,23 @@ document.addEventListener("DOMContentLoaded", function () {
   function checkInputs() {
     const allFilled = inputs.every((input) => input.value.trim() !== "");
     submitBtn.disabled = !allFilled;
+    console.log("All filled:", allFilled); // Log the state of the button
   }
 
   // Add event listeners to each input to check on input change
   inputs.forEach((input) => input.addEventListener("input", checkInputs));
+  inputs.forEach(input => input.addEventListener("input", checkInputs));
+
+  // Add event listener to the form for handling submit
+  form.addEventListener("submit", handleSubmit);
 });
 
+// Handle form submission
 function handleSubmit(event) {
   event.preventDefault();
-  onLogin();
 }
 
+// Function to handle login logic
 async function onLogin() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -32,6 +39,7 @@ async function onLogin() {
   await login(loginInfo);
 }
 
+// Function to send login request to the backend
 async function login(loginInfo) {
   try {
     const response = await fetch(apiUrl, {
@@ -46,14 +54,16 @@ async function login(loginInfo) {
       throw new Error("Error login: " + response.statusText);
     }
     const data = await response.json();
-    console.log("Login response data:", data); // Log to check if data is correct
+    console.log("Login Response:", data); // Log the response to check the data
     handleLocalStorage(data);
   } catch (error) {
     console.error("Error:", error);
   }
 }
 
+// Function to handle storing token and user data in localStorage
 function handleLocalStorage(data) {
+  console.log("handleLocalStorage Data:", data); // Check data structure
   if (data.token) {
     localStorage.setItem("authToken", data.token);
     const userInfo = {
@@ -65,12 +75,13 @@ function handleLocalStorage(data) {
     };
     console.log("Storing user info in localStorage:", userInfo); // Check userInfo data
     localStorage.setItem("user", JSON.stringify(userInfo));
-    window.location.href = "../../index.html";
+    window.location.href = "./index.html"; // Adjust path based on your setup
   } else {
-    console.log("Token not received");
+    console.log("Token not received", data); // Log response data for debugging
   }
 }
 
+// Function to set the location of various links on the page
 function handleLinksLocation() {
   setTimeout(() => {
     const home = document.getElementById("home");
@@ -85,8 +96,15 @@ function handleLinksLocation() {
     register.href = "../register-page/Register-Page.html";
     contact.href = "../contact-us/contact-us.html";
   }, 100);
+    home.href = '../../index.html';
+    logo.href = '../../index.html';
+    shop.href = '../primay-page/primary-page.html';
+    register.href = '../register-page/Register-Page.html';
+    contact.href = '../contact-us/contact-us.html';
+  }, 100);
 }
 
+// Function to load HTML content into the page (like header)
 function loadHTML(page) {
   fetch(page)
     .then((response) => {
@@ -105,3 +123,4 @@ function loadHTML(page) {
       );
     });
 }
+
