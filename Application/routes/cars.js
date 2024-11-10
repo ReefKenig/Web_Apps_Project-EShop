@@ -5,6 +5,9 @@ const carController = require("../controllers/cars");
 // Create a new car
 router.post("/", carController.createCar);
 
+// In your routes file
+router.post("/filter", carController.filterCars);
+
 // Get cars
 router.get("/search", carController.getCars);
 

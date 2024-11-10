@@ -23,13 +23,12 @@
 }
 
 .currency-switch .flag {
-  width: 30px;  /* Set the width of the flag */
+  width: 30px; /* Set the width of the flag */
   height: 20px; /* Set the height of the flag */
   margin-left: 10px; /* Space between the two flag icons */
   cursor: pointer;
   z-index: 7500;
 }
-
 
 .container .box {
   width: 11.875em;
@@ -42,7 +41,6 @@
   border-radius: 0.7rem;
   transition: all ease 0.3s;
   z-index: 2;
-
 }
 
 .container .box {
@@ -57,14 +55,13 @@
   letter-spacing: 0.1em;
 }
 
-
 .container .box img {
   justify-self: center;
   border: 1px solid rgba(255, 255, 255, 0.222);
   border-radius: 0.7rem;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
@@ -105,7 +102,7 @@ a{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 0.1fr));
   grid-auto-rows: auto;
-  gap: 5px;
+  gap: 60px;
   justify-content: center;
 }
 
@@ -120,11 +117,12 @@ a{
   border: 1px solid rgba(255, 255, 255, 0.222);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  border-radius: 0.7rem;  border-radius: 11px;
+  border-radius: 0.7rem;
+  border-radius: 11px;
   text-align: right;
   transition: all 0.6s ease;
 }
-.butt.next{
+.butt.next {
   /* margin-left: 345%; */
   display: flex;
   justify-content: space-between;
@@ -162,13 +160,13 @@ a{
   margin: 0 0.5em;
 }
 
-.prev{
+.prev {
   grid-column: 1 / 2;
   grid-row: span 1;
   justify-self: start;
 }
 
-.next{
+.next {
   grid-column: -2 / -1;
   grid-row: span 1;
   justify-self: end;
@@ -178,28 +176,28 @@ a{
 
 /* Filter Dropdown Menu */
 
-.dropdown-filter{
+.dropdown-filter {
   width: auto;
   height: auto;
   position: fixed;
-  top: 16dvh; 
-  left: 0; 
+  top: 16dvh;
+  left: 0;
   z-index: 1000;
 }
 
-.dropdown-filter .container .box{
+.dropdown-filter .container .box {
   height: auto;
   cursor: default;
 }
 
-.dropdown-filter .container .box svg{
+.dropdown-filter .container .box svg {
   margin-left: 40px;
   fill: white;
 }
 
 .input {
   -webkit-appearance: none;
- /* remove default */
+  /* remove default */
   display: block;
   margin: 10px;
   width: 24px;
@@ -207,23 +205,29 @@ a{
   border-radius: 12px;
   cursor: pointer;
   vertical-align: middle;
-  box-shadow: hsla(0,0%,100%,.15) 0 1px 1px, inset hsla(0,0%,0%,.5) 0 0 0 1px;
-  background-color: hsla(0,0%,0%,.2);
-  background-image: -webkit-radial-gradient( hsla(200,100%,90%,1) 0%, hsla(200,100%,70%,1) 15%, hsla(200,100%,60%,.3) 28%, hsla(200,100%,30%,0) 70% );
+  box-shadow: hsla(0, 0%, 100%, 0.15) 0 1px 1px,
+    inset hsla(0, 0%, 0%, 0.5) 0 0 0 1px;
+  background-color: hsla(0, 0%, 0%, 0.2);
+  background-image: -webkit-radial-gradient(
+    hsla(200, 100%, 90%, 1) 0%,
+    hsla(200, 100%, 70%, 1) 15%,
+    hsla(200, 100%, 60%, 0.3) 28%,
+    hsla(200, 100%, 30%, 0) 70%
+  );
   background-repeat: no-repeat;
-  -webkit-transition: background-position .15s cubic-bezier(.8, 0, 1, 1),
-    -webkit-transform .25s cubic-bezier(.8, 0, 1, 1);
+  -webkit-transition: background-position 0.15s cubic-bezier(0.8, 0, 1, 1),
+    -webkit-transform 0.25s cubic-bezier(0.8, 0, 1, 1);
   outline: none;
 }
 
 .input:checked {
-  -webkit-transition: background-position .2s .15s cubic-bezier(0, 0, .2, 1),
-    -webkit-transform .25s cubic-bezier(0, 0, .2, 1);
+  -webkit-transition: background-position 0.2s 0.15s cubic-bezier(0, 0, 0.2, 1),
+    -webkit-transform 0.25s cubic-bezier(0, 0, 0.2, 1);
 }
 
 .input:active {
   -webkit-transform: scale(1.5);
-  -webkit-transition: -webkit-transform .1s cubic-bezier(0, 0, .2, 1);
+  -webkit-transition: -webkit-transform 0.1s cubic-bezier(0, 0, 0.2, 1);
 }
 
 /* The up/down direction logic */
@@ -241,7 +245,6 @@ a{
 .input:checked ~ .input:active {
   background-position: 0 -24px;
 }
-
 
 .input-container {
   position: relative;
@@ -303,7 +306,7 @@ input[type="number"] {
 }
 
 /* Search Bar */
-/* From Uiverse.io by satyamchaudharydev */ 
+/* From Uiverse.io by satyamchaudharydev */
 /* From uiverse.io by @satyamchaudharydev */
 /* this button is inspired by -- whatsapp input */
 /* == type to see fully interactive and click the close buttom to remove the text  == */
@@ -312,25 +315,24 @@ input[type="number"] {
   margin-left: auto;
   margin-right: auto;
   margin-top: 10%;
-  --input-bg: #FFf;
- /*  background of input */
+  --input-bg: #fff;
+  /*  background of input */
   --padding: 1.5em;
   --rotate: 80deg;
- /*  rotation degree of input*/
+  /*  rotation degree of input*/
   --gap: 2em;
   /*  gap of items in input */
-  --icon-change-color: #15A986;
- /*  when rotating changed icon color */
+  --icon-change-color: #15a986;
+  /*  when rotating changed icon color */
   --height: 40px;
- /*  height */
+  /*  height */
   width: 50%;
   padding-inline-end: 1em;
- /*  change this for padding in the end of input */
+  /*  change this for padding in the end of input */
   background: var(--input-bg);
   position: relative;
   border-radius: 4px;
 }
-
 
 .form-search label {
   display: flex;
@@ -350,7 +352,7 @@ input[type="number"] {
 .form-search svg {
   /* display: block; */
   color: #111;
-  transition: 0.3s cubic-bezier(.4,0,.2,1);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: absolute;
   height: 15px;
 }
@@ -358,7 +360,7 @@ input[type="number"] {
 .icon {
   position: absolute;
   left: var(--padding);
-  transition: 0.3s cubic-bezier(.4,0,.2,1);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -407,7 +409,7 @@ input[type="number"] {
 }
 
 .form-search input:valid ~ .icon {
-  transform: scale(1.3) rotate(var(--rotate))
+  transform: scale(1.3) rotate(var(--rotate));
 }
 
 .form-search input:valid ~ .icon .swap-off {
@@ -435,5 +437,3 @@ input[type="number"] {
   background-size: cover;
   background-position: center;
 }
-
-

@@ -10,6 +10,69 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+document.getElementById("applyFilters").addEventListener("click", function () {
+  const filterData = {
+    manufacturer: document.getElementById("manufacturer").value,
+    brand: document.getElementById("model").value,
+    color: document.getElementById("color").value,
+    yearOfManufacture: document.getElementById("year").value,
+    minPrice:
+      document.getElementById("lValue").value === ""
+        ? "0"
+        : document.getElementById("lValue").value,
+    maxPrice:
+      document.getElementById("hValue").value === ""
+        ? "9999999"
+        : document.getElementById("hValue").value,
+  };
+
+  fetch("http://localhost:3030/api/cars/filter", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(filterData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      generateGrid(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+});
+
+async function applyFilters() {
+  // Build the filter object
+  const filters = {
+    manufacturer: manufacturer.value,
+    model: model.value,
+    color: color.value,
+    year: year.value,
+    priceRange: {
+      min: minPrice.value || 0,
+      max: maxPrice.value || Infinity,
+    },
+    sort: sortAsc.checked ? "asc" : "desc",
+  };
+
+  // Fetch filtered results from server
+  const response = await fetch("http://localhost:3030/api/cars/search", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(filters),
+  });
+
+  if (response.ok) {
+    const cars = await response.json();
+    displayResults(cars);
+  } else {
+    console.error("Failed to fetch filtered cars:", response.statusText);
+  }
+}
+
 async function loadPage() {
   try {
     // Fetch car data
