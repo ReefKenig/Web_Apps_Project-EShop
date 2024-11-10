@@ -18,7 +18,6 @@ async function loadPage() {
         type: 'GET',
         success: function(response) {
           if (Array.isArray(response)) {
-            console.log("Car data:", response); // Log the response to check the data
             generateGrid(response);  // Populate the grid with the received data
             resolve(response);
           } else {
@@ -89,7 +88,7 @@ function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, ye
 }
 // Function to fetch exchange rate from the ExchangeRateAPI
 async function fetchExchangeRate(currency) {
-  const apiKey = '371bf7bb3f3aff589d68d64b';  // Replace with your ExchangeRateAPI key
+  const apiKey = 'a1fde19d71f04b2786ada2c0';  // Replace with your ExchangeRateAPI key
   const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;  // Fetching rates based on USD
   try {
     const response = await fetch(url);
@@ -97,7 +96,6 @@ async function fetchExchangeRate(currency) {
 
     if (data.result === "success") {
       exchangeRate = data.conversion_rates[currency] || 1; // Use the conversion rate for the selected currency or fallback to 1
-      console.log(`Exchange rate for ${currency}: ${exchangeRate}`);
       updatePrices();  // Update prices after fetching the exchange rate
     } else {
       console.error('Error fetching exchange rate');
