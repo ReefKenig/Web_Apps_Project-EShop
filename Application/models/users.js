@@ -20,8 +20,6 @@ const userSchema = Schema({
         required: true,
       },
       quantity: { type: Number, required: true, default: 1 },
-      addedeAt: { type: Date, default: Date.now },
-      expiresAt: { type: Date, required: true },
     },
   ],
 });
