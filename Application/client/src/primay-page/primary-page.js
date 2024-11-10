@@ -33,7 +33,7 @@ async function loadPage(page) {
 function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, yearOfManufacture) {
     // Create a container div
     const sender = document.createElement('a');
-    sender.href = '../item-page/item-page.html';
+    sender.href = '../item-page/item-page.html?' + _id;
     sender.className = 'a';
 
     const container = document.createElement("div");
