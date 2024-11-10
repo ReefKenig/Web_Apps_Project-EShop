@@ -52,6 +52,12 @@ window.onload = function() {
     }
   }
 
+  function logout() {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    window.location.href = "/index.html";
+  }
+
   async function getOrderHistory(userId) {
     try {
       // Wrap the $.ajax call in a Promise

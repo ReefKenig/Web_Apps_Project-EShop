@@ -311,5 +311,5 @@ function loadHTML(page) {
 function logout() {
   localStorage.removeItem("authToken");
   localStorage.removeItem("user");
-  window.location.href = "index.html";
+  window.location.replace("http://localhost:3030/index.html");
 }

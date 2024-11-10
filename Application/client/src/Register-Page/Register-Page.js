@@ -2,7 +2,7 @@ const apiUrl = "http://localhost:3030/api/users/register";
 
 document.addEventListener("DOMContentLoaded", function () {
   loadHTML("/header.html");
-  handleLinksLocation();
+  
   const form = document.getElementById("form");
   const submitBtn = document.getElementById("submitBtn");
   const inputs = Array.from(form.querySelectorAll("input[required]"));
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add event listeners to each input to check on input change
   inputs.forEach((input) => input.addEventListener("input", checkInputs));
+  handleLinksLocation();
 });
 
 async function getFormValues() {
