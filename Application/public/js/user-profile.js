@@ -1,6 +1,6 @@
 window.onload = function() {
     if (window.location.pathname.includes("/user/user-profile.html")) {
-        loadHTMLForUserProfile("../../public/header.html");
+        loadHTMLForUserProfile("/header.html");
         handleLinksLocation();
         loadPage();
     }
@@ -130,10 +130,10 @@ function handleLinksLocation() {
     const shop = document.getElementById('shop');
     const contact = document.getElementById('contact');
 
-    home.href = '../../client/index.html';
-    logo.href = '../../client/index.html';
-    shop.href = '../../client/src/primay-page/primary-page.html';
-    contact.href = '../../client/src/contact-us/contact-us.html';
+    home.href = '/index.html';
+    logo.href = '/index.html';
+    shop.href = '/src/primay-page/primary-page.html';
+    contact.href = '/src/contact-us/contact-us.html';
 
     const navigationBar = document.getElementById("nav");
     handleUserNameElement(navigationBar);

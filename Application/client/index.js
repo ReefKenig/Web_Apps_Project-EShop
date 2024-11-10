@@ -79,8 +79,9 @@ svgUp?.addEventListener("click", () => {
 });
 
 window.onscroll = function () {
-  // if(logoImage !== null) {
-  // make navbar fixed & change logo color
+  const nav = document.querySelector("header nav");
+    const logoImage = document.querySelector("header nav .logo img");
+    const headerText = document.querySelector("header .text");
   if (window.pageYOffset > headerSection?.offsetHeight - 75) {
     nav?.classList.add("active");
     logoImage.src =
@@ -166,9 +167,7 @@ if (pageTitle.text === "ROSA- Restaurant") {
   menuImgs.forEach((img) =>
     img.addEventListener("click", function () {
       const arr = Array.from(this.parentElement.parentElement.children);
-
       arr.forEach((div) => div.classList.remove("active"));
-
       this.parentElement.classList.add("active");
       boxModel.classList.add("active");
       boxModelImage.src = this.src;

@@ -20,6 +20,7 @@ app.use(cors());
 // Middleware
 app.use(express.json());
 app.use(express.static("public"));
+app.use('/views', express.static('views'));
 
 // Routes
 app.use("/api/cars", carRoutes);
