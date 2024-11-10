@@ -36,30 +36,35 @@ const createUserFilters = (query, isAdmin, userId) => {
   return filters;
 };
 
-const createCarFilters = (query) => {
+const createCarFilters = (body) => {
   const filters = {};
-
-  for (const [key, value] of Object.entries(query)) {
-    if (key === "price" || key === "yearOfManufacture") {
-      // Handle range-based filtering for price and yearOfManufacture
-      const range = {};
-
-      if (value.min) range.$gte = value.min;
-      if (value.max) range.$lte = value.max;
-
-      filters[key] = range;
-    } else if (key === "brand") {
-      // Handle exact match or array of brands
-      if (Array.isArray(value)) {
-        filters[key] = { $in: value }; // Allows filtering by multiple brands
-      } else {
-        filters[key] = value; // Allows filtering by a single brand
+  for (const [key, value] of Object.entries(body)) {
+    if (
+      key === "manufacturer" ||
+      key === "brand" ||
+      key === "color" ||
+      key === "yearOfManufacture"
+    ) {
+      if (value !== "") {
+        filters[key] = value;
       }
-    } else {
-      // Add any other key-value pairs directly to the filter
-      filters[key] = value;
+    } else if (key === "minPrice" || key === "maxPrice") {
+      // Handle the price filter range
+      if (!filters["price"] && value !== "") {
+        filters["price"] = {}; // Initialize the price filter if not already present
+      }
+
+      if (key === "minPrice" && value !== "") {
+        filters["price"].$gte = Number(value); // Ensure it's a number for min price
+      }
+
+      if (key === "maxPrice" && value !== "") {
+        filters["price"].$lte = Number(value); // Ensure it's a number for max price
+      }
     }
   }
+  console.log(filters);
+
   return filters;
 };
 

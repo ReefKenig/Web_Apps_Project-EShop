@@ -10,6 +10,39 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+document.getElementById("applyFilters").addEventListener("click", function () {
+  const filterData = {
+    manufacturer: document.getElementById("manufacturer").value,
+    brand: document.getElementById("model").value,
+    color: document.getElementById("color").value,
+    yearOfManufacture: document.getElementById("year").value,
+    minPrice:
+      document.getElementById("lValue").value === ""
+        ? "0"
+        : document.getElementById("lValue").value,
+    maxPrice:
+      document.getElementById("hValue").value === ""
+        ? "9999999"
+        : document.getElementById("hValue").value,
+    sortOrder: document.querySelector("input[name='sortOrder']:checked").value,
+  };
+
+  fetch("http://localhost:3030/api/cars/filter", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(filterData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Filtered cars:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+});
+
 async function applyFilters() {
   // Build the filter object
   const filters = {

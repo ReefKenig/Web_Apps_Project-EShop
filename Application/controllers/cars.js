@@ -12,9 +12,25 @@ exports.createCar = async (req, res) => {
   }
 };
 
+exports.filterCars = async (req, res) => {
+  try {
+    console.log(req.body);
+
+    const filters = createCarFilters(req.body); // Filters are now retrieved from req.body
+
+    const cars = await Car.find(filters, "-__v");
+
+    res.status(200).json(cars);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Could not fetch cars", error: error.message });
+  }
+};
+
 exports.getCars = async (req, res) => {
   try {
-    const filters = createCarFilters(req.query);
+    const filters = createCarFilters(req.body); // Use req.body instead of req.query
 
     const cars = await Car.find(filters, "-__v");
 
@@ -39,34 +55,31 @@ exports.getCarById = async (req, res) => {
   }
 };
 
-
 // Function to get car data for chart
 exports.getCarDataForChart = async (req, res) => {
   try {
     const data = await Car.aggregate([
       {
         $group: {
-          _id: "$manufacturer",  // Group by manufacturer
-          carCount: { $sum: "$unitsInStock" } // Sum the unitsInStock for each manufacturer
-        }
+          _id: "$manufacturer", // Group by manufacturer
+          carCount: { $sum: "$unitsInStock" }, // Sum the unitsInStock for each manufacturer
+        },
       },
       {
         $project: {
-          manufacturer: "$_id",  // Rename _id to manufacturer
-          carCount: 1,           // Include carCount
-          _id: 0                 // Exclude _id
-        }
-      }
+          manufacturer: "$_id", // Rename _id to manufacturer
+          carCount: 1, // Include carCount
+          _id: 0, // Exclude _id
+        },
+      },
     ]);
 
-    res.json(data);  // Return the aggregated data in JSON format
+    res.json(data); // Return the aggregated data in JSON format
   } catch (err) {
-    console.error('Error fetching data:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error fetching data:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-
 
 exports.updateCar = async (req, res) => {
   try {
