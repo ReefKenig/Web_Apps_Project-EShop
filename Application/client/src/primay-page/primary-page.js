@@ -1,50 +1,50 @@
-let currentCurrency = 'USD'; // Default currency
+let currentCurrency = "USD"; // Default currency
 let exchangeRate = 1; // Default exchange rate
 let originalPrices = []; // Array to store the original prices of cars
 
 document.addEventListener("DOMContentLoaded", function () {
   if (window.location.pathname.includes("/primary-page.html")) {
-    loadHTML("../../../public/header.html");
+    loadHTML("../header/header.html");
     handleLinksLocation();
     loadPage();
-}});
+  }
+});
 
 async function loadPage() {
   try {
     // Fetch car data
     const data = await new Promise((resolve, reject) => {
       $.ajax({
-        url: 'http://localhost:3030/api/cars/search',
-        type: 'GET',
-        success: function(response) {
+        url: "http://localhost:3030/api/cars/search",
+        type: "GET",
+        success: function (response) {
           if (Array.isArray(response)) {
-            generateGrid(response);  // Populate the grid with the received data
+            generateGrid(response); // Populate the grid with the received data
             resolve(response);
           } else {
-            reject('Response is not an array');
+            reject("Response is not an array");
           }
         },
-        error: function(error) {
+        error: function (error) {
           reject(error);
-        }
+        },
       });
     });
 
     // Fetch exchange rate on page load for default currency (USD)
     await fetchExchangeRate(currentCurrency);
-
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
   }
 }
 
 function handleLinksLocation() {
   setTimeout(() => {
-    const home = document.getElementById('home');
-    const logo = document.getElementById('logo');
-    const shop = document.getElementById('shop');
-    const register = document.getElementById('register2');
-    const contact = document.getElementById('contact');
+    const home = document.getElementById("home");
+    const logo = document.getElementById("logo");
+    const shop = document.getElementById("shop");
+    const register = document.getElementById("register2");
+    const contact = document.getElementById("contact");
     const nav = document.getElementById("nav");
     const currencySwitcherHTML = `
     <div class="currency-switch">
@@ -53,80 +53,100 @@ function handleLinksLocation() {
     </div>
 `;
 
-// Insert the HTML into the navbar
-nav.insertAdjacentHTML("beforeend", currencySwitcherHTML);
+    // Insert the HTML into the navbar
+    nav.insertAdjacentHTML("beforeend", currencySwitcherHTML);
 
-    home.href = '../../index.html';
-    logo.href = '../../index.html';
-    shop.href = '../primay-page/primary-page.html';
-    register.href = '../register-page/Register-Page.html';
-    contact.href = '../contact-us/contact-us.html';
-}, 100);
+    home.href = "../../index.html";
+    logo.href = "../../index.html";
+    shop.href = "../primay-page/primary-page.html";
+    register.href = "../register-page/Register-Page.html";
+    contact.href = "../contact-us/contact-us.html";
+  }, 100);
 }
 
 function loadHTML(page) {
   fetch(page)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.text();
-      })
-      .then(html => {
-          document.getElementById("nav-template").innerHTML = html;
-      })
-      .catch(error => {
-          console.error('There has been a problem with your fetch operation:', error);
-      });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.text();
+    })
+    .then((html) => {
+      document.getElementById("nav-template").innerHTML = html;
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    });
 }
 
-function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, yearOfManufacture) {
-    // Create a container div
-    const sender = document.createElement('a');
-    sender.href = '../item-page/item-page.html';
-    sender.className = 'a';
+function generateCarTemplate(
+  _id,
+  carImage,
+  carManufacturer,
+  carModel,
+  Price,
+  yearOfManufacture
+) {
+  // Create a container div
+  const sender = document.createElement("a");
+  sender.href = "../item-page/item-page.html";
+  sender.className = "a";
 }
 // Function to fetch exchange rate from the ExchangeRateAPI
 async function fetchExchangeRate(currency) {
-  const apiKey = 'a1fde19d71f04b2786ada2c0';  // Replace with your ExchangeRateAPI key
-  const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;  // Fetching rates based on USD
+  const apiKey = "a1fde19d71f04b2786ada2c0"; // Replace with your ExchangeRateAPI key
+  const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`; // Fetching rates based on USD
   try {
     const response = await fetch(url);
     const data = await response.json();
 
     if (data.result === "success") {
       exchangeRate = data.conversion_rates[currency] || 1; // Use the conversion rate for the selected currency or fallback to 1
-      updatePrices();  // Update prices after fetching the exchange rate
+      updatePrices(); // Update prices after fetching the exchange rate
     } else {
-      console.error('Error fetching exchange rate');
+      console.error("Error fetching exchange rate");
     }
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
   }
-};
+}
 
-function generateElementFromString(string){
-    const range = document.createRange();
-    const fragment = range.createContextualFragment(string);
-    return fragment;
+function generateElementFromString(string) {
+  const range = document.createRange();
+  const fragment = range.createContextualFragment(string);
+  return fragment;
 }
 
 // Function to handle flag click and change currency
 function changeCurrency(currency) {
   currentCurrency = currency;
-  fetchExchangeRate(currency);  // Fetch the exchange rate and update prices
+  fetchExchangeRate(currency); // Fetch the exchange rate and update prices
 }
 
 // Function to format the price with 2 decimal places
 function formatPrice(price) {
-  return price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return price.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 }
 
 // Function to generate car template and correctly place the price
-function generateCarTemplate(_id, carImage, carManufacturer, carModel, price, yearOfManufacture) {
-  const sender = document.createElement('a');
+function generateCarTemplate(
+  _id,
+  carImage,
+  carManufacturer,
+  carModel,
+  price,
+  yearOfManufacture
+) {
+  const sender = document.createElement("a");
   sender.href = `../item-page/item-page.html?id=${_id}`;
-  sender.className = 'a';
+  sender.className = "a";
 
   const container = document.createElement("div");
   container.className = "container";
@@ -135,8 +155,8 @@ function generateCarTemplate(_id, carImage, carManufacturer, carModel, price, ye
   box.className = "box";
 
   const eImg = document.createElement("img");
-  eImg.src = carImage || 'default-image.jpg';  // Default image if no car image is available
-  eImg.alt = `${carManufacturer} ${carModel}`;  // Add alt text for image accessibility
+  eImg.src = carImage || "default-image.jpg"; // Default image if no car image is available
+  eImg.alt = `${carManufacturer} ${carModel}`; // Add alt text for image accessibility
 
   const detailsDiv = document.createElement("div");
 
@@ -152,7 +172,9 @@ function generateCarTemplate(_id, carImage, carManufacturer, carModel, price, ye
   originalPrices.push(price);
 
   // Apply exchange rate to price and place in the correct car box
-  priceSpan.textContent = `${formatPrice(price * exchangeRate)} ${currentCurrency}`; 
+  priceSpan.textContent = `${formatPrice(
+    price * exchangeRate
+  )} ${currentCurrency}`;
 
   detailsDiv.appendChild(manufacturerStrong);
   detailsDiv.appendChild(modelParagraph);
@@ -170,7 +192,7 @@ function generateCarTemplate(_id, carImage, carManufacturer, carModel, price, ye
 // Function to generate the grid and update car prices based on selected currency
 function generateGrid(items) {
   const output = document.getElementById("car-output");
-  output.className = "grid-container"; 
+  output.className = "grid-container";
 
   output.innerHTML = ""; // Clear any existing grid items
 
@@ -178,40 +200,42 @@ function generateGrid(items) {
     console.log("No cars available");
   }
 
-  items.forEach(item => {
+  items.forEach((item) => {
     const gridItem = generateCarTemplate(
       item._id,
-      item.media.pictures[0] || 'default-image.jpg',  // Fallback if no image exists
+      item.media.pictures[0] || "default-image.jpg", // Fallback if no image exists
       item.manufacturer,
       item.brand,
       item.price,
       item.yearOfManufacture
     );
-    gridItem.id="carstar"
+    gridItem.id = "carstar";
     output.appendChild(gridItem);
   });
 }
 
 // Update all car prices when currency changes
 function updatePrices() {
-  const gridItems = document.querySelectorAll('#carstar');
-  const priceSpans = document.querySelectorAll('#carstar span');
+  const gridItems = document.querySelectorAll("#carstar");
+  const priceSpans = document.querySelectorAll("#carstar span");
 
   priceSpans.forEach((priceSpan, index) => {
     const originalPrice = originalPrices[index]; // Get the original price from the stored array
-    priceSpan.textContent = `${formatPrice(originalPrice * exchangeRate)} ${currentCurrency}`; // Recalculate price
+    priceSpan.textContent = `${formatPrice(
+      originalPrice * exchangeRate
+    )} ${currentCurrency}`; // Recalculate price
   });
 }
 
 // Event listener for Israel flag click (change to Shekel)
-document.getElementById('israel-flag')?.addEventListener('click', function() {
-  changeCurrency('ILS'); // ILS for Israeli Shekel
+document.getElementById("israel-flag")?.addEventListener("click", function () {
+  changeCurrency("ILS"); // ILS for Israeli Shekel
 });
 
 // Event listener for USA flag click (change to USD)
-document.getElementById('usa-flag')?.addEventListener('click', function() {
-  changeCurrency('USD'); // USD for US Dollar
+document.getElementById("usa-flag")?.addEventListener("click", function () {
+  changeCurrency("USD"); // USD for US Dollar
 });
 
 // Run loadPage on page load
-document.addEventListener('DOMContentLoaded', loadPage);
+document.addEventListener("DOMContentLoaded", loadPage);
