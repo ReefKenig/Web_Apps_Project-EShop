@@ -1,11 +1,12 @@
 const Order = require("../models/orders");
 const User = require("../models/users");
 const Car = require("../models/cars");
+const { createOrderFilters } = require("../helpers/filters");
 
 // Create a new order
 exports.createOrder = async (req, res) => {
   try {
-    const { userId, items, orderStatus, totalCost,purchaseDate } = req.body;
+    const { userId, items, orderStatus, totalCost, purchaseDate } = req.body;
 
     // Check if userId is valid
     const userExists = await User.findById(userId);
@@ -14,7 +15,9 @@ exports.createOrder = async (req, res) => {
     }
 
     // Check if all car IDs in items are valid
-    const carsExist = await Promise.all(items.map(item => Car.findById(item.carId)));
+    const carsExist = await Promise.all(
+      items.map((item) => Car.findById(item.carId))
+    );
     if (carsExist.includes(null)) {
       return res.status(404).json({ message: "One or more cars not found" });
     }
@@ -24,7 +27,7 @@ exports.createOrder = async (req, res) => {
       items,
       orderStatus,
       totalCost,
-      purchaseDate
+      purchaseDate,
     });
 
     const savedOrder = await order.save();
@@ -35,17 +38,21 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.getAllOrders = async (req, res) => {
-  try {
-    // Populate user details and car details in items
-    const Orders = await Order.find({})
-      .populate("userId")
-      .populate("items.carId");
+exports.getOrders = async (req, res) => {
+  try { 
+    const query = req.query;
+    if(req.body.isAdmin) {
+      const filters = createOrderFilters(query, req.body.isAdmin);
+      const orders = await Order.find(filters);
+      res.json(orders);
+    } else {
+      res.status(500).json({ message: "Error fetching orders - the user is not admin", error: error.message });
+    }
 
-    res.status(200).json(Orders);
   } catch (error) {
-    console.error("Error fetching orders:", error);
-    res.status(500).json({ message: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching orders", error: error.message });
   }
 };
 
@@ -63,21 +70,67 @@ exports.getOrderById = async (req, res) => {
   }
 };
 
+// Update order details
+exports.updateOrder = async (req, res) => {
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Update the user's order history with the modified order
+    await User.updateOne(
+      { _id: updatedOrder.userId, "orderHistory.orderId": updatedOrder._id },
+      { $set: { "orderHistory.$": updatedOrder } }
+    );
+
+    res
+      .status(200)
+      .json({ message: "Order updated successfully", data: updatedOrder });
+  } catch (error) {
+    console.error("Error updating order:", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Delete an order
+exports.deleteOrder = async (req, res) => {
+  try {
+    const deletedOrder = await Order.findByIdAndDelete(req.params.id); // Consistent usage of id
+    if (!deletedOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Remove the order from user's order history
+    await User.updateOne(
+      { _id: deletedOrder.userId },
+      { $pull: { orderHistory: { orderId: deletedOrder._id } } }
+    );
+
+    res.status(200).json({ message: "Order deleted" });
+  } catch (error) {
+    console.error("Error deleting order:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Get orders by user ID
 exports.getOrdersByUserId = async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.params.id }).populate(
       "items.carId"
     );
-
     res.status(200).json(orders);
   } catch (error) {
-    console.error("Error fetching orders by user ID:", error);
     res.status(500).json({ message: error.message });
   }
 };
 
-// Aggregation function to get total revenue by month for a specific year
 exports.getRevenueByMonth = async (req, res) => {
   const year = parseInt(req.params.year, 10);
   try {
@@ -118,56 +171,5 @@ exports.getRevenueByMonth = async (req, res) => {
   } catch (err) {
     console.error("Error in revenue aggregation:", err);
     res.status(500).json({ message: err.message });
-  }
-};
-
-
-
-
-
-// Update order details
-exports.updateOrder = async (req, res) => {
-  try {
-    const updatedOrder = await Order.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-
-    if (!updatedOrder) {
-      return res.status(404).json({ message: "Order not found" });
-    }
-
-    // Update the user's order history with the modified order
-    await User.updateOne(
-      { _id: updatedOrder.userId, "orderHistory.orderId": updatedOrder._id },
-      { $set: { "orderHistory.$": updatedOrder } }
-    );
-
-    res.status(200).json({ message: "Order updated successfully", data: updatedOrder });
-  } catch (error) {
-    console.error("Error updating order:", error);
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Delete an order
-exports.deleteOrder = async (req, res) => {
-  try {
-    const deletedOrder = await Order.findByIdAndDelete(req.params.id); // Consistent usage of id
-    if (!deletedOrder) {
-      return res.status(404).json({ message: "Order not found" });
-    }
-
-    // Remove the order from user's order history
-    await User.updateOne(
-      { _id: deletedOrder.userId },
-      { $pull: { orderHistory: { orderId: deletedOrder._id } } }
-    );
-
-    res.status(200).json({ message: "Order deleted" });
-  } catch (error) {
-    console.error("Error deleting order:", error);
-    res.status(500).json({ message: error.message });
   }
 };

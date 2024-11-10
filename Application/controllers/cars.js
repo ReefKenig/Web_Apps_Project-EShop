@@ -66,8 +66,6 @@ exports.getCarDataForChart = async (req, res) => {
   }
 };
 
-
-
 exports.updateCar = async (req, res) => {
   try {
     const updatedCar = await Car.findByIdAndUpdate(req.params.id, req.body, {
@@ -94,5 +92,31 @@ exports.deleteCar = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// Function to get car data for chart
+exports.getCarDataForChart = async (req, res) => {
+  try {
+    const data = await Car.aggregate([
+      {
+        $group: {
+          _id: "$manufacturer",  // Group by manufacturer
+          carCount: { $sum: "$unitsInStock" } // Sum the unitsInStock for each manufacturer
+        }
+      },
+      {
+        $project: {
+          manufacturer: "$_id",  // Rename _id to manufacturer
+          carCount: 1,           // Include carCount
+          _id: 0                 // Exclude _id
+        }
+      }
+    ]);
+
+    res.json(data);  // Return the aggregated data in JSON format
+  } catch (err) {
+    console.error('Error fetching data:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };

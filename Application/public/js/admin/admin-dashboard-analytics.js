@@ -1,12 +1,9 @@
-
-
-
 async function loadUsers() {
     try {
       // Wrap the $.ajax call in a Promise
        const users = await new Promise((resolve, reject) => {
         $.ajax({
-          url: 'http://localhost:3030/api/users',
+          url: 'http://localhost:3030/api/users/search',
           type: 'GET',
           success: function(response) {
             if (Array.isArray(response)) {
@@ -28,40 +25,42 @@ async function loadUsers() {
     }
   }
 
-  
-
-
   async function loadOrders() {
     try {
+      const payload = {
+        isAdmin: true
+      }
       // Wrap the $.ajax call in a Promise
       const orders = await new Promise((resolve, reject) => {
         $.ajax({
-          url: 'http://localhost:3030/api/orders',
-          type: 'GET',
+          url: 'http://localhost:3030/api/orders/search',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(payload), 
           success: function(response) {
             if (Array.isArray(response)) {
               console.log(response);
-                resolve(response);  // Resolve with the valid data
+              resolve(response); 
             } else {
               reject('Response is not an array');
             }
           },
           error: function(error) {
-            reject(error);  // Reject the Promise if there’s an error
+            reject(error);
           }
         });
       });
-      window.orders = orders;
+      totalSales(orders);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   }
 
-  function totalSales(){
+  function totalSales(orders){
     const elem = document.getElementById("totalSales");
     const child = document.createElement('h1');
     let sum = 0;
-    for(i=0; i < window.orders.length; i++)
+    for(i=0; i < orders.length; i++)
     {
         sum += orders[i].totalCost;
     }
@@ -102,106 +101,93 @@ function rightArrow(){
     }
 }
 
-
-
-
-
-    function stock(){
+function stock() {
     fetch('http://localhost:3030/api/cars/chart-data')  // Fetch car data (car count by manufacturer)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);  // Check the data format
-            drawGraphStock(data);
-        })
-        .catch(err => console.error('Error fetching data:', err));
-        }
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);  // Check the data format
+        drawGraphStock(data);
+    })
+    .catch(err => console.error('Error fetching data:', err));
+}
+
+
         // Function to draw the graph
-    function drawGraphStock(data) {
-        const margin = { top: 20, right: 100, bottom: 100, left: 80 };
-        const width = 800 - margin.left - margin.right;
-        const height = 400 - margin.top - margin.bottom;
+function drawGraphStock(data) {
+    const margin = { top: 20, right: 100, bottom: 100, left: 80 };
+    const width = 800 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
 
-        const svg = d3.select("svg#graph2")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    const svg = d3.select("svg#graph2")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        // Set the X scale for manufacturers
-        const x = d3.scaleBand()
-            .domain(data.map(d => d.manufacturer))
-            .range([0, width])
-            .padding(0.3);
+    // Set the X scale for manufacturers
+    const x = d3.scaleBand()
+        .domain(data.map(d => d.manufacturer))
+        .range([0, width])
+        .padding(0.3);
 
-        // Set the Y scale for car count
-        const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => d.carCount) || 1])  // Handle small or zero values
-            .nice()
-            .range([height, 0]);
+    // Set the Y scale for car count
+    const y = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.carCount) || 1])  // Handle small or zero values
+        .nice()
+        .range([height, 0]);
 
-        // Append the bars for each manufacturer
-        svg.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", d => x(d.manufacturer))
-            .attr("y", d => y(d.carCount || 0))
-            .attr("width", x.bandwidth())
-            .attr("height", d => height - y(d.carCount || 0))  // Ensure height is positive
-            .attr("fill", "#6c9bcf");
+    // Append the bars for each manufacturer
+    svg.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", d => x(d.manufacturer))
+        .attr("y", d => y(d.carCount || 0))
+        .attr("width", x.bandwidth())
+        .attr("height", d => height - y(d.carCount || 0))  // Ensure height is positive
+        .attr("fill", "#6c9bcf");
 
-        // Append the X-axis (manufacturer names)
-        // svg.append("g")
-        //     .attr("transform", "translate(0," + height + ")")
-        //     .call(d3.axisBottom(x))
-        //     .selectAll("text")
-        //     .style("text-anchor", "middle")
-        //     .style("font-size", "12px");
-
-
-            // Append the X-axis (manufacturer names)
-svg.append("g")
-.attr("transform", "translate(0," + height + ")")
-.call(d3.axisBottom(x))
-.selectAll("text")
-.style("text-anchor", "end")      // Align text to the end for readability
-.attr("transform", "rotate(-45)") // Rotate labels by -45 degrees
-.style("font-size", "12px")
-.style("fill", "#363949");
-
-        // Append the Y-axis (car count)
         svg.append("g")
-            .call(d3.axisLeft(y).ticks(5));
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .style("text-anchor", "end")      // Align text to the end for readability
+        .attr("transform", "rotate(-45)") // Rotate labels by -45 degrees
+        .style("font-size", "12px")
+        .style("fill", "#363949");
 
-        // Add title for the X axis (Manufacturers)
-        svg.append("text")
-            .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom - 10) + ")")
-            .style("text-anchor", "middle")
-            .text("Manufacturers")
-            .style("fill", "#363949");
+    // Append the Y-axis (car count)
+    svg.append("g")
+        .call(d3.axisLeft(y).ticks(5));
 
-        // Add title for the Y axis (Car Count)
-        svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left + 20)
-            .attr("x", 0 - (height / 2))
-            .style("text-anchor", "middle")
-            .text("Cars By Manufacturs Numbers")
-            .style("fill", "#363949");
+    // Add title for the X axis (Manufacturers)
+    svg.append("text")
+        .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom - 10) + ")")
+        .style("text-anchor", "middle")
+        .text("Manufacturers")
+        .style("fill", "#363949");
 
-        // Append the car count numbers next to each bar on the right side
-        svg.selectAll(".label")
-            .data(data)
-            .enter().append("text")
-            .attr("class", "label")
-            .attr("x", d => x(d.manufacturer) + x.bandwidth() / 2)
-            .attr("y", d => y(d.carCount || 0) - 10)
-            .attr("text-anchor", "middle")
-            .text(d => d.carCount)
-            .style("font-size", "12px")
-            .style("fill", "black");
-        }
+    // Add title for the Y axis (Car Count)
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 20)
+        .attr("x", 0 - (height / 2))
+        .style("text-anchor", "middle")
+        .text("Cars By Manufacturs Numbers")
+        .style("fill", "#363949");
 
+    // Append the car count numbers next to each bar on the right side
+    svg.selectAll(".label")
+        .data(data)
+        .enter().append("text")
+        .attr("class", "label")
+        .attr("x", d => x(d.manufacturer) + x.bandwidth() / 2)
+        .attr("y", d => y(d.carCount || 0) - 10)
+        .attr("text-anchor", "middle")
+        .text(d => d.carCount)
+        .style("font-size", "12px")
+        .style("fill", "black");
+}
 
 function revenue(){
   fetch('http://localhost:3030/api/orders/revenue/2024')  // Fetch revenue data for 2024
@@ -295,22 +281,15 @@ function drawGraphRevenue(data) {
     .style("fill", "#363949");
 }
 
-
-
-
-
   function loadPage(){
     loadUsers();
     loadOrders();
     
-
-
     setTimeout(() => {
-        console.log("Orders fetched from the database!");
-        totalSales();
-            document.getElementById('left').style = 'fill: #f6f6f9';
-    document.getElementById('right').style = 'fill: #363949';
+      // totalSales();
+      document.getElementById('left').style = 'fill: #f6f6f9';
+      document.getElementById('right').style = 'fill: #363949';
         revenue();
         stock();
-      }, 1000);
+    }, 100);
 }

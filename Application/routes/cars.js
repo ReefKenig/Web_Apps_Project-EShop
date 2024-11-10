@@ -17,4 +17,6 @@ router.put("/:id", carController.updateCar);
 // Delete car
 router.delete("/:id", carController.deleteCar);
 
+router.get("/chart-data",carController.getCarDataForChart);
+
 module.exports = router;

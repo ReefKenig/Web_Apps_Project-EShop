@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='/index.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/user-profile.css'>
+</head>
+<body>
+        <header class="static-header">
+            <div id="content">
+                <div id="nav-template"></div>
+            </div>
+        </header>
+        <section class="profile-info">
+            <div class="profile-header">
+                <div class="user-details">
+                    <div>
+                        <h2 id="name"></h2>
+                    </div>
+                    <div>
+                        <h3 id="email"></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="adminLinks" id="adminLinks" style="display: none;">
+                <div>
+                  <a href="/views/admin/admin-dashboard-analytics.html">Go to admin dashboard</a>
+                </div>
+              </div>
+        </section>
+        <hr>
+        <h1>Order History</h1>
+    <div id="orderHistory" class="order-history"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/index.js"></script>
+    <script src="/js/user-profile.js"></script>
+</body>
+</html>

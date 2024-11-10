@@ -1,15 +1,33 @@
-nav{
-  background-color: rgba(35, 35, 35, 0.819);
-  border: 1px solid black;
-  border-radius: 0.7rem;
-}
-
 .container {
   color: white;
   position: relative;
   font-family: sans-serif;
   cursor: pointer;
   z-index: 2;
+}
+
+/* Ensuring flags appear next to the "Home" link */
+/* Ensuring flags appear at the far right */
+.navigation-bar ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding-left: 0;
+  justify-content: space-between; /* Distribute items across the bar */
+  width: 100%; /* Ensure full width */
+}
+
+.currency-switch {
+  display: flex;
+  align-items: center;
+}
+
+.currency-switch .flag {
+  width: 30px;  /* Set the width of the flag */
+  height: 20px; /* Set the height of the flag */
+  margin-left: 10px; /* Space between the two flag icons */
+  cursor: pointer;
+  z-index: 7500;
 }
 
 
@@ -31,7 +49,6 @@ nav{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
 }
 
 .container .box .title {
@@ -55,7 +72,6 @@ a{
   display: block;
   margin-bottom: 0.5rem;
   z-index: 2;
-
 }
 
 .container .box div p {
@@ -91,7 +107,6 @@ a{
   grid-auto-rows: auto;
   gap: 5px;
   justify-content: center;
-
 }
 
 /* Next and prev page buttons start */
@@ -111,12 +126,10 @@ a{
 }
 .butt.next{
   /* margin-left: 345%; */
-
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 
 .butt:hover {
   box-shadow: 0px 0px 20px 1px #ffbb763f;
@@ -145,7 +158,6 @@ a{
   transform: rotate(180deg) translateX(5px);
 }
 
-
 .butt-text {
   margin: 0 0.5em;
 }
@@ -163,7 +175,6 @@ a{
 }
 
 /*Next and prev buttons End */
-
 
 /* Filter Dropdown Menu */
 
@@ -214,8 +225,6 @@ a{
   -webkit-transform: scale(1.5);
   -webkit-transition: -webkit-transform .1s cubic-bezier(0, 0, .2, 1);
 }
-
-
 
 /* The up/down direction logic */
 
@@ -417,6 +426,14 @@ input[type="number"] {
   visibility: visible;
   transform: scale(1);
   transition: 0s;
+}
+
+.static-header {
+  height: calc(20vh - 22px);
+  padding: 20px 70px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
 }
 
 

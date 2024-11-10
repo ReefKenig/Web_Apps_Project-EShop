@@ -1,25 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,500;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
-/* 
-.static-header {
-    padding: 20px 70px;
-    background-size: cover;
-    background-position: center;
-    
-}
-.static-header::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: url('../../client/src/assets/primary-image-car.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    z-index: -1;
-    background-repeat: no-repeat;
-} */
 
 :root{
     --color-primary: #6c9bcf;

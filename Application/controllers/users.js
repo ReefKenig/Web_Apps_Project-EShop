@@ -2,6 +2,7 @@ const User = require("../models/users");
 const Car = require("../models/cars");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { createUserFilters } = require("../helpers/filters");
 
 const THIRTY_DAYS = 60 * 1000 * 24 * 60 * 30;
 
@@ -49,7 +50,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    if (email && password) {
     // Check if the user exists
     const user = await User.findOne({ email });
 
@@ -75,16 +76,22 @@ exports.login = async (req, res) => {
       maxAge: THIRTY_DAYS,
     });
 
-    return res.json({ token: accessToken });
+    return res.json({ token: accessToken, user});
+  } else {
+    res.status(400).json({ msg: "Error occurred - email or password not exist", error: error.message });
+  }
+
   } catch (error) {
     res.status(400).json({ msg: "Error occurred", error: error.message });
   }
 };
 
 // Get all users
-exports.getAllUsers = async (req, res) => {
+exports.getUsers = async (req, res) => {
   try {
-    const users = await User.find({}, "-__v")
+    const filters = createUserFilters(req.query, "users");
+
+    const users = await User.find(filters, "-__v")
       .populate({
         path: "orderHistory",
         populate: { path: "items.carId", model: Car },
