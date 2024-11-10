@@ -1,5 +1,3 @@
-const { getCarById } = require("../../../controllers/cars");
-
 function selectPicture(imageSrc) {
   document.getElementById("main-picture").src = imageSrc;
 }
@@ -38,66 +36,39 @@ function handleLinksLocation() {
   }, 100);
 }
 
-async function loadCars() {
-    try {
-      // Wrap the $.ajax call in a Promise
-      const cars = await new Promise((resolve, reject) => {
-        $.ajax({
-          url: 'http://localhost:3030/api/cars',
-          type: 'GET',
-          success: function(response) {
-            if (Array.isArray(response)) {
-              console.log(response);
-                resolve(response);  // Resolve with the valid data
-            } else {
-              reject('Response is not an array');
-            }
-          },
-          error: function(error) {
-            reject(error);  // Reject the Promise if there’s an error
-          }
-        });
-      });
-      window.cars = cars;
-    } catch (error) {
-      console.error('Error fetching data:', error);
+
+async function loadCar() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
+  const apiUrl = `http://localhost:3030/api/cars/search/${id}`; // Adjust URL as needed
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        // Add Authorization header if needed
+        // "Authorization": Bearer ${localStorage.getItem("authToken")}
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error fetching car: " + response.statusText);
     }
+
+    const carData = await response.json();
+    console.log("Car data:", carData); // Use or display the data as needed
+    window.carData = carData;
+  } catch (error) {
+    console.error("Error:", error);
   }
 
-function loadCar(_id){
+  console.log(id);
+  console.log(carData);
 
-    const car = getCarById(id);
-
-    console.log(car);
-
-
-
-
-
-
+  document.getElementById("des-name").textContent = carData.manufacturer + ' ' + carData.brand;
+  document.getElementById("des-content").textContent = carData.description;
+  document.getElementById("price").textContent = 'For only ' + carData.price + '$';
+  document.getElementById("main-picture").src = carData.media.pictures[0];
 }
-
-
-
-
-function loadHTML(page) {
-  fetch(page)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.text();
-    })
-    .then((html) => {
-        loadCars();
-        loadCar();
-    })
-    .catch((error) => {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
-    });
-}
-
 

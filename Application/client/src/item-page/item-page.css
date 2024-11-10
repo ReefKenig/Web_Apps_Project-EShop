@@ -8,7 +8,7 @@
 }
 
 .template.container .box{
-    width: 200dvh;
+    width: 60dvw;
     height: 80dvh;
     display: flex;
     justify-content: none;
@@ -51,7 +51,7 @@
 }
 
 .selected-picture.container{
-    max-width: 40dvh;
+    /* max-width: 40dvh; */
     flex-grow: 1;
     padding: 10px;
     display: flex;
@@ -63,8 +63,8 @@
 .selected-picture.container .box {
     width: auto;
     height: auto;
-    max-width: 55dvh;
-    max-height: 50dvh;
+    /* max-width: 55dvh; */
+    /* max-height: 50dvh; */
     flex-grow: 1;
     padding: 10px;
     display: flex;
@@ -75,8 +75,8 @@
 }
 
 .selected-picture.container .box img {
-    max-width: 50dvh;
-    max-height: 50dvh;
+    max-width: 30dvw;
+    max-height: 25dvh;
     border-radius: 0.7rem;
     object-fit: contain;
 }
@@ -107,9 +107,10 @@
 }
 
 .buy.container{
-    margin-top: 2%;
+    margin-top: 13%;
+    /* margin-left: 10vw; */
     columns: 2;
-    margin-right: 15rem;
+    margin-right: 5dvw;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -128,9 +129,14 @@
 }
 
 .buy.container .box span{
-    margin-left: 3.5rem;
+    /* margin-left: 3.5rem; */
+    
     font-size: 20px;
     font-weight: bold;
+}
+
+.underline{
+    text-decoration: underline;
 }
 
 .main{
@@ -139,9 +145,10 @@
 }
 
 
+/* From Uiverse.io by thisSasha */ 
 .buy-now {
     padding: 15px 25px;
-    border: unset;
+    border: 0;
     border-radius: 15px;
     color: #212121;
     z-index: 1;
@@ -149,31 +156,39 @@
     position: relative;
     font-weight: 1000;
     font-size: 17px;
-    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
     transition: all 250ms;
     overflow: hidden;
-   }
-   
-   .buy-now::before {
+  }
+  
+  .buy-now::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+    height: 0;
     width: 0;
     border-radius: 15px;
     background-color: #212121;
     z-index: -1;
-    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-    transition: all 250ms
-   }
-   
-   .buy-now:hover {
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    transition: all 250ms;
+  }
+  
+  .buy-now:hover {
     color: #e8e8e8;
-   }
-   
-   .buy-now:hover::before {
+  }
+  
+  .buy-now:hover::before {
     width: 100%;
-   }
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+  
+  .buy-now:active {
+    transform: scale(80%);
+  }
+  

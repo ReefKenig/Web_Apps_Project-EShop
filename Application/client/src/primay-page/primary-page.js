@@ -9,7 +9,7 @@ async function loadPage(page) {
     // Wrap the $.ajax call in a Promise
     const data = await new Promise((resolve, reject) => {
       $.ajax({
-        url: 'http://localhost:3030/api/cars',
+        url: 'http://localhost:3030/api/cars/search',
         type: 'GET',
         success: function(response) {
           if (Array.isArray(response)) {
@@ -33,7 +33,7 @@ async function loadPage(page) {
 function generateCarTemplate(_id, carImage, carManufacturer, carModel, Price, yearOfManufacture) {
     // Create a container div
     const sender = document.createElement('a');
-    sender.href = '../item-page/item-page.html?' + _id;
+    sender.href = '../item-page/item-page.html?id=' + _id;
     sender.className = 'a';
 
     const container = document.createElement("div");
