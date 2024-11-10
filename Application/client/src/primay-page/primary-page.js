@@ -2,34 +2,12 @@ let currentCurrency = "USD"; // Default currency
 let exchangeRate = 1; // Default exchange rate
 let originalPrices = []; // Array to store the original prices of cars
 
-document.addEventListener("DOMContentLoaded", () => {
-  const manufacturer = document.getElementById("Manufacturer");
-  const model = document.getElementById("Model");
-  const color = document.getElementById("Color");
-  const year = document.getElementById("Year-of-Manufacturing");
-  const minPrice = document.getElementById("lValue");
-  const maxPrice = document.getElementById("hValue");
-  const sortAsc = document.getElementById("pAsc");
-  const sortDesc = document.getElementById("pDesc");
-
-  [
-    manufacturer,
-    model,
-    color,
-    year,
-    minPrice,
-    maxPrice,
-    sortAsc,
-    sortDesc,
-  ].forEach((input) => {
-    input.addEventListener("change", applyFilters);
-  });
-
-  // if (window.location.pathname.includes("/primary-page.html")) {
-  //   loadHTML("../header/header.html");
-  //   handleLinksLocation();
-  //   loadPage();
-  // }
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.location.pathname.includes("/primary-page.html")) {
+    loadHTML("/header.html");
+    handleLinksLocation();
+    loadPage();
+  }
 });
 
 async function applyFilters() {
