@@ -235,6 +235,49 @@ aside .sidebar a:hover span{
 }
 
 .progress{
-    width: 30vw;
-    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    border-radius: var(--border-radius-1);
+    border: 1px solid var(--color-dark);
 }
+
+.progress h2{
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.graphs{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.arrow.a-left{
+    transform: rotate(-90deg);
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 4rem;
+    margin-left: 1rem;
+    transition: all 0.3s ease;
+}
+
+.arrow.a-left:hover{
+    transform: rotate(-90deg) scale(1.2);
+}
+
+.arrow.a-right{
+    transform: rotate(90deg);
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 4rem;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+}
+
+.arrow.a-right:hover{
+    transform: rotate(90deg) scale(1.2);
+}
+
