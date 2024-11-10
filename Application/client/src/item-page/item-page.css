@@ -1,9 +1,9 @@
 .template.container{
     cursor: default;
-
     display: flex;
+    flex-direction: row;
     justify-content: center;
-
+    align-items: center;
     margin-top: 7%;
 }
 
@@ -11,13 +11,16 @@
     width: 200dvh;
     height: 80dvh;
     display: flex;
+    justify-content: none;
     flex-direction: row;
 }
 
 .pictures{
     display: flex;
     align-items: flex-start;
+    justify-content: center;
     flex-direction: row; 
+    /* margin-top: 5rem; */
     gap: 10px;
 }
 
@@ -34,7 +37,6 @@
     overflow-y: auto;
     border-radius: 0.7rem;
     backdrop-filter: none;
-    border: 1px solid #ddd;
 }
 
 .picture-menu.container .box img {
@@ -81,7 +83,7 @@
 
 .description.container{
     margin-top: 2dvh;
-    margin-right: 29dvh;
+    /* margin-right: rem; */
     justify-content: flex-start;
 }
 
@@ -103,3 +105,75 @@
 .description.container .box p{
     font-size: 12px;
 }
+
+.buy.container{
+    margin-top: 2%;
+    columns: 2;
+    margin-right: 15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.buy.container .box{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    /* max-width: 10rem; */
+    height: auto;
+    max-height: 20rem;
+    backdrop-filter: none;
+    gap: 10px;
+}
+
+.buy.container .box span{
+    margin-left: 3.5rem;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.main{
+    display: flex;
+    flex-direction: column  ;
+}
+
+
+.buy-now {
+    padding: 15px 25px;
+    border: unset;
+    border-radius: 15px;
+    color: #212121;
+    z-index: 1;
+    background: #e8e8e8;
+    position: relative;
+    font-weight: 1000;
+    font-size: 17px;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms;
+    overflow: hidden;
+   }
+   
+   .buy-now::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 15px;
+    background-color: #212121;
+    z-index: -1;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms
+   }
+   
+   .buy-now:hover {
+    color: #e8e8e8;
+   }
+   
+   .buy-now:hover::before {
+    width: 100%;
+   }
