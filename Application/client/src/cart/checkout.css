@@ -570,8 +570,6 @@ header .text .arrow .left:after, header .text .arrow .right:after, header .text 
 }
 /*End Loader*/
 
-/*Start Home Page*/
-
 /*Start Header*/
 .scroll-header {
     height: calc(100vh - 22px);

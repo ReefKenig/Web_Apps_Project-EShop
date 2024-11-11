@@ -1,0 +1,12 @@
+
+{
+  "name": "web_apps_project-eshop",
+  "version": "1.0.0",
+  "main": "DB_structure.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
