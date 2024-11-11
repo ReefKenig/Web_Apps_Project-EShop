@@ -19,7 +19,6 @@ const userSchema = Schema({
         ref: "cars",
         required: true,
       },
-      quantity: { type: Number, required: true, default: 1 },
     },
   ],
 });

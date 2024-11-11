@@ -8,6 +8,12 @@ router.post("/register", userController.register);
 // User login
 router.post("/login", userController.login);
 
+// Add item to cart
+router.post("/add-to-cart", userController.addToCart);
+
+// Remove item from cart
+router.post("/remove-from-cart", userController.removeFromCart);
+
 // Get users
 router.get("/search", userController.getUsers);
 

@@ -51,36 +51,38 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (email && password) {
-    // Check if the user exists
-    const user = await User.findOne({ email });
+      // Check if the user exists
+      const user = await User.findOne({ email });
 
-    if (!user) {
-      return res.status(400).json({ msg: "User not found" });
+      if (!user) {
+        return res.status(400).json({ msg: "User not found" });
+      }
+
+      // Check the password
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+        return res.status(400).json({ msg: "Wrong password" });
+      }
+
+      // Generate a new token
+      const accessToken = jwt.sign(
+        { userId: user._id, email }, // Use the MongoDB ObjectId
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "30d" }
+      );
+
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        maxAge: THIRTY_DAYS,
+      });
+
+      return res.json({ token: accessToken, user });
+    } else {
+      res.status(400).json({
+        msg: "Error occurred - email or password not exist",
+        error: error.message,
+      });
     }
-
-    // Check the password
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) {
-      return res.status(400).json({ msg: "Wrong password" });
-    }
-
-    // Generate a new token
-    const accessToken = jwt.sign(
-      { userId: user._id, email }, // Use the MongoDB ObjectId
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30d" }
-    );
-
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      maxAge: THIRTY_DAYS,
-    });
-
-    return res.json({ token: accessToken, user});
-  } else {
-    res.status(400).json({ msg: "Error occurred - email or password not exist", error: error.message });
-  }
-
   } catch (error) {
     res.status(400).json({ msg: "Error occurred", error: error.message });
   }
@@ -159,5 +161,77 @@ exports.deleteUser = async (req, res) => {
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+exports.addToCart = async (req, res) => {
+  try {
+    const { userId, carId } = req.body;
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the carId is already in the cart
+    const carAlreadyInCart = user.shoppingCart.some(
+      (item) => item.carId.toString() === carId.toString() // Convert to string to ensure comparison works
+    );
+
+    if (carAlreadyInCart) {
+      return res.status(400).json({ message: "Item already in cart" });
+    }
+
+    // Add the item (carId) to the shopping cart
+    user.shoppingCart.push({ carId });
+
+    // Save the updated user document
+    await user.save();
+
+    res.status(200).json({
+      message: "Item added to cart",
+      shoppingCart: user.shoppingCart,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Could not add item to cart", error: error.message });
+  }
+};
+
+// Remove Item from Shopping Cart
+exports.removeFromCart = async (req, res) => {
+  try {
+    const { userId, carId } = req.body; // carId and userId are passed in the body
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the item is in the cart
+    if (!user.shoppingCart.includes(carId)) {
+      return res.status(400).json({ message: "Item not found in cart" });
+    }
+
+    // Remove the item (carId) from the shopping cart
+    user.shoppingCart = user.shoppingCart.filter((item) => item !== carId);
+
+    // Save the updated user document
+    await user.save();
+
+    res.status(200).json({
+      message: "Item removed from cart",
+      shoppingCart: user.shoppingCart,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Could not remove item from cart",
+      error: error.message,
+    });
   }
 };
