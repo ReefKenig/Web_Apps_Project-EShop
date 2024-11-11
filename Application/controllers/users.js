@@ -204,7 +204,7 @@ exports.addToCart = async (req, res) => {
 // Remove Item from Shopping Cart
 exports.removeFromCart = async (req, res) => {
   try {
-    const { userId, carId } = req.body; // carId and userId are passed in the body
+    const { userId, carId } = req.body;
 
     // Find the user by ID
     const user = await User.findById(userId);
@@ -212,13 +212,17 @@ exports.removeFromCart = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Check if the item is in the cart
-    if (!user.shoppingCart.includes(carId)) {
+    // Check if the carId is in the cart
+    const carIndex = user.shoppingCart.findIndex(
+      (item) => item.carId.toString() === carId.toString() // Convert to string to ensure comparison works
+    );
+
+    if (carIndex === -1) {
       return res.status(400).json({ message: "Item not found in cart" });
     }
 
-    // Remove the item (carId) from the shopping cart
-    user.shoppingCart = user.shoppingCart.filter((item) => item !== carId);
+    // Remove the item from the cart
+    user.shoppingCart.splice(carIndex, 1); // Remove 1 item from the found index
 
     // Save the updated user document
     await user.save();
@@ -229,9 +233,11 @@ exports.removeFromCart = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      message: "Could not remove item from cart",
-      error: error.message,
-    });
+    res
+      .status(500)
+      .json({
+        message: "Could not remove item from cart",
+        error: error.message,
+      });
   }
 };
